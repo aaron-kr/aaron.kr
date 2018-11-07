@@ -1,0 +1,518 @@
+body {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b0bec5+0,ffffff+100 */
+  background: rgb(176,190,197); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(176,190,197,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(176,190,197,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(176,190,197,1) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b0bec5', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+/*   min-height: 100vw; */
+}
+
+h1 img {
+  width: 64px;
+  border: none!important;
+  margin: 0!important;
+  background: white!important;
+  border-radius: 5px;
+  padding: 5px!important;
+  position: relative;
+  top: 4px;
+}
+
+.reveal h1 a {
+  color: white;
+  text-decoration: none!important;
+}
+
+.reveal h2.fragment,
+.reveal .fragment h2 {
+  font-size: 2rem;
+}
+
+.reveal h2.fragment a,
+.reveal .fragment h2 a {
+  text-decoration: none;
+  color: rgb(244, 180, 0);
+}
+
+img.with-bg {
+  background: white;
+}
+
+.logo {
+  background: transparent!important;
+}
+
+.talk-title span {
+  display: block;
+  font-size: 50%;
+}
+
+.talk-subtitle {
+  color: #f4b400;
+}
+
+.talk-subtitle span {
+  color: #000;
+  font-weight: bold;
+}
+
+.talk-link {
+  margin-top: 1em!important;
+  text-shadow: none!important;
+}
+
+.speaker-meta {
+  border-top: 2px solid #0f9d58!important;
+  border-bottom: 2px solid #0f9d58!important;
+}
+
+/*------------------------------------------------------------
+ # Stars
+ -----------------------------------------------------------*/
+.stars-0:after,
+.stars-0-div:before,
+.stars-1:after,
+.stars-1-div:before,
+.stars-2:after,
+.stars-2-div:before,
+.stars-3:after,
+.stars-3-div:before,
+.stars-4:after,
+.stars-4-div:before,
+.stars-5:after,
+.stars-5-div:before {
+  font-family: "FontAwesome";
+  font-size: 0.6em;
+  color: #f4b400;
+  content: "\f006 \f006 \f006 \f006 \f006";
+  display: inline-block;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  position: relative;
+  top: -0.25em;
+  text-shadow: 0px 1px 1px rgba(0,0,0,0.26);
+}
+
+.stars-0:after,
+.stars-0-div:before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-1:after,
+.stars-1-div:before {
+  content: "\f005 \f006 \f006 \f006 \f006";
+}
+
+.stars-2:after,
+.stars-2-div:before {
+  content: "\f005 \f005 \f006 \f006 \f006";
+}
+
+.stars-3:after,
+.stars-3-div:before {
+  content: "\f005 \f005 \f005 \f006 \f006";
+}
+
+.stars-4:after,
+.stars-4-div:before {
+  content: "\f005 \f005 \f005 \f005 \f006";
+}
+
+.stars-5:after,
+.stars-5-div:before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+}
+
+.stars.big-question {
+  width: 55%;
+}
+
+.stars.big-question .stars-0-div:before,
+.stars.big-question .stars-1-div:before,
+.stars.big-question .stars-2-div:before,
+.stars.big-question .stars-3-div:before,
+.stars.big-question .stars-4-div:before,
+.stars.big-question .stars-5-div:before {
+  margin-left: 0;
+  margin-right: 0;
+  font-size: 0.85em;
+}
+
+/*------------------------------------------------------------
+ # Overview Grid
+ -----------------------------------------------------------*/
+.overview-grid {
+  display: flex;
+  text-align: center;
+}
+
+.overview-grid img,
+.overview-grid small {
+  display: block;
+}
+
+.overview-grid ul,
+.overview-grid ol {
+  list-style: none;
+}
+
+.overview-grid li {
+  text-align: center;
+  height: 150px;
+}
+
+.overview-grid img {
+  border: none!important;
+  box-shadow: none!important;
+  background: transparent!important;
+  height: 80px;
+  margin: 0 auto;
+  position: relative;
+  display: inline-block;
+}
+
+/*------------------------------------------------------------
+ # Google Search
+ -----------------------------------------------------------*/
+.google-search-area,
+.google-search-area h2 {
+  position: absolute;
+  margin: 0.5em auto!important;
+  width: 100%;
+}
+
+.google-search-area h2 {
+  background: #db4437;
+  width: 100%;
+  bottom: -2em;
+  line-height: 1.4;
+  font-size: 2rem!important;
+}
+
+.google-search-box {
+    background: white;
+    width: 60%;
+    margin: 0 auto;
+    display: inline-block;
+    height: 60px;
+    vertical-align: top;
+    border-radius: 3px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.36), 0 0 0 1px rgba(0,0,0,0.18);
+    position: relative;
+}
+
+.google-search {
+    position: absolute;
+    margin: 0!important;
+    background: white;
+    width: 100%;
+    height: 60px;
+    /*box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);*/
+    text-align: left;
+    text-indent: 15px;
+    line-height: 1.8!important;
+    font-size: 2rem!important;
+}
+
+.filetype {
+    position: absolute;
+    background: #fff77d;
+    padding: 0!important;
+    border-radius: 5px;
+    line-height: 1.6!important;
+    padding: top;
+    height: 52px;
+    top: 4px;
+    padding: 10px;
+    text-indent: 0;
+    padding: 0 5px!important;
+}
+
+.filetype-5 {
+  z-index: 1;
+}
+
+.filetype-4 {
+  z-index: 2;
+}
+
+.filetype-3 {
+  z-index: 3;
+}
+
+.filetype-2 {
+  z-index: 4;
+}
+
+.filetype-1 {
+  z-index: 5;
+}
+
+.google-search-box.gmail {
+  width: 100%;
+  font-size: 18px!important;
+  background: transparent!important;
+  height: 70px;
+  box-shadow: none;
+}
+
+.gmail .google-search {
+  box-shadow: none;
+  background: transparent;
+  text-align: center;
+}
+
+.gmail span,
+.gmail i {
+  float: left;
+  display: inline-block;
+}
+
+.gmail .fa-star {
+  color: goldenrod;
+}
+
+.gmail i {
+  padding: 7px;
+  opacity: 0.7;
+}
+
+.gmail p {
+  margin: 0;
+  padding: 7px 15px 7px 10px;
+}
+
+.gmail-from {
+  padding-left: 5px!important;
+  padding-right: 40px!important;
+}
+
+.gmail-label-1,
+.gmail-label-2,
+.gmail-label-3 {
+  opacity: 0.8;
+  background: pink;
+  padding: 0px 7px!important;
+  margin-right: 7px!important;
+  font-size: 90%!important;
+  margin-top: 2px!important;
+}
+
+.gmail-label-2 {
+  background: lightblue;
+}
+
+.gmail-label-3 {
+  background: lightgreen;
+}
+
+.gmail-message-intro {
+  opacity: 0.7;
+}
+
+.gmail-message-intro:before {
+  content: "-";
+  margin: 0 5px;
+}
+
+.gmail-date {
+  float: right!important;
+  position: relative;
+  right: 0;
+}
+
+.gmail-inbox {
+  font-size: 16px!important;
+  background: white;
+}
+
+.google-search.gmail-inbox {
+  background: white;
+  height: 30px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  text-indent: 0;
+}
+
+.google-search.gmail-inbox:hover {
+  background: #ddd;
+}
+
+/*------------------------------------------------------------
+ # Keyboard
+ -----------------------------------------------------------*/
+.keyboard {
+  margin-bottom: 1rem;
+  /*height: 100px;*/
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto!important;
+}
+
+.key {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 49px;
+    height: 31px;
+    margin-right: 3.5px;
+    margin-left: 3.5px;
+    padding: 12px 4px 0px 0px;
+    /*float: left;*/
+    border-style: solid none;
+    border-width: 1px 1px 3px;
+    border-color: #f5f5f5 transparent rgba(54, 54, 54, .27);
+    border-radius: 4px 4px 5px 5px;
+    background-color: #eff0f2;
+    background-image: -webkit-linear-gradient(270deg, hsla(0, 0%, 100%, .75), hsla(0, 0%, 100%, .75));
+    background-image: linear-gradient(180deg, hsla(0, 0%, 100%, .75), hsla(0, 0%, 100%, .75));
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .65);
+    /*font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;*/
+    color: #aaa;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 700;
+    text-align: right;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-shadow: 0 1px 0 #f5f5f5;
+}
+
+.non-key {
+  text-indent: 0;
+  margin: -0.5rem 1rem!important;
+}
+
+.key.square {
+    width: 47px;
+    height: 47px;
+    padding-top: 6px;
+    padding-right: 0px;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 700;
+    text-align: center;
+    text-indent: 0;
+}
+
+.key.shift {
+    width: 89px;
+    height: 47px;
+    padding-top: 22px;
+    padding-left: 10px;
+    font-size: 14px;
+    text-align: left;
+    text-transform: none;
+}
+
+.key.shift.left {
+    width: 116px;
+}
+
+.translate div {
+  flex: 1 1 20%;
+}
+
+.translate div img {
+  height: 33%;
+}
+
+/*------------------------------------------------------------
+ # Picture Area
+ -----------------------------------------------------------*/
+.picture-area,
+.picture-area h2 {
+  position: absolute;
+  margin: 0.5em auto!important;
+  width: 100%;
+}
+
+.picture-area h2 {
+  background: #db4437;
+  width: 100%;
+  bottom: -2em;
+  line-height: 1.4;
+  font-size: 2rem!important;
+}
+
+.picture-area.red h2,
+.picture-area h2.red {
+  background: #db4437;
+}
+
+.picture-area.blue h2,
+.picture-area h2.blue {
+  background: #4285f4;
+}
+
+.picture-area.yellow h2,
+.picture-area h2.yellow {
+  background: rgb(244, 180, 0);
+}
+
+.picture-area.green h2,
+.picture-area h2.green {
+  background: #0f9d58;
+}
+
+.picture-area.gray h2,
+.picture-area h2.gray {
+  background: #414549;
+}
+
+.picture-area h2 code {
+    background: black;
+    padding: 5px 10px!important;
+    /* display: inline-block; */
+    font-size: 1.4rem!important;
+    /* margin-top: -10px!important; */
+    position: relative;
+    top: -7px;
+}
+
+.picture-area img {
+  max-width: 80%!important;
+  border: none!important;
+  margin-top: -20%!important;
+}
+
+.picture-area-box {
+    background: white;
+    width: 60%;
+    margin: 0 auto;
+    display: inline-block;
+    height: 60px;
+    vertical-align: top;
+    border-radius: 3px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.36), 0 0 0 1px rgba(0,0,0,0.18);
+    position: relative;
+}
+
+/*
+.google-search {
+    position: absolute;
+    margin: 0!important;
+    background: white;
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    text-align: left;
+    text-indent: 15px;
+    line-height: 1.8!important;
+    font-size: 2rem!important;
+}
+*/
+
+.drive img {
+  max-width: auto;
+}
+
+.drive h2 img {
+    height: 40px;
+    border: none!important;
+    box-shadow: none;
+    background: none;
+    margin: 0 0 0 0.5rem;
+    top: 6px;
+    position: relative;
+}

@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Google Classroom 101 - KOTESOL 2017 International Conference Slides</title>
+
+		<meta name="description" content="Introducing Google Classroom to English teachers in Korea.">
+		<meta name="author" content="Aaron Snowberger">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../lib/reveal-pikest/css/reveal.css">
+		<link rel="stylesheet" href="../lib/reveal-pikest/css/theme/googlestreet.css" id="theme">
+		<!-- <link rel="stylesheet" href="../lib/reveal-pikest/css/theme/iamvdo.css" id="theme"> -->
+		<link rel="stylesheet" type="text/css" href="../lib/tabzilla/css/tabzilla.css" media="screen" />
+		<link rel="stylesheet" href="../lib/reveal-pikest/plugin/title-footer/title-footer.css">
+
+		<!-- Code syntax highlighting - also available: visualstudio.css & zenburn.css -->
+		<link rel="stylesheet" href="../lib/reveal-pikest/lib/css/github.css">
+		<!-- <link rel="stylesheet" href="../lib/reveal-pikest/lib/css/zenburn.css">
+		<link rel="stylesheet" href="../lib/reveal-pikest/lib/css/visualstudio.css"> -->
+
+		<!-- Icons -->
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../lib/reveal-pikest/css/print/pdf.css' : '../lib/reveal-pikest/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/reveal-pikest/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal pikestreet">
+
+			<div id="tabzilla">
+    		  <a href="https://aaron.kr/">Aaron.kr</a>
+			</div>
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<!-- #1 : Title Slide -->
+				<section data-background="assets/bg/classroom-dk.jpg" data-state="no-title-footer" data-background-video-muted>
+					<div class="circle accent">
+						<br>
+						<img class="logo" src="assets/google-product-logos/logo_classroom.png">
+						<h1>Google Classroom 101</h1>
+						<h2 class="talk-link">
+							<a target="_blank" href="http://aaron.kr/talks/kotesol">
+								<code>aaron.kr/talks/kotesol</code>
+							</a>
+						</h2>
+						<small class="author-name">Aaron Snowberger<br /><img src="assets/google-trainer/ct2017.png" /></small>
+						<cite data-cite="Press [spacebar] to cycle through the slides"></cite>
+                        <!--<cite data-cite="Press [S] to read the Speaker Notes"></cite>-->
+					</div>
+
+					<aside class="notes">
+						Please follow the link above to access the Preliminary Survey, and Slides for this Presentation.
+					</aside>
+				</section>
+
+				<!-- Vertical Slides (Self Intro)-->
+				<section>
+					<!-- #2 : Speaker Meta -->
+					<section data-background-transition="zoom">
+						<div class="speaker-name">
+							<img class="logo" src="assets/aaron-400x400.png">
+							<p><strong>Aaron Snowberger</strong></p>
+							<p><a class="google-blue-font" href="http://aaron.kr" data-preview-link><span data-title="https://aaron.kr">https://aaron.kr</span></a></p>
+						</div>
+						<div class="speaker-meta">
+								<p>
+									Google Certified Educator &amp; Trainer
+									<a class="roll"  style="color: inherit;" target="_blank" href="https://edudirectory.withgoogle.com/en/profile/36aceee34fe6db52f9f302b6c1d8060c"><i class="fa fa-external-link"></i></a>
+								</p>
+								<p><a href="http://www.jj.ac.kr/gen/faculty/foreign.jsp" data-preview-link>Jeonju University</a> &amp; <a href="http://gpa.justkeeplearning.xyz" data-preview-link>Global Prodigy Academy</a></p>
+								<p>
+									WordPress Developer
+									<a class="roll" href="https://profiles.wordpress.org/jekkilekki"><i class="fa fa-external-link"></i></a>
+								</p>
+						</div>
+						<div class="speaker-qualifications">
+							<ul>
+								<li>
+									<a href="https://edutrainingcenter.withgoogle.com/certification_level1" data-preview-link>
+										<img src="assets/google-trainer/GCE_Badges_01.png">
+									</a>
+								</li>
+								<li>
+									<a href="https://edutrainingcenter.withgoogle.com/certification_level2" data-preview-link>
+										<img src="assets/google-trainer/GCE_Badges_02.png">
+									</a>
+								</li>
+								<li>
+									<a href="https://edutrainingcenter.withgoogle.com/certification_trainer" data-preview-link>
+										<img src="assets/google-trainer/Badges-Learning_Center-revised_9-1-03.png">
+									</a>
+								</li>
+								<li>
+									<a href="https://cloud.google.com/training/admin" data-preview-link>
+										<img style="width: 80px; margin-top: -5px; box-shadow: 1px 1px 3px gray;" src="assets/google-trainer/G-Suite_Admin_Badge.png">
+									</a>
+								</li>
+							</ul>
+						</div>
+					</section>
+
+					<!-- #4 : Get Google Certified -->
+					<section data-background-iframe="https://edutrainingcenter.withgoogle.com/certification_level1" data-background-interactive>
+                        <div class="light-box accent fragment current-visible">
+                            <h2><strong>Get Certified!</strong></h2>
+                            <small><a target="_blank" href="https://edutrainingcenter.withgoogle.com/certification_level1">Google Certified Educator Level 1</a> ($10)<br><br>
+                            <a target="_blank" href="https://edutrainingcenter.withgoogle.com/certification_level2">Google Certified Educator Level 2</a> ($25)<br></small>
+                        </div>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2><strong>Overview</strong></h2>
+                        <ol>
+							<li class="fragment" style="color: #4285f4">Student View</li>
+							<li class="fragment" style="color: #0f9d58">Teacher View</li>
+							<li class="fragment" style="color: #f4b400">Tips</li>
+						</ol>
+					</section>
+
+					<section data-transition="zoom">
+						<h2><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <strong class="google-font-red">Caveat</strong></h2>
+						<img class="g-logo" src="assets/500px-Google-G-Logo.png" />
+					</section>
+                    
+                    <!-- #6 : WHY Google Classroom -->
+                    <section data-background="assets/bg/teacher-training.jpg">
+					<div class="circle accent">
+						<br>
+						<img class="logo" src="assets/google-product-logos/logo_classroom.png">
+						<h2><strong style="color: white">Join my class!</strong></h2>
+						<h2 class="talk-link">
+							<a target="_blank" href="https://classroom.google.com">
+								<code>classroom.google.com</code>
+							</a>
+						</h2>
+						<h1 class="author-name"><code style="color:#f4b400">jasj61t</code></h1>
+					</div>
+				    </section>
+<!--
+					<section data-background="assets/bg/teacher-training.png">
+						<div class="accent">
+                            <br>
+						    <img class="logo" src="assets/google-product-logos/logo_classroom.jpg">
+							
+                            <br>
+                            <p><code style="color: white">classroom.google.com/</code></p>
+                            <br>
+                            <h3><code class="google-button" style="color: white">jasj61t</code></h3>
+						</div>
+					</section>
+-->
+				</section>
+                
+                <section data-background="#4285f4">
+					<section>
+						<hgroup class="accent big-question">
+							<h1 style="font-size: 4em">Student</h1>
+							<h2 style="font-size: 3.2em">Viewpoint</h2>
+						</hgroup>
+					</section>
+
+					<section data-background="#000000" data-background-video="assets/video/Mission-control-for-students-and-teachers.mp4">
+                        <!--<cite data-cite="YouTube.com">YouTube.com</cite>-->
+					</section>
+                    
+                    <section data-background="#ffffff">
+                        <h2><strong>What we're working with</strong></h2>
+                        <ul class="flex-list">
+                            <li class="fragment">
+                                <img src="assets/google-product-logos/logo_slides_128px.png">
+                                <small>Slides (PPT)</small>
+                            </li>
+                            <li class="fragment">
+                                <img src="assets/google-product-logos/logo_sheets_128px.png">
+                                <small>Sheets (Excel)</small>
+                            </li>
+                            <li class="fragment">
+                                <img src="assets/google-product-logos/logo_docs_128px.png">
+                                <small>Docs (Word)</small>
+                            </li>
+                            <li class="fragment">
+                                <img src="assets/google-product-logos/logo_drawings_128px.png">
+                                <small>Drawings (graphics)</small>
+                            </li>
+                            <li class="fragment">
+                                <img src="assets/google-product-logos/logo_forms_128px.png">
+                                <small>Forms (surveys)</small>
+                            </li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <hgroup class="accent big-question">
+							<h1 style="font-size: 4em">Demo <i class="fa fa-external-link"></i></h1>
+						</hgroup>
+                    </section>
+				</section>
+
+				<section data-background="#0f9d58">
+					<section>
+						<hgroup class="accent big-question">
+							<h1 style="font-size: 4em">Teacher</h1>
+							<h2 style="font-size: 3.2em">Viewpoint</h2>
+						</hgroup>
+					</section>
+
+					<section data-background="#000000" data-background-video="assets/video/Previewing-a-new-Classroom-by-Google.mp4">
+                        <!--<cite>YouTube.com</cite>-->
+					</section>
+                    
+					<section data-background="#ffffff">
+						<h2><strong>How to use it</strong></p>
+						<img src="assets/google-create-assignment.png">
+                        <p>Also, better Organization &amp; Grading</p>
+					</section>
+					
+                    <section>
+                        <hgroup class="accent big-question">
+							<h1 style="font-size: 4em">Demo <i class="fa fa-external-link"></i></h1>
+						</hgroup>
+                    </section>
+				</section>
+
+				<!-- Vertical Slides (Google Services) -->
+				<section data-background="#f4b400">
+					<section>
+                        <hgroup class="accent big-question yellow">
+							<h1 style="font-size: 4em">3x3 Tips</h1>
+						</hgroup>
+                    </section>
+                    
+                    <section>
+                        <h2><strong>Do it for yourself</strong></h2>
+                        <ol>
+                            <li class="fragment"><i class="fa fa-trash"></i> USB</li>
+                            <li class="fragment">Go Paperless</li>
+                            <li class="fragment">Organize yourself</li>
+                        </ol>
+                    </section>
+                    
+                    <section>
+                        <h2><strong>No Google Account?</strong></h2>
+                        <ol>
+                            <li class="fragment"><a target="_blank" href="https://sites.google.com/view/screen-english-extra/home">Google Sites</a> &amp; Quizzes <i class="fa fa-external-link"></i></li>
+                            <li class="fragment"><a target="_blank" href="https://chrome.google.com/webstore/detail/flubaroo/mjkbmijfpphoabkogbdmdkolcnaenaia">Flubaroo Grading</a> <i class="fa fa-external-link"></i></li>
+                            <li class="fragment"><a target="_blank" href="http://office.naver.com/">Naver Office</a> <i class="fa fa-external-link"></i></li>
+                        </ol>
+                    </section>
+                    
+                    <section>
+                        <h2><strong>More beautiful PPTs?</strong></h2>
+                        <ol>
+                            <li class="fragment"><a target="_blank" href="https://docs.google.com/document/u/0/?ftv=1&tgif=c">Google Templates</a> <i class="fa fa-external-link"></i></li>
+                            <li class="fragment"><a target="_blank" href="http://www.slidescarnival.com/">SlidesCarnival.com</a> <i class="fa fa-external-link"></i></li>
+                            <li class="fragment"><a target="_blank" href="https://slides.com/">Slides.com</a> <i class="fa fa-external-link"></i></li>
+                        </ol>
+                    </section>
+				</section>
+
+				<!-- #24 : Get Certified online! -->
+                <section>
+                    <section data-background-image="assets/bg/classroom-dk.jpg">
+                        <hgroup class="accent big-question">
+                            <h1 style="font-size: 4em">THE END</h1>
+                            <h2 style="font-size: 2.8em">Thank you!</h2>
+                        </hgroup>
+                    </section>
+                
+                    <!-- #4 : Get Google Certified -->
+					<section data-background-iframe="https://edutrainingcenter.withgoogle.com/certification_level1" data-background-interactive>
+                        <div class="light-box accent fragment current-visible">
+                            <h2><strong>Get Certified!</strong></h2>
+                            <small><a target="_blank" href="https://edutrainingcenter.withgoogle.com/certification_level1">Google Certified Educator Level 1</a> ($10)<br><br>
+                            <a target="_blank" href="https://edutrainingcenter.withgoogle.com/certification_level2">Google Certified Educator Level 2</a> ($25)<br></small>
+                        </div>
+					</section>
+                </section>
+
+			</div>
+
+		</div>
+
+		<script src="../lib/reveal-pikest/lib/js/head.min.js"></script>
+		<script src="../lib/reveal-pikest/js/reveal.js"></script>
+
+		<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="../lib/reveal-pikest/js/pikestreet.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+//				previewLinks: true,
+                loop: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				allottedTime: 45 * 60 * 1000, // 45 minutes allotted
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../lib/reveal-pikest/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					// { src: '../lib/reveal-pikest/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					// { src: '../lib/reveal-pikest/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../lib/reveal-pikest/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../lib/reveal-pikest/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../lib/reveal-pikest/plugin/notes/notes.js', async: true },
+					{ src: '../lib/reveal-pikest/plugin/menu/menu.js' },
+					{ src: '../lib/reveal-pikest/plugin/elapsed-time-bar/elapsed-time-bar.js' },
+					{ src: '../lib/reveal-pikest/plugin/title-footer/title-footer.js', async: true, callback: function() { title_footer.initialize(); } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
