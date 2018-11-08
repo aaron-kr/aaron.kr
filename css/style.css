@@ -98,6 +98,12 @@ p {
   margin: 5.25rem 0;
 }
 
+.self-intro span {
+  position: absolute;
+  background: #ffcc00;
+  padding: 0 0.5rem;
+}
+
 .section-talk-title {
   font-size: 2rem;
   line-height: 3.2rem;
