@@ -1,0 +1,21 @@
+.classes-section {
+  margin-top: 1.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tech-classes,
+.esl-classes {
+  flex: 1 1 50%;
+}
+.tech-classes {
+  margin-right: 1rem;
+}
+.esl-classes {
+  margin-left: 1rem;
+}
+
+.class-curriculum,
+.class-dates {
+  display: none;
+}

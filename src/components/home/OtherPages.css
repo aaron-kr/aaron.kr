@@ -1,0 +1,28 @@
+/**
+ Specifics
+ **/
+ .talk-notes ul,
+ .talk-notes ol {
+   margin: 1rem 2rem;
+ }
+ 
+ .talk-section-title {
+   border-top: 1px solid #eee;
+   padding-top: 1rem;
+   margin-top: 3.5rem;
+ }
+ 
+ .youtube-video {
+   width: 100%;
+   height: 400px;
+   background: #bdbdbd;
+ }
+ 
+ .google-button {
+   background: #4285f4;
+   color: white;
+   padding: 0.45rem 0.75rem;
+   border-radius: 5px;
+   font-weight: bolder;
+ }
+ 

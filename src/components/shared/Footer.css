@@ -1,0 +1,23 @@
+.site-footer {
+  border-top: 1px solid #dbdbdb;
+  margin-top: 7rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.copyright {
+  text-align: right;
+  padding: 1rem 0;
+  color: #777;
+  font-weight: 300;
+  font-size: 0.8125rem;
+}
+
+.farewell {
+  font-size: 2rem;
+  line-height: 3.2rem;
+  padding-top: 2rem;
+  text-align: center;
+  font-weight: 700;
+  right: 0%;
+}

@@ -1,0 +1,23 @@
+.site-navigation ul {
+  margin: 0 3.0625rem;
+  display: flex;
+  list-style: none;
+}
+
+.site-navigation li {
+  padding: 3.5rem 0rem;
+}
+
+.site-navigation li a {
+  color: inherit;
+  opacity: 0.7;
+  padding: 3.5rem 1rem;
+}
+
+.site-title:hover,
+.site-navigation li:hover a {
+  color: white;
+  opacity: 1;
+  background: #a0f;
+  border: none;
+}

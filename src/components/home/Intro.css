@@ -1,0 +1,62 @@
+.site-title.huge {
+  margin: 3rem 0 6rem;
+  padding: 0;
+  font-size: 6rem;
+  text-align: center;
+  font-weight: 100;
+  /* background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 44%, #FFCC70 100%); */
+  background-image: linear-gradient(43deg, #4158D0 0%, #4158D0 44%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 5rem;
+}
+.site-title.huge strong {
+  font-weight: 700;
+  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 44%, #FFCC70 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.intro {
+  font-size: 2rem;
+  line-height: 3.2rem;
+  font-weight: 700;
+  margin: 5.25rem 0;
+}
+
+.self-intro span {
+  position: absolute;
+  background: #ffcc00;
+  padding: 0 0.5rem;
+  width: 560px;
+  font-weight: 500;
+}
+
+.section-talk-title {
+  font-size: 2rem;
+  line-height: 3.2rem;
+}
+
+.intro-sites {
+  list-style: none;
+  display: flex;
+  margin: 3rem -0.25rem;
+  height: 8rem;
+}
+
+.intro-site-item {
+  flex: 1 1 15%;
+  margin: 0.25rem;
+  padding: 5rem 1rem 0;
+  justify-content: space-between;
+  font-size: 1rem;
+  line-height: 1;
+  background: gray;
+}
+
+.intro-site-item a {
+  color: white;
+  font-weight: 300;
+  text-decoration: none;
+  bottom: 0;
+}

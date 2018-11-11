@@ -1,0 +1,26 @@
+.site-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.site-title {
+  color: inherit;
+  padding: 3.5rem;
+  font-size: 0.5rem;
+}
+
+.login-button {
+  width: 24px;
+  height: 24px;
+  display: block;
+  position: absolute;
+  /* background: red; */
+  top: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.login-button:hover {
+  cursor: pointer;
+  border-bottom: none;
+}
