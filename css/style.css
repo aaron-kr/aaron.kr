@@ -119,7 +119,7 @@ p {
 .intro-site-item {
   flex: 1 1 15%;
   margin: 0.25rem;
-  padding: 1rem;
+  padding: 5rem 1rem 0;
   justify-content: space-between;
   font-size: 1rem;
   line-height: 1;
@@ -402,6 +402,7 @@ p {
 
 .site-footer {
   border-top: 1px solid #eee;
+  background: #eee;
   margin-top: 7rem;
   display: flex;
   justify-content: space-between;
@@ -409,7 +410,7 @@ p {
 
 .copyright {
   text-align: right;
-  padding: 3.5rem 0;
+  padding: 1rem 0;
   color: #bdbdbd;
   font-weight: 300;
   font-size: 0.8125rem;
