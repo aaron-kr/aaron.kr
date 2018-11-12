@@ -2,7 +2,7 @@ let links = {
   "portfolio": {
     "id": "portfolio",
     "name": "Design Portfolio",
-    "img": "",
+    "img": "/img/aaronsnowberger-small.png",
     "detail": "",
     "url": "https://aaronsnowberger.com"
   },
@@ -99,7 +99,7 @@ let talks = {
   },
   20160409: {
     "id": 20160409,
-    "title": "Become a Better Presenter by Becoming a Better Teacher (and vice versa)<br />",
+    "title": "Become a Better Presenter by Becoming a Better Teacher (and vice versa)",
     "subtitle": "",
     "img": "",
     "event": "Jeonju KOTESOL Workshop",
@@ -159,7 +159,7 @@ let talks = {
   },
   20150228: {
     "id": 20150228,
-    "title": "Open Source, WordPress, &amp; the Community",
+    "title": "Open Source, WordPress, & the Community",
     "subtitle": "",
     "img": "",
     "event": "Seoul WordPress Grand Meetup 2015",
@@ -228,7 +228,7 @@ let classes = {
     "id": "compapp",
     "subject": "technology",
     "title": "Computer A+",
-    "curriculum": "CompTIA &amp; Mike Meyers A+ curriculum",
+    "curriculum": "CompTIA & Mike Meyers A+ curriculum",
     "dates": 2018,
     "url": ""
   },
@@ -236,7 +236,7 @@ let classes = {
     "id": "compa",
     "subject": "technology",
     "title": "Computer A (Office)",
-    "curriculum": "Touch typing, MS &amp; Google Office Suite",
+    "curriculum": "Touch typing, MS & Google Office Suite",
     "dates": "2013, 2014, 2015",
     "url": "http://drive.google.com"
   },
@@ -323,7 +323,7 @@ let classes = {
   "jjuspeech": {
     "id": "jjuspeech",
     "subject": "esl",
-    "title": "Speech &amp; Drama",
+    "title": "Speech & Drama",
     "curriculum": "Speaking of Speech",
     "dates": "2010-2017",
     "url": "disabled"
@@ -331,7 +331,7 @@ let classes = {
   "jjurw": {
     "id": "jjurw",
     "subject": "esl",
-    "title": "Reading &amp; Writing",
+    "title": "Reading & Writing",
     "curriculum": "Practical English Series",
     "dates": 2016,
     "url": "disabled"
@@ -379,8 +379,8 @@ let classes = {
   "avalon": {
     "id": "avalon",
     "subject": "esl",
-    "title": "TOEFL Writing &amp; Reading",
-    "curriculum": "TOEFL Writing &amp; Reading",
+    "title": "TOEFL Writing & Reading",
+    "curriculum": "TOEFL Writing & Reading",
     "dates": "2007-2009",
     "url": "disabled"
   },
@@ -404,7 +404,7 @@ let classes = {
     "id": "kindie",
     "subject": "esl",
     "title": "Kindergarten ESL",
-    "curriculum": "Storytime &amp; games",
+    "curriculum": "Storytime & games",
     "dates": "2006-2007",
     "url": "disabled"
   }
@@ -439,9 +439,11 @@ let projects = {
     "id": "portfolio",
     "builtWith": "WordPress",
     "title": "AaronSnowberger.com",
+    "description": "My online graphic design portfolio",
+    "tags": "WordPress, Express",
     "url": "https://aaronsnowberger.com",
     "color": "#455A64",
-    "img": ""
+    "img": "/img/aaronsnowberger-com.png"
   },
   "kotesolWorkshops": {
     "id": "kotesolWorkshops",
@@ -460,3 +462,5 @@ let projects = {
     "img": ""
   }
 }
+
+export { links, talks, classes, projects }

@@ -1,12 +1,16 @@
 import React from 'react'
 import './Intro.css'
 import Flipper from './Flipper'
+import { obj2arr } from '../../utils/helpers'
+import { links } from '../../utils/_DATA'
 
 const Intro = () => {
+  let linksArr = obj2arr( links )
+
   return (
     <section className='intro'>
       <figure>
-        <img className='profile-pic' src='img/aaron-profile-2018.jpg' />
+        <img className='profile-pic' src='img/aaron-profile-2018.jpg' alt="Aaron Snowberger" />
       </figure>
       <h1 className='site-title huge'>Aaron<strong>Snowberger</strong></h1>
       <hr />
@@ -17,24 +21,20 @@ const Intro = () => {
       </p>
       <p>Find me on <a href='https://linkedin.com/in/aaronsnowberger'>LinkedIn</a> or elsewhere:</p>
       <ul className='intro-sites'>
-        <li 
-          className='intro-site-item' 
-          style={{backgroundImage: "url('img/aaronsnowberger-small.png')", backgroundSize: 'cover', backgroundPosition: 'center'}}
-        >
-          <a href='https://aaronsnowberger.com'>Design Portfolio</a>
-        </li>
-        <li className='intro-site-item'>
-          <a href='https://keytokorean.com'>Korean blog</a>
-        </li>
-        <li className='intro-site-item'>
-          <a href='https://github.com/jekkilekki'>GitHub code</a>
-        </li>
-        <li className='intro-site-item'>
-          <a href='https://profiles.wordpress.org/jekkilekki'>WordPress</a>
-        </li>
-        <li className='intro-site-item'>
-          <a href='https://twitter.com/jekkilekki'>Twitter</a>
-        </li>
+
+        { linksArr.map((link) => (
+          <li 
+            className='intro-site-item' 
+            style={{
+              backgroundImage: `url(${link.img})`, 
+              backgroundSize: 'cover', 
+              backgroundPosition: 'center'
+            }}
+          >
+            <a href={link.url}>{link.name}</a>
+          </li>
+        ))}
+
       </ul>
     </section>
   )
