@@ -59,4 +59,19 @@
   font-weight: 300;
   text-decoration: none;
   bottom: 0;
+  z-index: 1000;
+  /* text-indent: 200%; */
+  white-space: nowrap;
+  font-size: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
 }
+
+.intro-site-item:hover {
+  opacity: 0.8;
+}
+

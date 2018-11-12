@@ -50,9 +50,18 @@ span.google-text:before {
 }
 
 main {
-  max-width: 52rem;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+.container {
+  max-width: 52rem;
+  margin-left: auto!important;
+  margin-right: auto!important;
+}
+
+.container.large {
+  max-width: 82rem;
 }
 
 p {

@@ -16,58 +16,35 @@
 
 .list-boxes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 1rem;
   list-style: none;
-}
-
-.list-box-item {
-
-}
-
-.list-box-item a {
-  /* padding: 3.5rem 1.75rem; */
-  text-align: center;
-  background: green;
-  display: block;
-  color: white;
-  opacity: 0.8;
-}
-
-.list-box-item a:hover {
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
-  opacity: 1;
-  border: none;
+  margin-top: 1.75rem;
 }
 
 #projects figure {
   position: relative;
+  max-height: 280px;
   overflow: hidden;
 }
 
 figure.effect {
   background: #22a39f;
+  background: #4158D0;
   color: white;
 }
 
 #projects figure img {
-  width: 110%;
+  width: 100%;
 }
 
 figure.effect:hover img {
   opacity: 0.2;
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+  transform: scale(1.1);
 }
 figure.effect img {
-  width: -webkit-calc(100% + 20px);
-  width: calc(100% + 20px);
   -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
   transition: opacity 0.35s, transform 0.35s;
-  -webkit-transform: translate3d(-10px,0,0);
-  transform: translate3d(-10px,0,0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 #projects figure figcaption {
@@ -87,6 +64,9 @@ figure.effect figcaption {
   color: #FFF;
   font-weight: 600;
   margin-bottom: 5px;
+  font-size: 1.4rem;
+  line-height: 1.35;
+  padding-top: 10px;
 }
 figure.effect:hover h3 {
   opacity: 1;
@@ -94,7 +74,7 @@ figure.effect:hover h3 {
 figure.effect h3 {
   position: relative;
   overflow: hidden;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   opacity: 0;
   -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
   transition: opacity 0.35s, transform 0.35s;
@@ -132,6 +112,10 @@ figure.effect p {
   -webkit-transform: translate3d(100%,0,0);
   transform: translate3d(100%,0,0);
 }
+
+#projects figure p {
+  margin: 0;
+}
 #projects figure p > strong {
   width: 60px;
   display: inline-block;
@@ -154,6 +138,7 @@ figure.effect p {
 
 #projects figure .icon {
   background: #22A39F;
+  background: #aa00ff;
   position: absolute;
   top: 0px;
   right: 0px;

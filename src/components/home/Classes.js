@@ -9,7 +9,7 @@ const Classes = () => {
   let eslClasses = classArr.filter((c) => { return c.subject === 'esl' })
 
   return (
-    <section id='classes' className='main-section'>
+    <section id='classes' className='main-section container'>
       <h2 className='section-title'>Classes</h2>
       <div className='classes-section'>
 

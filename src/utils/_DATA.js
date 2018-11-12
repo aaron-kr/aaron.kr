@@ -8,29 +8,29 @@ let links = {
   },
   "korean": {
     "id": "korean",
-    "name": "Korean blog",
-    "img": "",
+    "name": "",
+    "img": "/img/keytokorean-small.png",
     "detail": "",
     "url": "https://keytokorean.com"
   },
   "github": {
     "id": "github",
     "name": "GitHub",
-    "img": "",
+    "img": "/img/github-universe.jpg",
     "detail": "",
     "url": "https://github.com/jekkilekki"
   },
   "wordpress": {
     "id": "wordpress",
     "name": "WordPress",
-    "img": "",
+    "img": "/img/wordpress.jpg",
     "detail": "",
     "url": "https://profiles.wordpress.org/jekkilekki"
   },
   "twitter": {
     "id": "twitter",
     "name": "Twitter",
-    "img": "",
+    "img": "/img/twitter.png",
     "detail": "",
     "url": "https://twitter.com/jekkilekki"
   }
@@ -411,55 +411,77 @@ let classes = {
 }
 
 let projects = {
-  "k2k": {
-    "id": "k2k",
-    "builtWith": "WordPress Multi-site",
-    "title": "Key To Korean",
-    "url": "https://keytokorean.com",
-    "color": "rgb(83, 191, 156)",
-    "img": ""
-  },
-  "gpa": {
-    "id": "gpa",
-    "builtWith": "WordPress",
-    "title": "Global Prodigy Academy",
-    "url": "https://gpa.justkeeplearning.xyz",
-    "color": "#303F9F",
-    "img": ""
-  },
-  "marsx": {
-    "id": "marsx",
-    "builtWith": "WordPress custom theme",
-    "title": "MarsX.kr",
-    "url": "https://marsx.kr",
-    "color": "#000000",
-    "img": ""
-  },
   "portfolio": {
     "id": "portfolio",
-    "builtWith": "WordPress",
     "title": "AaronSnowberger.com",
-    "description": "My online graphic design portfolio",
-    "tags": "WordPress, Express",
+    "description": "My online graphic design portfolio.",
+    "tags": "WordPress, custom theme, design",
     "url": "https://aaronsnowberger.com",
     "color": "#455A64",
     "img": "/img/aaronsnowberger-com.png"
   },
+  "koreanbyheart": {
+    "id": "koreanbyheart",
+    "title": "Korean by Heart",
+    "description": "A flashcard app with 6,000 pre-loaded Korean words.",
+    "tags": "React Native, Expo, Redux",
+    "url": "https://koreanbyheart.com",
+    "color": "rgb(83, 191, 156)",
+    "img": "/img/koreanbyheart-com.png"
+  },
+  "k2k": {
+    "id": "k2k",
+    "title": "Key To Korean",
+    "description": "My Korean language learning blog and educational site.",
+    "tags": "WordPress Multi-site, custom theme, design, writing",
+    "url": "https://keytokorean.com",
+    "color": "rgb(83, 191, 156)",
+    "img": "/img/keytokorean-com.png"
+  },
+  "gpa": {
+    "id": "gpa",
+    "title": "Global Prodigy Academy",
+    "description": "English homepage for the International high school I work at.",
+    "tags": "WordPress",
+    "url": "https://gpa.justkeeplearning.xyz",
+    "color": "#303F9F",
+    "img": "/img/gpa-blog.png"
+  },
+  "marsx": {
+    "id": "marsx",
+    "title": "MarsX.kr",
+    "description": "A startup in Jeonju that does underground development.",
+    "tags": "WordPress, custom theme, custom plugin",
+    "url": "https://marsx.kr",
+    "color": "#000000",
+    "img": "/img/marsx-kr.png"
+  },
   "kotesolWorkshops": {
     "id": "kotesolWorkshops",
-    "builtWith": "Angular 2",
-    "title": "KOTESOL Workshops Angular app",
+    "title": "KOTESOL Workshops",
+    "description": "Attendance app for KOTESOL that does random prize draws.",
+    "tags": "Angular, design",
     "url": "https://jnjkotesol.com/workshops",
     "color": "#303F9F",
-    "img": ""
+    "img": "/img/jnjkotesol-workshops.png"
   },
-  "kotesolConferences": {
-    "id": "kotesolConferences",
-    "builtWith": "Node.js, Express.js",
-    "title": "KOTESOL Conferences in Node.js",
-    "url": "https://conference.jnjkotesol.com",
+  "kotesolConferences2017": {
+    "id": "kotesolConferences2017",
+    "title": "2017 JNJ KOTESOL Conference",
+    "description": "Conference website for Jeonju-North Jeolla KOTESOL.",
+    "tags": "Node.js, Express.js, design",
+    "url": "https://2017.conference.jnjkotesol.com",
     "color": "#a0f",
-    "img": ""
+    "img": "/img/2017-conference-jnjkotesol-com.png"
+  },
+  "kotesolConferences2018": {
+    "id": "kotesolConferences2018",
+    "title": "2018 JNJ KOTESOL Conference",
+    "description": "Conference website for Jeonju-North Jeolla KOTESOL.",
+    "tags": "Node.js, Express.js, design",
+    "url": "https://2018.conference.jnjkotesol.com",
+    "color": "#a0f",
+    "img": "/img/2018-conference-jnjkotesol-com.png"
   }
 }
 

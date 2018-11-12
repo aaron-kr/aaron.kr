@@ -8,7 +8,7 @@ const Intro = () => {
   let linksArr = obj2arr( links )
 
   return (
-    <section className='intro'>
+    <section className='intro container'>
       <figure>
         <img className='profile-pic' src='img/aaron-profile-2018.jpg' alt="Aaron Snowberger" />
       </figure>
