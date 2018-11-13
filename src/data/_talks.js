@@ -1,0 +1,172 @@
+let talks = {
+  20181117: {
+    "id": 20181117,
+    "title": "Atomic Habits that will turn you into a Superhero",
+    "subtitle": "",
+    "img": "/img/atomic-habits-ppt.jpg",
+    "event": "Jeonju KOTESOL Conference 2018",
+    "venue": "Jeonju University",
+    "date": 20181117,
+    "slidesUrl": "",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20171111: {
+    "id": 20171111,
+    "title": "11 Great Google Services (for your Classroom)",
+    "subtitle": "",
+    "img": "",
+    "event": "Jeonju KOTESOL Conference 2018",
+    "venue": "Jeonju University",
+    "date": 20171111,
+    "slidesUrl": "/talks/notes/11-google-services.html",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20171021: {
+    "id": 20171021,
+    "title": "Google Classroom 101",
+    "subtitle": "",
+    "img": "",
+    "event": "KOTESOL Int'l Conference 2017",
+    "venue": "Sookmyeong University",
+    "date": 20171021,
+    "slidesUrl": "/talks/notes/google-classroom.html",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20170816: {
+    "id": 20170816,
+    "title": "G Suite for Education Training",
+    "subtitle": "",
+    "img": "",
+    "event": "GPA HS Teacher Training Seminar",
+    "venue": "Global Prodigy Academy",
+    "date": 20170816,
+    "slidesUrl": "disabled",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20170217: {
+    "id": 20170217,
+    "title": "Teacher Tech Tips",
+    "subtitle": "",
+    "img": "",
+    "event": "GPA HS Teacher Training Seminar",
+    "venue": "Global Prodigy Academy",
+    "date": 20170217,
+    "slidesUrl": "disabled",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20160409: {
+    "id": 20160409,
+    "title": "Become a Better Presenter by Becoming a Better Teacher (and vice versa)",
+    "subtitle": "",
+    "img": "",
+    "event": "Jeonju KOTESOL Workshop",
+    "venue": "Jeonju University",
+    "date": 20160409,
+    "slidesUrl": "https://speakerdeck.com/asnowberger/become-a-better-presenter-kotesol",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20150530: {
+    "id": 20150530,
+    "title": "A Roadmap for WordPress as LMS",
+    "subtitle": "",
+    "img": "",
+    "event": "KOTESOL National Conference 2015",
+    "venue": "Sookmyeong University",
+    "date": 20150530,
+    "slidesUrl": "https://speakerdeck.com/asnowberger/kotesol-national-conference-2015-a-roadmap-for-wordpress-as-lms",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20150416: {
+    "id": 20150416,
+    "title": "Computer Science as a Career",
+    "subtitle": "",
+    "img": "",
+    "event": "GPA HS Career Day",
+    "venue": "Global Prodigy Academy",
+    "date": 20150416,
+    "slidesUrl": "https://speakerdeck.com/asnowberger/gpa-hs-career-day-computer-science",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20150314: {
+    "id": 20150314,
+    "title": "WordPress in your Classroom as an LMS",
+    "subtitle": "",
+    "img": "",
+    "event": "Jeonju KOTESOL Workshop",
+    "venue": "Jeonju University",
+    "date": 20150314,
+    "slidesUrl": "https://speakerdeck.com/asnowberger/kotesol-jj-wordpress-as-lms-learning-management-system",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20150307: {
+    "id": 20150307,
+    "title": "A Comprehensive Overview of WP Site Owner Roles",
+    "subtitle": "",
+    "img": "",
+    "event": "Jeonju WordPress Meetup",
+    "venue": "Winning Story Café",
+    "date": 20150307,
+    "slidesUrl": "https://speakerdeck.com/asnowberger/wordpress-meetup-jeonju-number-2-a-comprehensive-overview-of-wp-site-owner-roles",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20150228: {
+    "id": 20150228,
+    "title": "Open Source, WordPress, & the Community",
+    "subtitle": "",
+    "img": "",
+    "event": "Seoul WordPress Grand Meetup 2015",
+    "venue": "Seoul",
+    "date": 20150228,
+    "slidesUrl": "https://speakerdeck.com/asnowberger/seoul-2015-meetup-open-source-wordpress-and-the-community",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20150124: {
+    "id": 20150124,
+    "title": "WordPress Overview",
+    "subtitle": "",
+    "img": "",
+    "event": "Jeonju WordPress Meetup",
+    "venue": "Winning Story Café",
+    "date": 20150124,
+    "slidesUrl": "https://speakerdeck.com/asnowberger/wordpress-meetup-jeonju-number-1-wordpress-overview",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20140412: {
+    "id": 20140412,
+    "title": "From Delinquent to Star Student",
+    "subtitle": "My journey toward second-language learning motivation",
+    "img": "",
+    "event": "Jeonju KOTESOL Conference 2014",
+    "venue": "Jeonju University",
+    "date": 20140412,
+    "slidesUrl": "disabled",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
+  20120421: {
+    "id": 20120421,
+    "title": "Technology Upgrade:",
+    "subtitle": "Build a Customized Gradebook",
+    "img": "",
+    "event": "Jeonju KOTESOL Conference 2012",
+    "venue": "Geunyoung Girl's High School",
+    "date": 20120421,
+    "slidesUrl": "disabled",
+    "notesUrl": "",
+    "venueUrl": ""
+  }
+}
+
+export default talks

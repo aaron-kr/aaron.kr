@@ -1,7 +1,7 @@
 import React from 'react'
 import './Classes.css'
 import { obj2arr } from '../../utils/helpers'
-import { classes } from '../../utils/_DATA'
+import classes from '../../data/_classes'
 
 const Classes = () => {
   let classArr = obj2arr( classes )

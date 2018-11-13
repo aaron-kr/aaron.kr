@@ -1,7 +1,7 @@
 import React from 'react'
 import './Projects.css'
 import { obj2arr } from '../../utils/helpers'
-import { projects } from '../../utils/_DATA'
+import projects from '../../data/_projects'
 
 const Projects = () => {
   let projectArr = obj2arr( projects )
@@ -13,7 +13,7 @@ const Projects = () => {
 
         { projectArr.map((project) => (
 
-          <li key={project.id} className='list-box-item' style={{background: project.color}}>
+          <li key={project.id} className='list-box-item'>
             <figure className="effect">
               <img src={project.img} alt={project.title} />
               <figcaption>

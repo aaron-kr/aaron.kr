@@ -1,7 +1,7 @@
 import React from 'react'
 import './Talks.css'
 import { obj2arr, formatDate } from '../../utils/helpers'
-import { talks } from '../../utils/_DATA'
+import talks from '../../data/_talks'
 
 const Talks = () => {
   let talkArr = obj2arr( talks ).reverse() // make sure most recent is first

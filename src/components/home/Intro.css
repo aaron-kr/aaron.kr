@@ -17,6 +17,10 @@
   -webkit-text-fill-color: transparent;
 }
 
+.site-title.huge:hover {
+  border-color: transparent;
+}
+
 .intro {
   font-size: 2rem;
   line-height: 3.2rem;
@@ -75,3 +79,8 @@
   opacity: 0.8;
 }
 
+.intro .profile-pic.logged-in {
+  border: 2px solid #a0f;
+  border-image-source: linear-gradient(#a0f, #fff);
+  border-image-slice: 30;
+}

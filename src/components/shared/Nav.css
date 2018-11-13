@@ -1,23 +1,20 @@
 .site-navigation ul {
-  margin: 0 3.0625rem;
+  padding: 0;
   display: flex;
   list-style: none;
-}
-
-.site-navigation li {
-  padding: 3.5rem 0rem;
 }
 
 .site-navigation li a {
   color: inherit;
   opacity: 0.7;
-  padding: 3.5rem 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  border: 2px solid transparent;
 }
 
 .site-title:hover,
 .site-navigation li:hover a {
-  color: white;
   opacity: 1;
-  background: #a0f;
-  border: none;
+  border: 2px solid #4158D0;
+  /* background: rgba(255,204,112,0.2); */
 }

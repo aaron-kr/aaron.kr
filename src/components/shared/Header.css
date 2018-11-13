@@ -1,12 +1,16 @@
 .site-header {
   display: flex;
   justify-content: space-between;
+  padding: 3.5rem;
 }
 
 .site-title {
   color: inherit;
-  padding: 3.5rem;
   font-size: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin: -0.5rem -1rem;
+  border-radius: 50px;
+  border: 2px solid transparent;
 }
 
 .login-button {

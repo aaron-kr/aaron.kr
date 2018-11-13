@@ -2,7 +2,7 @@ import React from 'react'
 import './Intro.css'
 import Flipper from './Flipper'
 import { obj2arr } from '../../utils/helpers'
-import { links } from '../../utils/_DATA'
+import links from '../../data/_links'
 
 const Intro = () => {
   let linksArr = obj2arr( links )
@@ -20,7 +20,9 @@ const Intro = () => {
         {/* <i className='fa fa-thumbs-o-up'></i> */}
       </p>
       <p>Find me on <a href='https://linkedin.com/in/aaronsnowberger'>LinkedIn</a> or elsewhere:</p>
-      <ul className='intro-sites'>
+      
+      
+      {/* <ul className='intro-sites'>
 
         { linksArr.map((link) => (
           <li 
@@ -35,7 +37,7 @@ const Intro = () => {
           </li>
         ))}
 
-      </ul>
+      </ul> */}
     </section>
   )
 }

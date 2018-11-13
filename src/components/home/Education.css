@@ -1,0 +1,16 @@
+#education .school {
+  display: flex;
+}
+
+.school p {
+  margin: 0;
+}
+
+.school-subject {
+  padding-top: 0.25rem;
+}
+
+.school-meta {
+  width: 25%;
+  margin-right: 1.75rem;
+}

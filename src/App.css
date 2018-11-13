@@ -81,7 +81,7 @@ hr {
 .section-title {
   font-size: 2rem;
   margin: 0;
-  padding: 0;
+  padding: 0 0 1.75rem;
   line-height: 1.35;
 }
 

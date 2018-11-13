@@ -1,5 +1,6 @@
 .site-footer {
   border-top: 1px solid #dbdbdb;
+  border-image: linear-gradient(43deg, #4158D0 0%, #C850C0 44%, #FFCC70 100%) 30;
   margin-top: 7rem;
   display: flex;
   justify-content: space-between;
@@ -9,6 +10,7 @@
   text-align: right;
   padding: 1rem 0;
   color: #777;
+  /* color: white; */
   font-weight: 300;
   font-size: 0.8125rem;
 }
