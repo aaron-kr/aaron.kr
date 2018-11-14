@@ -4,6 +4,7 @@ let projects = {
     "title": "AaronSnowberger.com",
     "description": "My online graphic design portfolio.",
     "tags": "WordPress, custom theme, design",
+    "tagsVisual": "fab fa-wordpress",
     "url": "https://aaronsnowberger.com",
     "color": "#455A64",
     "img": "/img/aaronsnowberger-com.png"
@@ -13,6 +14,7 @@ let projects = {
     "title": "Korean by Heart",
     "description": "A flashcard app with 6,000 pre-loaded Korean words.",
     "tags": "React Native, Expo, Redux",
+    "tagsVisual": "fab fa-react",
     "url": "https://koreanbyheart.com",
     "color": "rgb(83, 191, 156)",
     "img": "/img/koreanbyheart-com.png"
@@ -22,6 +24,7 @@ let projects = {
     "title": "Key To Korean",
     "description": "My Korean language learning blog and educational site.",
     "tags": "WordPress Multi-site, custom theme, design, writing",
+    "tagsVisual": "fab fa-wordpress",
     "url": "https://keytokorean.com",
     "color": "rgb(83, 191, 156)",
     "img": "/img/keytokorean-com.png"
@@ -31,6 +34,7 @@ let projects = {
     "title": "Global Prodigy Academy",
     "description": "English homepage for the International high school I work at.",
     "tags": "WordPress",
+    "tagsVisual": "fab fa-wordpress",
     "url": "https://gpa.justkeeplearning.xyz",
     "color": "#303F9F",
     "img": "/img/gpa-blog.png"
@@ -40,6 +44,7 @@ let projects = {
     "title": "MarsX.kr",
     "description": "A startup in Jeonju that does underground development.",
     "tags": "WordPress, custom theme, custom plugin",
+    "tagsVisual": "fab fa-wordpress",
     "url": "https://marsx.kr",
     "color": "#000000",
     "img": "/img/marsx-kr.png"
@@ -49,6 +54,7 @@ let projects = {
     "title": "KOTESOL Workshops",
     "description": "Attendance app for KOTESOL that does random prize draws.",
     "tags": "Angular, design",
+    "tagsVisual": "fab fa-angular",
     "url": "https://jnjkotesol.com/workshops",
     "color": "#303F9F",
     "img": "/img/jnjkotesol-workshops.png"
@@ -58,6 +64,7 @@ let projects = {
     "title": "2017 JNJ KOTESOL Conference",
     "description": "Conference website for Jeonju-North Jeolla KOTESOL.",
     "tags": "Node.js, Express.js, design",
+    "tagsVisual": "fab fa-node-js",
     "url": "https://2017.conference.jnjkotesol.com",
     "color": "#a0f",
     "img": "/img/2017-conference-jnjkotesol-com.png"
@@ -67,6 +74,7 @@ let projects = {
     "title": "2018 JNJ KOTESOL Conference",
     "description": "Conference website for Jeonju-North Jeolla KOTESOL.",
     "tags": "Node.js, Express.js, design",
+    "tagsVisual": "fab fa-node-js",
     "url": "https://2018.conference.jnjkotesol.com",
     "color": "#a0f",
     "img": "/img/2018-conference-jnjkotesol-com.png"

@@ -4,12 +4,13 @@
   margin-top: 7rem;
   display: flex;
   justify-content: space-between;
+  opacity: 0.5;
 }
 
 .copyright {
   text-align: right;
   padding: 1rem 0;
-  color: #777;
+  /* color: #777; */
   /* color: white; */
   font-weight: 300;
   font-size: 0.8125rem;

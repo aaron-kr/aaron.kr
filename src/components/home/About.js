@@ -5,7 +5,7 @@ const About = () => {
   return ( 
     <section id='about' className='main-section container'>
       <h2 className='section-title'>About</h2>
-      <p>View full profile on <a href=''>LinkedIn <i className='fa fa-long-arrow-right'></i></a></p>
+      <p>View full profile on <a href=''>LinkedIn <i className='fas fa-long-arrow-alt-right'></i></a></p>
       
       <h3>Web Development</h3>
       <p>I'm a skilled web developer with over 7 years experience building and managing client websites and 3 years experience contributing to Open Source projects like WordPress. I'm proficient in HTML5, CSS3, PHP, and WordPress; a competent user of JavaScript, jQuery, Foundation and Bootstrap Frameworks; and have taught website design and development as part of the core technology curriculum in GPA International High School since 2013.</p>

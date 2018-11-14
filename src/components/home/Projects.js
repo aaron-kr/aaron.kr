@@ -17,9 +17,12 @@ const Projects = () => {
             <figure className="effect">
               <img src={project.img} alt={project.title} />
               <figcaption>
-                <h3 className='project-title'>{project.title}</h3>
+                <h3 className='project-title'><i className={project.tagsVisual}></i> {project.title}</h3>
                 <p className='project-description'>{project.description}</p>
-                <p className='project-tags'><strong>Tags:</strong><br />{project.tags}</p>
+                <p className='project-tags'>
+                  <strong>Tags:</strong><br />
+                  {project.tags}
+                </p>
                 <a className="visit" href={project.url} target="_blank">Visit site</a>
                 <span className="icon"><i className="fa fa-share"></i></span>
               </figcaption>

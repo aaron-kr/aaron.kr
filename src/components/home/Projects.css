@@ -120,6 +120,10 @@ figure.effect p {
   transform: translate3d(100%,0,0);
 }
 
+h3.project-title i {
+  font-weight: normal;
+}
+
 #projects figure p {
   margin: 0;
 }

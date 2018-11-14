@@ -9,7 +9,19 @@ let talks = {
     "date": 20181117,
     "slidesUrl": "",
     "notesUrl": "",
-    "venueUrl": ""
+    "venueUrl": "https://jj.ac.kr"
+  },
+  20180609: {
+    "id": 20180609,
+    "title": "Increase your Professional Performance",
+    "subtitle": "",
+    "img": "/img/atomic-habits-ppt.jpg",
+    "event": "Jeonju KOTESOL Workshop",
+    "venue": "Jeonju University",
+    "date": 20180609,
+    "slidesUrl": "https://speakerdeck.com/asnowberger/increase-your-professional-performance",
+    "notesUrl": "https://aaron.kr/content/talks/increase-your-professional-performance/",
+    "venueUrl": "https://jj.ac.kr"
   },
   20171111: {
     "id": 20171111,
@@ -20,8 +32,8 @@ let talks = {
     "venue": "Jeonju University",
     "date": 20171111,
     "slidesUrl": "/talks/notes/11-google-services.html",
-    "notesUrl": "",
-    "venueUrl": ""
+    "notesUrl": "https://aaron.kr/content/talks/11-great-google-things-for-your-classroom/",
+    "venueUrl": "https://jj.ac.kr"
   },
   20171021: {
     "id": 20171021,
@@ -32,20 +44,20 @@ let talks = {
     "venue": "Sookmyeong University",
     "date": 20171021,
     "slidesUrl": "/talks/notes/google-classroom.html",
-    "notesUrl": "",
-    "venueUrl": ""
+    "notesUrl": "https://aaron.kr/content/talks/google-classroom-101/",
+    "venueUrl": "http://www.sookmyung.ac.kr/"
   },
   20170816: {
     "id": 20170816,
-    "title": "G Suite for Education Training",
+    "title": "Google Classroom & G Suite for Education Training",
     "subtitle": "",
     "img": "",
     "event": "GPA HS Teacher Training Seminar",
     "venue": "Global Prodigy Academy",
     "date": 20170816,
-    "slidesUrl": "disabled",
-    "notesUrl": "",
-    "venueUrl": ""
+    "slidesUrl": "https://speakerdeck.com/asnowberger/google-classroom-and-g-suite-for-education",
+    "notesUrl": "https://aaron.kr/content/talks/google-classroom-g-suite-for-education-training/",
+    "venueUrl": "https://jj.ac.kr/gpa"
   },
   20170217: {
     "id": 20170217,
@@ -55,9 +67,9 @@ let talks = {
     "event": "GPA HS Teacher Training Seminar",
     "venue": "Global Prodigy Academy",
     "date": 20170217,
-    "slidesUrl": "disabled",
-    "notesUrl": "",
-    "venueUrl": ""
+    "slidesUrl": "https://speakerdeck.com/asnowberger/teacher-tech-tips",
+    "notesUrl": "https://aaron.kr/content/talks/teacher-tech-tips/",
+    "venueUrl": "https://jj.ac.kr/gpa"
   },
   20160409: {
     "id": 20160409,
@@ -68,8 +80,8 @@ let talks = {
     "venue": "Jeonju University",
     "date": 20160409,
     "slidesUrl": "https://speakerdeck.com/asnowberger/become-a-better-presenter-kotesol",
-    "notesUrl": "",
-    "venueUrl": ""
+    "notesUrl": "https://aaron.kr/content/talks/become-a-better-presenter/",
+    "venueUrl": "https://jj.ac.kr"
   },
   20150530: {
     "id": 20150530,
@@ -80,8 +92,8 @@ let talks = {
     "venue": "Sookmyeong University",
     "date": 20150530,
     "slidesUrl": "https://speakerdeck.com/asnowberger/kotesol-national-conference-2015-a-roadmap-for-wordpress-as-lms",
-    "notesUrl": "",
-    "venueUrl": ""
+    "notesUrl": "https://aaron.kr/content/talks/a-roadmap-for-wordpress-as-lms/",
+    "venueUrl": "http://www.sookmyung.ac.kr/"
   },
   20150416: {
     "id": 20150416,
@@ -92,8 +104,8 @@ let talks = {
     "venue": "Global Prodigy Academy",
     "date": 20150416,
     "slidesUrl": "https://speakerdeck.com/asnowberger/gpa-hs-career-day-computer-science",
-    "notesUrl": "",
-    "venueUrl": ""
+    "notesUrl": "https://aaron.kr/content/talks/gpa-hs-career-day-computer-science/",
+    "venueUrl": "https://jj.ac.kr/gpa"
   },
   20150314: {
     "id": 20150314,
@@ -104,8 +116,8 @@ let talks = {
     "venue": "Jeonju University",
     "date": 20150314,
     "slidesUrl": "https://speakerdeck.com/asnowberger/kotesol-jj-wordpress-as-lms-learning-management-system",
-    "notesUrl": "",
-    "venueUrl": ""
+    "notesUrl": "https://aaron.kr/content/code/wordpress/wordpress-as-lms-learning-management-system/",
+    "venueUrl": "https://jj.ac.kr"
   },
   20150307: {
     "id": 20150307,
@@ -116,11 +128,23 @@ let talks = {
     "venue": "Winning Story Café",
     "date": 20150307,
     "slidesUrl": "https://speakerdeck.com/asnowberger/wordpress-meetup-jeonju-number-2-a-comprehensive-overview-of-wp-site-owner-roles",
-    "notesUrl": "",
+    "notesUrl": "https://aaron.kr/content/talks/a-comprehensive-overview-of-wordpress-site-owner-roles/",
     "venueUrl": ""
   },
   20150228: {
     "id": 20150228,
+    "title": "오픈 소스, 워드프레스, 그리고 커뮤니티",
+    "subtitle": "",
+    "img": "",
+    "event": "서울 워드프레스 미트업 2015",
+    "venue": "서울",
+    "date": 20150228,
+    "slidesUrl": "https://www.slideshare.net/jekkilekki/2015-45239193",
+    "notesUrl": "https://aaron.kr/content/talks/%ec%84%9c%ec%9a%b8-%ec%9b%8c%eb%93%9c%ed%94%84%eb%a0%88%ec%8a%a4-%eb%af%b8%ed%8a%b8%ec%97%85-2015-%ec%98%a4%ed%94%88-%ec%86%8c%ec%8a%a4-%ec%9b%8c%eb%93%9c%ed%94%84%eb%a0%88%ec%8a%a4-%ea%b7%b8/",
+    "venueUrl": ""
+  },
+  20150227: {
+    "id": 20150227,
     "title": "Open Source, WordPress, & the Community",
     "subtitle": "",
     "img": "",
@@ -128,7 +152,7 @@ let talks = {
     "venue": "Seoul",
     "date": 20150228,
     "slidesUrl": "https://speakerdeck.com/asnowberger/seoul-2015-meetup-open-source-wordpress-and-the-community",
-    "notesUrl": "",
+    "notesUrl": "https://aaron.kr/content/talks/seoul-meetup-2015-open-source-wordpress-and-the-community/",
     "venueUrl": ""
   },
   20150124: {
@@ -140,7 +164,7 @@ let talks = {
     "venue": "Winning Story Café",
     "date": 20150124,
     "slidesUrl": "https://speakerdeck.com/asnowberger/wordpress-meetup-jeonju-number-1-wordpress-overview",
-    "notesUrl": "",
+    "notesUrl": "https://aaron.kr/content/talks/all-you-ever-wanted-to-know-about-wordpress-in-ten-minutes-or-less/",
     "venueUrl": ""
   },
   20140412: {
@@ -151,9 +175,9 @@ let talks = {
     "event": "Jeonju KOTESOL Conference 2014",
     "venue": "Jeonju University",
     "date": 20140412,
-    "slidesUrl": "disabled",
-    "notesUrl": "",
-    "venueUrl": ""
+    "slidesUrl": "https://speakerdeck.com/asnowberger/from-delinquent-to-star-student",
+    "notesUrl": "https://aaron.kr/content/talks/from-delinquent-to-star-student/",
+    "venueUrl": "https://jj.ac.kr"
   },
   20120421: {
     "id": 20120421,
@@ -163,8 +187,8 @@ let talks = {
     "event": "Jeonju KOTESOL Conference 2012",
     "venue": "Geunyoung Girl's High School",
     "date": 20120421,
-    "slidesUrl": "disabled",
-    "notesUrl": "",
+    "slidesUrl": "https://www.slideshare.net/jekkilekki/kotesol-gradebook-presentation",
+    "notesUrl": "https://aaron.kr/content/talks/technology-upgrade-customized-grade-book/",
     "venueUrl": ""
   }
 }

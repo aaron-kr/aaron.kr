@@ -15,7 +15,7 @@ const Classes = () => {
 
       { /* Tech Classes */ }
       <div className='tech-classes'>
-        <h3 className='section-subtitle'><i className='fa fa-language'></i> {techClasses[0].subject}</h3>
+        <h3 className='section-subtitle'><i className='fa fa-desktop'></i> {techClasses[0].subject}</h3>
         <ul className='list-tiles tech-classes-list'>
       
         { techClasses.map((theClass) => (

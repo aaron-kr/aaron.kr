@@ -84,3 +84,39 @@
   border-image-source: linear-gradient(#a0f, #fff);
   border-image-slice: 30;
 }
+
+.my-links {
+  list-style: none;
+}
+
+.my-link {
+  display: inline-block;
+  position: relative;
+  margin-right: 1.5rem;
+}
+
+.my-link a {
+  transition: all 0.3s;
+}
+
+.my-link a p {
+  color: initial;
+  font-weight: 300;
+  font-size: 0.9rem;
+  position: absolute;
+  line-height: 1.35;
+  text-align: center;
+  margin: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+}
+
+.my-link a:hover {
+  border: none;
+  /* text-shadow: 1px 1px 5px rgba(0,0,0,0.2); */
+}
+
+.my-link a:hover p {
+  display: block;
+}

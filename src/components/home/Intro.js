@@ -21,6 +21,16 @@ const Intro = () => {
       </p>
       <p>Find me on <a href='https://linkedin.com/in/aaronsnowberger'>LinkedIn</a> or elsewhere:</p>
       
+      <ul className='my-links'>
+        { linksArr.map((link) => (
+          <li key={link.id} className='my-link'>
+            <a href={link.url}>
+              <i className={link.fa} style={{color: (link.colorAlt || link.color) }}></i>
+              <p className='my-link-name'>{link.name}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
       
       {/* <ul className='intro-sites'>
 
