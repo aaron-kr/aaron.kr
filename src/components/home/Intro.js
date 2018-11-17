@@ -15,7 +15,8 @@ const Intro = () => {
       <h1 className='site-title huge'>Aaron<strong>Snowberger</strong></h1>
       <hr />
       <p className='self-intro'>
-        안녕하세요, 나는 에런입니다. Hi, I'm Aaron.<br />I'm a <Flipper /><br />
+        {/* 안녕하세요~<br /> */}
+        Hi, I'm Aaron. I'm a <br className='hide-on-large' /><Flipper /><br />
         and I teach ESL &amp; Computers in Korea. 👍
         {/* <i className='fa fa-thumbs-o-up'></i> */}
       </p>

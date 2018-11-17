@@ -1,14 +1,4 @@
 let projects = {
-  "portfolio": {
-    "id": "portfolio",
-    "title": "AaronSnowberger.com",
-    "description": "My online graphic design portfolio.",
-    "tags": "WordPress, custom theme, design",
-    "tagsVisual": "fab fa-wordpress",
-    "url": "https://aaronsnowberger.com",
-    "color": "#455A64",
-    "img": "/img/aaronsnowberger-com.png"
-  },
   "koreanbyheart": {
     "id": "koreanbyheart",
     "title": "Korean by Heart",
@@ -18,6 +8,16 @@ let projects = {
     "url": "https://koreanbyheart.com",
     "color": "rgb(83, 191, 156)",
     "img": "/img/koreanbyheart-com.png"
+  },
+  "portfolio": {
+    "id": "portfolio",
+    "title": "AaronSnowberger.com",
+    "description": "My online graphic design portfolio.",
+    "tags": "WordPress, custom theme, design",
+    "tagsVisual": "fab fa-wordpress",
+    "url": "https://aaronsnowberger.com",
+    "color": "#455A64",
+    "img": "/img/aaronsnowberger-com.png"
   },
   "k2k": {
     "id": "k2k",
@@ -49,15 +49,15 @@ let projects = {
     "color": "#000000",
     "img": "/img/marsx-kr.png"
   },
-  "kotesolWorkshops": {
-    "id": "kotesolWorkshops",
-    "title": "KOTESOL Workshops",
-    "description": "Attendance app for KOTESOL that does random prize draws.",
-    "tags": "Angular, design",
-    "tagsVisual": "fab fa-angular",
-    "url": "https://jnjkotesol.com/workshops",
+  "yearInReview": {
+    "id": "yearInReview",
+    "title": "Year in Review: 2016",
+    "description": "Custom PHP implementation that was inspired by WordPress.com's Year in Review site.",
+    "tags": "Custom PHP, SVG, D3.js, design",
+    "tagsVisual": "fab fa-php",
+    "url": "https://aaron.kr/year-in-review/2016",
     "color": "#303F9F",
-    "img": "/img/jnjkotesol-workshops.png"
+    "img": "/img/year-in-review-site.png"
   },
   "kotesolConferences2017": {
     "id": "kotesolConferences2017",
@@ -82,3 +82,18 @@ let projects = {
 }
 
 export default projects
+
+/** 
+ * Alternate
+ * 
+"kotesolWorkshops": {
+  "id": "kotesolWorkshops",
+  "title": "KOTESOL Workshops",
+  "description": "Attendance app for KOTESOL that does random prize draws.",
+  "tags": "Angular, design",
+  "tagsVisual": "fab fa-angular",
+  "url": "https://jnjkotesol.com/workshops",
+  "color": "#303F9F",
+  "img": "/img/jnjkotesol-workshops.png"
+},
+*/

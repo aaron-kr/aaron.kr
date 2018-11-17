@@ -70,6 +70,15 @@ let links = {
     "url": "https://twitter.com/jekkilekki",
     "fa": "fab fa-twitter",
     "color": "#1da1f2"
+  },
+  "gmail": {
+    "id": "gmail",
+    "name": "Gmail",
+    "img": "",
+    "detail": "",
+    "url": "mailto:aaron.jju@gmail.com",
+    "fa": "far fa-envelope",
+    "color": "#ea4335"
   }
 }
 

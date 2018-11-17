@@ -7,8 +7,8 @@ let talks = {
     "event": "Jeonju KOTESOL Conference 2018",
     "venue": "Jeonju University",
     "date": 20181117,
-    "slidesUrl": "",
-    "notesUrl": "",
+    "slidesUrl": "https://speakerdeck.com/asnowberger/atomic-habits-that-will-turn-you-into-a-superhero/",
+    "notesUrl": "https://aaron.kr/content/talks/atomic-habits-that-will-turn-you-into-a-superhero/",
     "venueUrl": "https://jj.ac.kr"
   },
   20180609: {

@@ -1,7 +1,7 @@
 .site-title.huge {
-  margin: 3rem 0 6rem;
+  margin: 0rem 0 3rem;
   padding: 0;
-  font-size: 6rem;
+  font-size: 3rem;
   text-align: center;
   font-weight: 100;
   /* background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 44%, #FFCC70 100%); */
@@ -17,8 +17,33 @@
   -webkit-text-fill-color: transparent;
 }
 
+@media screen and (min-width: 36rem) {
+  .site-title.huge {
+    font-size: 4rem;
+    margin: 1rem 0 4rem;
+  }
+}
+
+@media screen and (min-width: 48rem) {
+  .site-title.huge {
+    font-size: 5rem;
+    margin: 2rem 0 5rem;
+  }
+}
+
+@media screen and (min-width: 60rem) {
+  .hide-on-large {
+    display: none;
+  }
+  .site-title.huge {
+    font-size: 6rem;
+    margin: 3rem 0 6rem;
+  }
+}
+
 .site-title.huge:hover {
   border-color: transparent;
+  text-shadow: none;
 }
 
 .intro {
@@ -31,9 +56,13 @@
 .self-intro span {
   position: absolute;
   background: #ffcc00;
-  padding: 0 0.5rem;
-  width: 560px;
+  width: 520px;
+  max-width: 100%;
   font-weight: 500;
+}
+
+.self-intro .flash span {
+  padding: 0 0.5rem;
 }
 
 .section-talk-title {
@@ -97,6 +126,7 @@
 
 .my-link a {
   transition: all 0.3s;
+  font-weight: normal;
 }
 
 .my-link a p {
@@ -114,6 +144,7 @@
 
 .my-link a:hover {
   border: none;
+  /* font-weight: bold; */
   /* text-shadow: 1px 1px 5px rgba(0,0,0,0.2); */
 }
 
