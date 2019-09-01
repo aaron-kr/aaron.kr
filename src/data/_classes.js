@@ -2,6 +2,7 @@ let classes = {
   "apcsj": {
     "id": "apcsj",
     "subject": "technology",
+    "discipline": "coding",
     "title": "AP Computer Science (Java)",
     "curriculum": "Blue Pelican Java",
     "dates": 2016,
@@ -10,6 +11,7 @@ let classes = {
   "apcspjs": {
     "id": "apcspjs",
     "subject": "technology",
+    "discipline": "coding",
     "title": "AP Computer Science Principles (JavaScript)",
     "curriculum": "Code.org",
     "dates": "2017, 2018",
@@ -34,6 +36,7 @@ let classes = {
   "compb": {
     "id": "compb",
     "subject": "technology",
+    "discipline": "coding",
     "title": "Computer B (Web programming)",
     "curriculum": "HTML, CSS, JS, jQuery, Bootstrap",
     "dates": "2013, 2014, 2015",
@@ -66,6 +69,7 @@ let classes = {
   "csd": {
     "id": "csd",
     "subject": "technology",
+    "discipline": "coding",
     "title": "Computer Science Discoveries",
     "curriculum": "Code.org",
     "dates": 2017,
@@ -79,12 +83,28 @@ let classes = {
     "dates": 2016,
     "url": "https://www.commonsense.org/education/digital-citizenship"
   },
+  "preA1": {
+    "id": "preA1",
+    "subject": "mathsci",
+    "title": "Pre-Algebra 1A",
+    "curriculum": "Holt Pre-Algebra",
+    "dates": 2019,
+    "url": "disabled"
+  },
   "alg1a": {
     "id": "alg1a",
     "subject": "mathsci",
     "title": "Algebra 1A",
     "curriculum": "Holt Algebra 1",
     "dates": 2017,
+    "url": "disabled"
+  },
+  "eslSci": {
+    "id": "eslSci",
+    "subject": "mathsci",
+    "title": "ESL Science",
+    "curriculum": "The ESL Science Book",
+    "dates": 2019,
     "url": "disabled"
   },
   "earthscib": {

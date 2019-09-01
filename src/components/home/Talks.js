@@ -11,7 +11,7 @@ const Talks = () => {
       <h2 className='section-title'>Talks</h2>
 
       <ul className='list-index'><span className='list-index-date'>2018</span>
-        <li className='latest-talk list-index-item list-index-upcoming'>
+        <li className='latest-talk list-index-item list-index-new'>
           <a href={talkArr[0].notesUrl}>
             <img className='latest-talk-image' src={talkArr[0].img} alt={talkArr[0].title} />
             <span className='talk-title'>{talkArr[0].title}</span>

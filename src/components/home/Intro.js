@@ -1,6 +1,7 @@
 import React from 'react'
 import './Intro.css'
 import Flipper from './Flipper'
+import MyLinks from '../shared/MyLinks'
 import { obj2arr } from '../../utils/helpers'
 import links from '../../data/_links'
 
@@ -16,22 +17,13 @@ const Intro = () => {
       <hr />
       <p className='self-intro'>
         {/* 안녕하세요~<br /> */}
-        Hi, I'm Aaron. I'm a <br className='hide-on-large' /><Flipper /><br />
+        Hi, I'm Aaron. I'm a <br className='hide-on-large' /><Flipper /><br /><br className='hide-on-medium' />
         and I teach ESL &amp; Computers in Korea. 👍
         {/* <i className='fa fa-thumbs-o-up'></i> */}
       </p>
-      <p>Find me on <a href='https://linkedin.com/in/aaronsnowberger'>LinkedIn</a> or elsewhere:</p>
+      <p>Find me on <a href='https://linkedin.com/in/aaronsnowberger/'>LinkedIn</a> or elsewhere:</p>
       
-      <ul className='my-links'>
-        { linksArr.map((link) => (
-          <li key={link.id} className='my-link'>
-            <a href={link.url}>
-              <i className={link.fa} style={{color: (link.colorAlt || link.color) }}></i>
-              <p className='my-link-name'>{link.name}</p>
-            </a>
-          </li>
-        ))}
-      </ul>
+      <MyLinks links={linksArr} />
       
       {/* <ul className='intro-sites'>
 

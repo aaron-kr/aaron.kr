@@ -22,13 +22,10 @@ $(function() {
 let offset = 0;
 let call;
 function scroll() {
-    if ((offset - document.documentElement.scrollTop) > 0) {
-        document.documentElement.scrollTop += 10
-    }
-    else if ((offset - document.documentElement.scrollTop) < 0) {
-        document.documentElement.scrollTop -= 10
-    }
-    else {
+    if ((offset - document.documentElement.scrollTop) > -240
+      && (window.innerHeight + window.scrollY) < document.body.offsetHeight) {
+        document.documentElement.scrollTop += 20
+    } else {
         clearInterval(call)
     }
 };
@@ -38,9 +35,8 @@ document.querySelector('.navbar').addEventListener("click", reply_click);
 //CallBack Function
 function reply_click() {
   event.preventDefault();
-  call = setInterval(scroll, 10);
+  call = setInterval(scroll, 2);
   target = event.srcElement.dataset.scroll;
   offset = document.getElementById(target).offsetTop;
-
 }
 });

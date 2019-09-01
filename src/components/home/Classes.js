@@ -5,20 +5,21 @@ import classes from '../../data/_classes'
 
 const Classes = () => {
   let classArr = obj2arr( classes )
-  let techClasses = classArr.filter((c) => { return c.subject === 'technology' })
-  let eslClasses = classArr.filter((c) => { return c.subject === 'esl' })
+  let codeClasses = classArr.filter((c) => c.discipline === 'coding' )
+  let techClasses = classArr.filter((c) => c.discipline !== 'coding' && c.subject === 'technology' )
+  // let eslClasses = classArr.filter((c) => c.subject === 'esl' )
 
   return (
     <section id='classes' className='main-section container'>
       <h2 className='section-title'>Classes</h2>
       <div className='classes-section'>
 
-      { /* Tech Classes */ }
+      { /* Coding Classes */ }
       <div className='tech-classes'>
-        <h3 className='section-subtitle'><i className='fa fa-desktop'></i> {techClasses[0].subject}</h3>
+        <h3 className='section-subtitle'><i className='fa fa-keyboard'></i> {codeClasses[0].discipline}</h3>
         <ul className='list-tiles tech-classes-list'>
       
-        { techClasses.map((theClass) => (
+        { codeClasses.map((theClass) => (
           
           <li key={theClass.id} className='list-tile-item'>
             <a href={theClass.url}>
@@ -32,12 +33,12 @@ const Classes = () => {
         </ul>
       </div>
 
-      { /* ESL Classes */ }
-      <div className='esl-classes'>
-        <h3 className='section-subtitle'><i className='fa fa-language'></i> {eslClasses[0].subject}</h3>
-        <ul className='list-tiles esl-classes-list'>
+      { /* Other Tech Classes */ }
+      <div className='tech-classes'>
+        <h3 className='section-subtitle'><i className='fa fa-desktop'></i> {techClasses[0].subject}</h3>
+        <ul className='list-tiles tech-classes-list'>
       
-        { eslClasses.map((theClass) => (
+        { techClasses.map((theClass) => (
           
           <li key={theClass.id} className='list-tile-item'>
             <a href={theClass.url}>

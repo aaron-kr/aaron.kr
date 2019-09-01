@@ -72,7 +72,7 @@ figure.effect figcaption {
   margin-bottom: 5px;
   font-size: 1.4rem;
   line-height: 1.35;
-  padding-top: 10px;
+  /* padding-top: 10px; */
 }
 figure.effect:hover h3 {
   opacity: 1;
@@ -157,4 +157,22 @@ h3.project-title i {
   height: 36px;
   text-align: center;
   padding-top: 6px;
+}
+
+.list-icons-container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.list-icons {
+  margin: 0 auto;
+  list-style: none;
+  text-align: center;
+}
+
+.list-icons-item {
+  font-size: 1.6rem;
+  display: inline;
+  opacity: 0.8;
+  margin: 1.5rem;
 }

@@ -4,7 +4,7 @@ let links = {
     "name": "LinkedIn",
     "img": "",
     "detail": "",
-    "url": "https://linkedin.com/in/aaronsnowberger",
+    "url": "https://linkedin.com/in/aaronsnowberger/",
     "fa": "fab fa-linkedin",
     "color": "#0077b5",
     "colorAlt": "#00a0dc"
@@ -20,7 +20,7 @@ let links = {
   },
   "korean": {
     "id": "korean",
-    "name": "Key to Korean",
+    "name": "Korean Blog",
     "img": "/img/keytokorean-small.png",
     "detail": "",
     "url": "https://keytokorean.com",
@@ -51,10 +51,10 @@ let links = {
   },
   "google": {
     "id": "google",
-    "name": "Google Education",
+    "name": "Google Trainer",
     "img": "",
     "detail": "",
-    "url": "https://edudirectory.withgoogle.com/en/profile/36aceee34fe6db52f9f302b6c1d8060c",
+    "url": "https://edudirectory.withgoogle.com/profiles/4831414625239040",
     "fa": "fab fa-google",
     "color": "#4285f4",
     "googleBlue": "#4285f4",
@@ -76,7 +76,7 @@ let links = {
     "name": "Gmail",
     "img": "",
     "detail": "",
-    "url": "mailto:aaron.jju@gmail.com",
+    "url": "mailto:hi@aaron.kr",
     "fa": "far fa-envelope",
     "color": "#ea4335"
   }

@@ -1,4 +1,28 @@
 let talks = {
+  20190903: {
+    "id": 20190903,
+    "title": "Learn JavaScript by Building a Shopping App in CodePen",
+    "subtitle": "",
+    "img": "/img/JSConf-Korea-2019.jpg",
+    "event": "JS Conf Korea 2019",
+    "venue": "International Convention Center, COEX, Seoul",
+    "date": 20190903,
+    "slidesUrl": "",
+    "notesUrl": "",
+    "venueUrl": "https://2019.jsconfkorea.com/en/about"
+  },
+  20190325: {
+    "id": 20190325,
+    "title": "Full Circle: (W)holistic Life Management",
+    "subtitle": "",
+    "img": "/img/full-circle-life-management.jpg",
+    "event": "Bodeum + Winning Story Meetup",
+    "venue": "Bodeum Coffee Shop",
+    "date": 20190325,
+    "slidesUrl": "",
+    "notesUrl": "",
+    "venueUrl": ""
+  },
   20181117: {
     "id": 20181117,
     "title": "Atomic Habits that will turn you into a Superhero",
