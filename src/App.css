@@ -14,18 +14,19 @@ img {
 }
 
 a {
-/*   color: #9B30FF; */
+  /*   color: #9B30FF; */
   color: #a0f;
   text-decoration: none;
 }
 
 a:hover {
-/*   border-bottom: 3px solid #9B30FF; */
+  /*   border-bottom: 3px solid #9B30FF; */
   border-bottom: 3px solid #a0f;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 span.google-text {
@@ -33,20 +34,20 @@ span.google-text {
 }
 
 span.google-text:before {
-  content: "<span class=\"google-font-blue\">G</span><span class=\"google-font-red\">o</span><span class=\"google-font-yellow\">o</span><span class=\"google-font-blue\">g</span><span class=\"google-font-green\">l</span><span class=\"google-font-red\">e</span>";
+  content: '<span class="google-font-blue">G</span><span class="google-font-red">o</span><span class="google-font-yellow">o</span><span class="google-font-blue">g</span><span class="google-font-green">l</span><span class="google-font-red">e</span>';
 }
 
 .google-font-red {
-  color: #db4437!important;
+  color: #db4437 !important;
 }
 .google-font-blue {
-  color: #4285f4!important;
+  color: #4285f4 !important;
 }
 .google-font-green {
-  color: #0f9d58!important;
+  color: #0f9d58 !important;
 }
 .google-font-yellow {
-  color: #f4b400!important;
+  color: #f4b400 !important;
 }
 
 main {
@@ -56,8 +57,8 @@ main {
 
 .container {
   max-width: 52rem;
-  margin-left: auto!important;
-  margin-right: auto!important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 .container.large {
@@ -103,4 +104,25 @@ hr {
   left: 50%;
   transform: translateX(-50%);
   height: 100px;
+}
+
+/* LOGIN */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui.card.login-card {
+  width: 450px;
+}
+
+.login.button {
+  float: right;
+}
+
+.ui.form input[type="text"],
+.ui.form input[type="password"],
+.ui.form select {
+  margin-top: 10px;
 }
