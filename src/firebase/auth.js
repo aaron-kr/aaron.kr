@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import { createUserDocument } from "./user";
 
 export const signup = async ({ firstName, lastName, email, password }) => {
   const res = await firebase
@@ -9,6 +10,7 @@ export const signup = async ({ firstName, lastName, email, password }) => {
   const user = res.user;
 
   await user.updateProfile({ displayName: `${firstName} ${lastName}` });
+  await createUserDocument(user);
 
   return user;
 };
