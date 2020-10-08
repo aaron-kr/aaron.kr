@@ -19,6 +19,8 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import ProfileRedirect from "./router/ProfileRedirect";
 import PrivateRoute from "./router/PrivateRoute";
+import AdminRoute from "./router/AdminRoute";
+import Users from "./pages/Users";
 
 class App extends Component {
   render() {
@@ -32,6 +34,7 @@ class App extends Component {
                 <ProfileRedirect exact path="/login" component={Login} />
                 <ProfileRedirect exact path="/signup" component={Signup} />
                 <PrivateRoute exact path="/profile/:id" component={Profile} />
+                <AdminRoute exact path="/users" component={Users} />
               </Switch>
               <Intro />
               <Talks />
