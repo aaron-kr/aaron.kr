@@ -14,7 +14,7 @@ const ProfileRedirect = ({ component: Component, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: isAdmin ? "/users" : `/profile/${user.uid}`,
+              pathname: isAdmin ? "/admin" : `/profile/${user.uid}`,
               state: { from: props.location },
             }}
           />

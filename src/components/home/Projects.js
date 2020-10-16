@@ -10,7 +10,7 @@ const Projects = () => {
 
   return (
     <section id='projects' className='main-section'>
-      <h2 className='section-title container'>Projects</h2>
+      <h2 className='section-title container'>Latest Projects</h2>
       <ul className='list-boxes container large'>
 
         { projectArr.map((project) => project.status === 'hidden' ? '' : (

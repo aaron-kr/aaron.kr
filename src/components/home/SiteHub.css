@@ -1,0 +1,10 @@
+.site-hub {
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 44%,
+    #ffcc70 100%
+  );
+  color: white;
+  padding: 0.5rem 2rem;
+}

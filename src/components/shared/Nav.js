@@ -11,7 +11,7 @@ function Nav() {
 
   const logoutUser = async () => {
     await logout();
-    history.push("/login");
+    history.push("/");
   };
 
   return (
@@ -42,12 +42,16 @@ function Nav() {
         </li>
         {!user && (
           <li className="site-nav-item">
-            <Link to="/login">Login</Link>
+            <Link to="/login">
+              <i className="fa fa-lock"></i>
+            </Link>
           </li>
         )}
         {user && (
           <li className="site-nav-item">
-            <button onClick={logoutUser}>Logout</button>
+            <button onClick={logoutUser}>
+              <i className="fa fa-unlock-alt"></i>
+            </button>
           </li>
         )}
       </ul>
