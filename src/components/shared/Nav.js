@@ -4,6 +4,7 @@ import "./Nav.css";
 import { logout } from "../../firebase/auth";
 import { Link, useHistory } from "react-router-dom";
 import { useSession } from "../../firebase/UserProvider";
+import LoginModal from "./LoginModal";
 
 function Nav() {
   const history = useHistory();
@@ -40,20 +41,7 @@ function Nav() {
             About
           </a>
         </li>
-        {!user && (
-          <li className="site-nav-item">
-            <Link to="/login">
-              <i className="fa fa-lock"></i>
-            </Link>
-          </li>
-        )}
-        {user && (
-          <li className="site-nav-item">
-            <button onClick={logoutUser}>
-              <i className="fa fa-unlock-alt"></i>
-            </button>
-          </li>
-        )}
+        <LoginModal />
       </ul>
     </nav>
   );

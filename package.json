@@ -11,6 +11,7 @@
     "react-scripts": "2.1.1"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "firebase": "^7.22.1",
     "firebase-admin": "^9.2.0",
     "flow-bin": "^0.135.0",

@@ -33,7 +33,7 @@ class App extends Component {
             <Header />
             <main className="site-main" role="main">
               <Switch>
-                <ProfileRedirect exact path="/login" component={Login} />
+                {/* <ProfileRedirect exact path="/login" component={Login} /> */}
                 <ProfileRedirect exact path="/signup" component={Signup} />
                 <PrivateRoute exact path="/profile/:id" component={Profile} />
                 <AdminRoute exact path="/users" component={Users} />

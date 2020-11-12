@@ -1,11 +1,54 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { login, logout } from "../firebase/auth";
-import { wplogin, wplogout } from "../wp/wpauth";
+import React, { useState } from 'react';
+import Modal from 'react-modal';
 
-function Login(props) {
-  const { register, handleSubmit, reset, formState } = useForm({
+import { useForm } from "react-hook-form";
+import { login, logout } from "../../firebase/auth";
+import { wplogin, wplogout } from "../../wp/wpauth";
+
+import { Link, useHistory } from "react-router-dom";
+import { useSession } from "../../firebase/UserProvider";
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement('#root');
+Modal.defaultStyles.overlay.zIndex = 1;
+Modal.defaultStyles.overlay.backgroundColor = 'rgba(0,0,0,0.5)';
+
+function LoginModal(props){
+  var subtitle;
+  const [modalIsOpen,setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = '#f00';
+  }
+
+  function closeModal(){
+    setIsOpen(false);
+	}
+	
+	const history = useHistory();
+  const { user } = useSession();
+
+  const logoutUser = async () => {
+    await logout();
+    history.push("/");
+	};
+	
+	const { register, handleSubmit, reset, formState } = useForm({
     mode: "onChange"
   });
   const [isLoading, setLoading] = useState(false);
@@ -13,11 +56,24 @@ function Login(props) {
   const routeOnLogin = async (user) => {
     const token = await user.getIdTokenResult();
     if (token.claims.admin) {
-      props.history.push("/users");
+			closeModal();
+      history.push("/users");
     } else {
-      props.history.push(`/profile/${user.uid}`);
+			closeModal();
+      history.push(`/profile/${user.uid}`);
     }
-  };
+	};
+	
+	const routeOnWPLogin = (user) => {
+		const token = user.token;
+		if (token) {
+			closeModal();
+			history.push("/users");
+		} else {
+			closeModal();
+			history.push("/talks");
+		}
+	}
 
   const onSubmit = async (data) => {
     let user;
@@ -47,7 +103,8 @@ function Login(props) {
     }
 
     if (user) {
-      console.log("Success! We have a user!");
+			console.log("Success! We have a user!");
+			routeOnWPLogin(user);
     } else {
       setLoading(false);
     }
@@ -56,8 +113,31 @@ function Login(props) {
 
   const formClassName = `ui form ${isLoading ? "loading" : ""}`;
 
-  return (
-    <div className="login-container">
+    return (
+      <div>
+        {!user && (
+          <li className="site-nav-item">
+            <button onClick={openModal}>
+              <i className="fa fa-unlock"></i>
+            </button>
+          </li>
+        )}
+        {user && (
+          <li className="site-nav-item">
+            <button onClick={logoutUser}>
+              <i className="fa fa-lock"></i>
+            </button>
+          </li>
+        )}
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+
+<div className="login-container">
       <div className="ui card login-card">
         <div className="content">
           <form className={formClassName} onSubmit={handleSubmit(onSubmit)}>
@@ -137,7 +217,9 @@ function Login(props) {
         </div>
       </div>
     </div>
-  );
+        </Modal>
+      </div>
+    );
 }
 
-export default Login;
+export default LoginModal;
