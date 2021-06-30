@@ -10,27 +10,27 @@ const SiteAdd = () => {
   const { user } = useSession();
   const params = useParams();
   const { register, setValue, handleSubmit } = useForm();
-  const [siteDocument, setSiteDocument] = useState(null);
+  // const [siteDocument, setSiteDocument] = useState(null);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(
     () => {
-      const docRef = firestore.collection("sites").doc(params.id);
-      // Real-time changes
-      const unsubscribe = docRef.onSnapshot((doc) => {
-        if (doc.exists) {
-          const documentData = doc.data();
-          setSiteDocument(documentData);
+      // const docRef = firestore.collection("sites").doc(params.id);
+      // // Real-time changes
+      // const unsubscribe = docRef.onSnapshot((doc) => {
+      //   if (doc.exists) {
+      //     const documentData = doc.data();
+      //     setSiteDocument(documentData);
 
-          const formData = Object.entries(documentData).map((entry) => ({
-            [entry[0]]: entry[1],
-          }));
+      //     const formData = Object.entries(documentData).map((entry) => ({
+      //       [entry[0]]: entry[1],
+      //     }));
 
-          // setValue array only works with API v.5
-          setValue(formData);
-        }
-      });
-      return unsubscribe;
+      //     // setValue array only works with API v.5
+      //     setValue(formData);
+      //   }
+      // });
+      // return unsubscribe;
 
       // Non-real-time changes
       // docRef.get().then((document) => {
@@ -53,9 +53,9 @@ const SiteAdd = () => {
     }
   };
 
-  if (!siteDocument) {
-    return null;
-  }
+  // if (!siteDocument) {
+  //   return null;
+  // }
 
   const formClassname = `ui big form ${isLoading ? "loading" : ""}`;
 

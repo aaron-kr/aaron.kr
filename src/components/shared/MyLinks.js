@@ -7,7 +7,12 @@ const MyLinks = (props) => {
         <li key={link.id || link} className='my-link'>
           { link.url &&
             <a href={link.url}>
-              <i className={link.fa} style={{color: (link.colorAlt || link.color) }}></i>
+              { link.fa &&
+                <i className={link.fa} style={{color: (link.colorAlt || link.color) }}></i>
+              }
+              { !link.fa && link.img &&
+                <img className='links-icon' src={link.img} />
+              }
               <p className='my-link-name'>{link.name}</p>
             </a>
           }

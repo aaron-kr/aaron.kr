@@ -71,6 +71,24 @@ let links = {
     "fa": "fab fa-twitter",
     "color": "#1da1f2"
   },
+  "eduonix": {
+    "id": "eduonix",
+    "name": "Eduonix",
+    "img": "/img/eduonix.ico",
+    "detail": "",
+    "url": "https://www.strava.com/athletes/43923078",
+    "fa": "",
+    "color": "#FC6100",
+  },
+  "strava": {
+    "id": "strava",
+    "name": "Strava",
+    "img": "",
+    "detail": "",
+    "url": "https://www.strava.com/athletes/43923078",
+    "fa": "fab fa-strava",
+    "color": "#FC6100",
+  },
   "gmail": {
     "id": "gmail",
     "name": "Gmail",

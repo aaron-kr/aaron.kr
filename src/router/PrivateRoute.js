@@ -5,6 +5,8 @@ import { useSession } from "../firebase/UserProvider";
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { user, isAdmin } = useSession();
 
+  console.log( "Private route: ", user );
+
   return (
     <Route
       {...rest}

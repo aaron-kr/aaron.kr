@@ -5,14 +5,19 @@
   text-align: center;
   font-weight: 100;
   /* background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 44%, #FFCC70 100%); */
-  background-image: linear-gradient(43deg, #4158D0 0%, #4158D0 44%);
+  background-image: linear-gradient(43deg, #4158d0 0%, #4158d0 44%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 5rem;
 }
 .site-title.huge strong {
   font-weight: 700;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 44%, #FFCC70 100%);
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 44%,
+    #ffcc70 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -171,4 +176,9 @@
 .my-link a:hover p,
 .my-link span:hover p {
   display: block;
+}
+
+.links-icon {
+  width: 32px;
+  top: 4px;
 }
