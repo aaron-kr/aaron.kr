@@ -1,0 +1,25 @@
+.blog-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* grid-gap: 1rem; */
+  list-style: none;
+  /* margin-top: 1.75rem; */
+  /* background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 44%,
+    #ffcc70 100%
+  ); */
+}
+
+.blog-posts-grid figure {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 280px;
+  overflow: hidden;
+}
+
+.blog-boxes figure img {
+  max-width: 100%;
+}

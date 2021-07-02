@@ -1,13 +1,22 @@
 let links = {
   "linkedin": {
     "id": "linkedin",
-    "name": "LinkedIn",
+    "name": "LinkedIn Resume",
     "img": "",
     "detail": "",
     "url": "https://linkedin.com/in/aaronsnowberger/",
     "fa": "fab fa-linkedin",
     "color": "#0077b5",
     "colorAlt": "#00a0dc"
+  },
+  "talks": {
+    "id": "speakerdeck",
+    "name": "Speaker Deck Talks",
+    "img": "",
+    "detail": "",
+    "url": "https://speakerdeck.com/asnowberger",
+    "fa": "fab fa-speaker-deck",
+    "color": "#168180",
   },
   "portfolio": {
     "id": "portfolio",
@@ -30,7 +39,7 @@ let links = {
   },
   "github": {
     "id": "github",
-    "name": "GitHub",
+    "name": "GitHub Code",
     "img": "/img/github-universe.jpg",
     "detail": "",
     "url": "https://github.com/jekkilekki",
@@ -40,7 +49,7 @@ let links = {
   },
   "wordpress": {
     "id": "wordpress",
-    "name": "WordPress",
+    "name": "WordPress Dev Profile",
     "img": "/img/wordpress.jpg",
     "detail": "",
     "url": "https://profiles.wordpress.org/jekkilekki",
@@ -73,7 +82,7 @@ let links = {
   },
   "eduonix": {
     "id": "eduonix",
-    "name": "Eduonix",
+    "name": "Eduonix Courses",
     "img": "/img/eduonix.ico",
     "detail": "",
     "url": "https://www.strava.com/athletes/43923078",
@@ -82,7 +91,7 @@ let links = {
   },
   "strava": {
     "id": "strava",
-    "name": "Strava",
+    "name": "Strava Exercise",
     "img": "",
     "detail": "",
     "url": "https://www.strava.com/athletes/43923078",
