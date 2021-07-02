@@ -5,7 +5,9 @@ import TalksREST from "../components/home/TalksREST";
 import Classes from "../components/home/Classes";
 import Projects from "../components/home/Projects";
 import About from "../components/home/About";
+import AboutREST from "../components/home/AboutREST";
 import BlogPosts from "../components/home/BlogPosts"
+import ProjectsREST from "../components/home/ProjectsREST";
 // import Education from '../components/home/Education'
 
 const Home = () => {
@@ -27,7 +29,9 @@ const Home = () => {
       <TalksREST />
       <Talks />
       <Classes />
+      <ProjectsREST />
       <Projects />
+      <AboutREST />
       <About />
       {/* <Education /> */}
     </>
