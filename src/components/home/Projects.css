@@ -2,8 +2,8 @@
   list-style: none;
 }
 
-.list-tiles:first-of-type{
-  margin-top: .75rem;
+.list-tiles:first-of-type {
+  margin-top: 0.75rem;
 }
 
 .list-tile-item {
@@ -20,12 +20,21 @@
   /* grid-gap: 1rem; */
   list-style: none;
   /* margin-top: 1.75rem; */
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 44%, #FFCC70 100%);
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 44%,
+    #ffcc70 100%
+  );
+}
+
+.list-box-item {
+  text-align: center;
 }
 
 #projects figure {
   position: relative;
-  max-height: 280px;
+  max-height: 450px;
   overflow: hidden;
 }
 
@@ -67,7 +76,7 @@ figure.effect figcaption {
 }
 
 #projects figure h3 {
-  color: #FFF;
+  color: #fff;
   font-weight: 600;
   margin-bottom: 5px;
   font-size: 1.4rem;
@@ -87,8 +96,8 @@ figure.effect h3 {
 }
 
 figure.effect:hover h3::after {
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 figure.effect h3::after {
   position: absolute;
@@ -97,17 +106,17 @@ figure.effect h3::after {
   width: 100%;
   height: 2px;
   background: #fff;
-  content: '';
+  content: "";
   -webkit-transition: -webkit-transform 0.35s;
   transition: transform 0.35s;
-  -webkit-transform: translate3d(-100%,0,0);
-  transform: translate3d(-100%,0,0);
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
 }
 
 figure.effect:hover p {
   opacity: 1;
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 figure.effect p {
@@ -116,8 +125,8 @@ figure.effect p {
   opacity: 0;
   -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
   transition: opacity 0.35s, transform 0.35s;
-  -webkit-transform: translate3d(100%,0,0);
-  transform: translate3d(100%,0,0);
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
 }
 
 h3.project-title i {
@@ -148,7 +157,7 @@ h3.project-title i {
 }
 
 #projects figure .icon {
-  background: #22A39F;
+  background: #22a39f;
   background: #aa00ff;
   position: absolute;
   top: 0px;

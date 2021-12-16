@@ -30,7 +30,7 @@ function scroll() {
     }
 };
 // Add Event Listener to parent Element 
-document.querySelector('.navbar').addEventListener("click", reply_click);
+// document.querySelector('.navbar').addEventListener("click", reply_click);
 
 //CallBack Function
 function reply_click() {

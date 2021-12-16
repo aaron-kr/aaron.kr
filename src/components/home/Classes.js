@@ -11,7 +11,7 @@ const Classes = () => {
 
   return (
     <section id='classes' className='main-section container'>
-      <h2 className='section-title'>Classes</h2>
+      <h2 className='section-title'>Classes (OLD)</h2>
       <div className='classes-section'>
 
       { /* Coding Classes */ }

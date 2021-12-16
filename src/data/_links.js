@@ -85,7 +85,7 @@ let links = {
     "name": "Eduonix Courses",
     "img": "/img/eduonix.ico",
     "detail": "",
-    "url": "https://www.strava.com/athletes/43923078",
+    "url": "https://www.eduonix.com/i/aaron-snowberger",
     "fa": "",
     "color": "#FC6100",
   },

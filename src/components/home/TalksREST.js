@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Talks.css'
-import { obj2arr, formatDate } from '../../utils/helpers'
+import { formatDate } from '../../utils/helpers'
+import Skeleton from 'react-loading-skeleton'
 // import talks from '../../data/_talks'
 
 export default function TalksREST() {
@@ -8,7 +9,7 @@ export default function TalksREST() {
   const [ posts, setPosts ] = useState([])
 	useEffect(() => {
 		async function loadPosts() {
-			const response = await fetch(`https://aaron.kr/content/wp-json/wp/v2/posts/?categories=8&posts_per_page=200`)
+			const response = await fetch(`https://aaron.kr/content/wp-json/wp/v2/posts/?categories=8&per_page=50`)
 			if ( ! response.ok ) {
 				// oops! something went wrong
 				return
@@ -23,36 +24,49 @@ export default function TalksREST() {
 
   return (
     <section id='talks' className='main-section container'>
-      <h2 className='section-title'>Latest Talks (REST)</h2>
+      <h2 className='section-title'>Latest Talks</h2>
 
-      <ul className='list-index'>
-        {/* <li className='latest-talk list-index-item list-index-new'>
-          <a href={posts[0].link}>
-            <img className='latest-talk-image' src={posts[0].jetpack_featured_media_url} alt={posts[0].title.rendered} />
-            <span className='talk-title'>{posts[0].title.rendered}</span>
-            { posts[0].subtitle &&
-              <span className='talk-subtitle'>{posts[0].subtitle}<br /></span>
-            }
-            <span className='talk-location'>{posts[0].status}</span>
-            <span className='talk-date'>{formatDate(posts[0].date, true)}</span>
-          </a>
-        </li> */}
+      { posts.length > 0 ? (
 
-        { posts.map((talk, i) => (
-          i !== 0 &&
-          <li key={i} className='list-index-item'>
-            <a href={talk.link}>
-              <span className='talk-title'>{talk.title.rendered}</span>
-              { talk.subtitle && 
-                <span className='talk-subtitle'>{talk.subtitle}<br /></span>
-              }
-              <span className='talk-location'>{talk.status}</span>
-              <span className='talk-date'>{formatDate(talk.date, true)}</span>
-            </a>
-          </li>
-        ))}
-              
-      </ul>
+        <ul className='list-index'>
+          { posts.map((talk, i) => (
+
+            i === 0 ?
+
+            <li key={i} className='latest-talk list-index-item list-index-new'>
+              <a href={talk.link}>
+                <img className='latest-talk-image' src={talk.jetpack_featured_media_url} alt={talk.title.rendered} />
+                <span className='talk-title' dangerouslySetInnerHTML={{__html: talk.title.rendered}} />
+                { talk.acf.subtitle &&
+                  <span className='talk-subtitle'>{talk.acf.subtitle}<br /></span>
+                }
+                { talk.acf.location &&
+                  <span className='talk-location'>{talk.acf.location}</span>
+                }
+                <span className='talk-date'>{formatDate(talk.date)}</span>
+              </a>
+            </li>
+
+            :
+
+            <li key={i} className='list-index-item'>
+              <a href={talk.link}>
+                <span className='talk-title' dangerouslySetInnerHTML={{__html: talk.title.rendered}} />
+                { talk.acf.subtitle && 
+                  <span className='talk-subtitle'>{talk.acf.subtitle}<br /></span>
+                }
+                { talk.acf.location &&
+                  <span className='talk-location'>{talk.acf.location}</span>
+                }
+                <span className='talk-date'>{formatDate(talk.date)}</span>
+              </a>
+            </li>
+          ))}
+                
+        </ul>
+      ) : (
+        <Skeleton count={10} />
+      )}
     </section>
   )
 }

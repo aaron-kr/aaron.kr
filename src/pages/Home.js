@@ -3,6 +3,7 @@ import Intro from "../components/home/Intro";
 import Talks from "../components/home/Talks";
 import TalksREST from "../components/home/TalksREST";
 import Classes from "../components/home/Classes";
+import ClassesREST from "../components/home/ClassesREST";
 import Projects from "../components/home/Projects";
 import About from "../components/home/About";
 import AboutREST from "../components/home/AboutREST";
@@ -17,6 +18,7 @@ const Home = () => {
       <BlogPosts 
         site_url = "https://aaron.kr/content"
         num_posts = {4}
+        orderby = 'rand'
       />
       <BlogPosts 
         site_url = "https://aaronsnowberger.com"
@@ -28,11 +30,14 @@ const Home = () => {
       />
       <TalksREST />
       <Talks />
+      <ClassesREST />
       <Classes />
-      <ProjectsREST />
-      <Projects />
+      <ProjectsREST
+        num_posts = {12}
+      />
+      {/* <Projects /> */}
       <AboutREST />
-      <About />
+      {/* <About /> */}
       {/* <Education /> */}
     </>
   );

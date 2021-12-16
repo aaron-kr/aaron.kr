@@ -1,10 +1,29 @@
 .classes-section {
   /* margin-top: 1.75rem; */
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
 }
 
-.tech-classes,
+.classes-section div:first-child h3:before {
+  content: "\f11c";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 0.5rem;
+}
+
+.classes-section div:last-child h3:before {
+  content: "\f109";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 0.5rem;
+}
+
+.classes-section ul li {
+  padding: 0.125rem 0;
+}
+
+/* .tech-classes,
 .esl-classes {
   flex: 1 1 50%;
 }
@@ -13,7 +32,7 @@
 }
 .esl-classes {
   margin-left: 1rem;
-}
+} */
 
 .class-curriculum,
 .class-dates {

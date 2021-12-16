@@ -8,7 +8,7 @@ const Talks = () => {
 
   return (
     <section id='talks' className='main-section container'>
-      <h2 className='section-title'>Latest Talks</h2>
+      <h2 className='section-title'>Latest Talks (OLD)</h2>
 
       <ul className='list-index'><span className='list-index-date'>2018</span>
         <li className='latest-talk list-index-item list-index-new'>

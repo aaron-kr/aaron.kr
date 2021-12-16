@@ -11,7 +11,7 @@ const MyLinks = (props) => {
                 <i className={link.fa} style={{color: (link.colorAlt || link.color) }}></i>
               }
               { !link.fa && link.img &&
-                <img className='links-icon' src={link.img} />
+                <img className='links-icon' src={link.img} alt='' />
               }
               <p className='my-link-name'>{link.name}</p>
             </a>
