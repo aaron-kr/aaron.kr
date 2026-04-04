@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-lang="en" data-aurora="off">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aaron Snowberger, Ph.D. · AI Researcher & Educator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════════
+   TOKENS
+══════════════════════════════════════ */
+[data-theme="dark"] {
+  --bg:        #0c0f0e;
+  --bg-soft:   #101614;
+  --bg-muted:  #131a18;
+  --text-1:    #e6efec;
+  --text-2:    #7ea89e;
+  --text-3:    #3e5852;
+  --border:    #1b2825;
+  --border-2:  #243530;
+  --rule-clr:  rgba(255,255,255,.06);
+  --nav-bg:    rgba(12,15,14,.9);
+  --cta-fg:    #0c0f0e;
+  --teal:      #2dd4bf;
+  --blue:      #38bdf8;
+  --purple:    #a78bfa;
+  --pink:      #e879f9;
+  --dim-t:     rgba(45,212,191,.09);
+  --dim-b:     rgba(56,189,248,.09);
+  --dim-p:     rgba(167,139,250,.09);
+  --aur-a:     rgba(45,212,191,.18);
+  --aur-b:     rgba(56,189,248,.14);
+  --aur-c:     rgba(167,139,250,.10);
+  --aur-d:     rgba(232,121,249,.07);
+  --overlay:   rgba(12,15,14,.72);
+}
+[data-theme="light"] {
+  --bg:        #f9faf9;
+  --bg-soft:   #ffffff;
+  --bg-muted:  #f0f6f3;
+  --text-1:    #101814;
+  --text-2:    #3e5750;
+  --text-3:    #8aa29b;
+  --border:    #d8e8e4;
+  --border-2:  #c4d8d2;
+  --rule-clr:  rgba(0,0,0,.07);
+  --nav-bg:    rgba(249,250,249,.92);
+  --cta-fg:    #ffffff;
+  --teal:      #0a8c78;
+  --blue:      #0369a1;
+  --purple:    #6d28d9;
+  --pink:      #a21caf;
+  --dim-t:     rgba(10,140,120,.10);
+  --dim-b:     rgba(3,105,161,.10);
+  --dim-p:     rgba(109,40,217,.08);
+  --aur-a:     rgba(10,140,120,.15);
+  --aur-b:     rgba(3,105,161,.10);
+  --aur-c:     rgba(109,40,217,.08);
+  --aur-d:     rgba(162,28,175,.05);
+  --overlay:   rgba(249,250,249,.75);
+}
+
+/* ══════════════════════════════════════
+   AURORA OVERLAY
+   Controlled by data-aurora="on"
+══════════════════════════════════════ */
+[data-aurora="on"] #hero::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 120% 60% at 15% -5%,  var(--aur-a) 0%, transparent 55%),
+    radial-gradient(ellipse  80% 50% at 80%  10%,  var(--aur-b) 0%, transparent 50%),
+    radial-gradient(ellipse  60% 40% at  5%  55%,  var(--aur-c) 0%, transparent 45%),
+    radial-gradient(ellipse  40% 30% at 95%  70%,  var(--aur-d) 0%, transparent 40%);
+}
+[data-aurora="on"] section.sec-aurora::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 0% 50%, var(--aur-a) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 30% at 100% 50%, var(--aur-c) 0%, transparent 50%);
+  opacity: .4;
+}
+[data-aurora="on"] footer::before {
+  opacity: 1 !important;
+}
+.aurora-btn[aria-pressed="true"] {
+  border-color: var(--teal) !important;
+  color: var(--teal) !important;
+  background: var(--dim-t) !important;
+}
+
+/* ══════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg); color:var(--text-1);
+  font-family:'DM Sans','Noto Sans KR',sans-serif;
+  font-size:16px; line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;
+}
+a{text-decoration:none;color:inherit;}
+section{position:relative; overflow:hidden;}
+section > *{position:relative;z-index:1;}
+
+/* ══════════════════════════════════════
+   PROGRESS
+══════════════════════════════════════ */
+#prog{
+  position:fixed;top:0;left:0;height:2px;width:0%;
+  background:linear-gradient(90deg,var(--teal),var(--blue),var(--purple),var(--pink));
+  z-index:999;transition:width .08s linear;
+}
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:58px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;
+  background:var(--nav-bg);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:.95rem;
+  color:var(--text-1);white-space:nowrap;flex-shrink:0;
+}
+.nav-logo span{color:var(--teal);}
+
+.nav-ul{
+  display:flex;gap:1.75rem;list-style:none;
+  flex:1;justify-content:center;
+}
+.nav-ul a{
+  font-size:.81rem;font-weight:500;color:var(--text-2);
+  letter-spacing:.02em;transition:color .2s;white-space:nowrap;
+}
+.nav-ul a:hover{color:var(--teal);}
+
+.nav-right{display:flex;gap:.4rem;align-items:center;flex-shrink:0;}
+.nbtn{
+  background:transparent;border:1px solid var(--border-2);
+  color:var(--text-2);cursor:pointer;
+  padding:5px 11px;border-radius:6px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.75rem;font-weight:600;letter-spacing:.04em;
+  transition:all .2s;white-space:nowrap;
+}
+.nbtn:hover{border-color:var(--teal);color:var(--teal);}
+
+/* Hamburger */
+.hamburger{
+  display:none;flex-direction:column;gap:5px;cursor:pointer;
+  padding:6px;border:none;background:transparent;
+}
+.hamburger span{
+  width:22px;height:1.5px;background:var(--text-2);
+  transition:all .25s;display:block;
+}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+/* Mobile menu */
+.mobile-menu{
+  display:none;
+  position:fixed;top:58px;left:0;right:0;
+  background:var(--nav-bg);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2rem;z-index:190;
+  flex-direction:column;gap:.15rem;
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{
+  font-size:.9rem;font-weight:500;color:var(--text-2);
+  padding:.55rem 0;border-bottom:1px solid var(--border);
+  transition:color .2s;
+}
+.mobile-menu a:last-child{border-bottom:none;}
+.mobile-menu a:hover{color:var(--teal);}
+
+/* ══════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════ */
+.wrap{max-width:1060px;margin:0 auto;padding:0 2rem;}
+section.pad{padding:5.5rem 0;}
+.rule{max-width:1060px;margin:0 auto;height:1px;background:var(--rule-clr);}
+
+/* ══════════════════════════════════════
+   SECTION HEADERS  (with optional img)
+══════════════════════════════════════ */
+.sec-hdr{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:2.5rem;
+  margin-bottom:3rem;
+}
+.sec-hdr-text{flex:1;}
+.sec-label{
+  font-size:.69rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.55rem;
+}
+.sec-label::before{content:'';width:1.4rem;height:1.5px;background:var(--teal);flex-shrink:0;}
+.sec-label.blue{color:var(--blue);} .sec-label.blue::before{background:var(--blue);}
+.sec-label.purple{color:var(--purple);} .sec-label.purple::before{background:var(--purple);}
+.sec-label.pink{color:var(--pink);} .sec-label.pink::before{background:var(--pink);}
+
+h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.85rem,4.5vw,2.85rem);
+  font-weight:700;line-height:1.1;
+  color:var(--text-1);letter-spacing:-.01em;margin-bottom:.5rem;
+}
+h2 em{font-style:italic;color:var(--teal);}
+h2 .ib{font-style:italic;color:var(--blue);}
+h2 .ip{font-style:italic;color:var(--purple);}
+
+.sec-intro{font-size:.94rem;color:var(--text-2);line-height:1.85;max-width:580px;}
+
+/* Section right image slot */
+.sec-img{
+  flex-shrink:0;width:220px;height:150px;
+  border-radius:8px;overflow:hidden;
+  position:relative;
+}
+.sec-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.sec-img .img-ph{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ══════════════════════════════════════
+   GRADIENT HELPERS (placeholder images)
+══════════════════════════════════════ */
+.grad-aurora{
+  background:linear-gradient(135deg,
+    #0a2a2a 0%,#0e4040 20%,#1a7a6a 40%,
+    #2dd4bf 55%,#a78bfa 75%,#e879f9 90%,#38bdf8 100%);
+}
+.grad-wyoming{
+  background:linear-gradient(180deg,
+    #0d1e35 0%,#1c3f6e 25%,#4a7eb5 45%,
+    #c4823a 62%,#e8a855 72%,#8b5a2b 85%,#3a2010 100%);
+}
+.grad-korea{
+  background:linear-gradient(180deg,
+    #0a1a2e 0%,#1a3550 22%,#2a5f7a 42%,
+    #3d8a7a 58%,#5aaa8a 72%,#8bc4a0 85%,#b8d8c0 100%);
+}
+.grad-lab{
+  background:linear-gradient(135deg,
+    #0e1f2e 0%,#1a3a5c 40%,#2d6e9e 70%,#38bdf8 100%);
+}
+.grad-research{
+  background:linear-gradient(135deg,
+    #0d1a1a 0%,#0e3030 40%,#1a5a50 70%,#2dd4bf 100%);
+}
+.grad-cs{
+  background:linear-gradient(135deg,
+    #1a0e2e 0%,#3a1a5a 40%,#6a3a8a 70%,#a78bfa 100%);
+}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero{
+  padding-top:58px;min-height:100vh;
+  display:flex;align-items:center;
+}
+/* Hero bg image slot (for Wyoming later) */
+#hero.has-bg-img::after{
+  content:'';position:absolute;inset:0;
+  background:var(--overlay);z-index:0;pointer-events:none;
+}
+#hero.has-bg-img{background-size:cover;background-position:center;}
+
+.hero-grid{
+  max-width:1060px;margin:0 auto;padding:5rem 2rem 6rem;
+  display:grid;grid-template-columns:240px 1fr;
+  gap:4.5rem;align-items:center;
+}
+.hero-photo img{
+  width:100%;border-radius:5px;display:block;
+  filter:grayscale(8%);transition:filter .3s;
+}
+.hero-photo:hover img{filter:grayscale(0%);}
+.photo-affil{margin-top:1rem;display:flex;flex-direction:column;gap:.3rem;}
+.affil-line{
+  display:flex;align-items:center;gap:.45rem;
+  font-size:.72rem;font-weight:500;color:var(--text-3);
+}
+.affil-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0;}
+.affil-dot.b{background:var(--blue);}
+.affil-dot.p{background:var(--purple);}
+
+.hero-eyebrow{display:flex;align-items:center;gap:.65rem;margin-bottom:1.2rem;}
+.eyebrow-line{width:2rem;height:1.5px;background:var(--teal);}
+.eyebrow-txt{
+  font-size:.69rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--teal);
+}
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.8rem,6.5vw,4.8rem);
+  font-weight:700;line-height:1.05;
+  color:var(--text-1);letter-spacing:-.01em;margin-bottom:.3rem;
+}
+h1 em{font-style:italic;color:var(--teal);}
+.hero-cred{
+  font-size:.81rem;font-weight:500;letter-spacing:.06em;
+  color:var(--text-3);text-transform:uppercase;margin-bottom:1.5rem;
+}
+.hero-tagline{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-style:italic;
+  color:var(--text-2);line-height:1.65;margin-bottom:1.4rem;max-width:490px;
+}
+.hero-bio{font-size:.94rem;color:var(--text-2);line-height:1.85;max-width:490px;margin-bottom:1.75rem;}
+
+/* Social links — gradient colored */
+.social-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:0;}
+.slink{
+  display:inline-flex;align-items:center;gap:.35rem;
+  font-size:.79rem;font-weight:600;
+  padding:7px 13px;border-radius:6px;
+  border:1px solid var(--border-2);
+  background:transparent;transition:all .22s;
+}
+.slink svg{width:13px;height:13px;opacity:.6;flex-shrink:0;}
+.slink:hover{transform:translateY(-1px);}
+
+/* Each link gets its own color identity */
+.slink-teal  {color:var(--teal);}
+.slink-teal:hover{border-color:var(--teal);background:var(--dim-t);}
+.slink-blue  {color:var(--blue);}
+.slink-blue:hover{border-color:var(--blue);background:var(--dim-b);}
+.slink-purple{color:var(--purple);}
+.slink-purple:hover{border-color:var(--purple);background:var(--dim-p);}
+.slink-pink  {color:var(--pink);}
+.slink-pink:hover{border-color:var(--pink);background:rgba(232,121,249,.09);}
+
+/* ══════════════════════════════════════
+   WYOMING / KOREA COMPARISON SLIDER
+══════════════════════════════════════ */
+#wyo-korea{
+  padding:0;overflow:hidden;
+  border-top:1px solid var(--rule-clr);
+  border-bottom:1px solid var(--rule-clr);
+}
+.compare-wrap{
+  position:relative;height:360px;cursor:ew-resize;
+  user-select:none;-webkit-user-select:none;
+  overflow:hidden;
+}
+/* Wyoming — left side */
+.cmp-left{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,
+      #0d1e35 0%,#1c3f6e 22%,#4a7eb5 42%,
+      #c4823a 60%,#e8a855 70%,#8b5a2b 83%,#3a2010 100%);
+}
+/* Mountain silhouettes */
+.cmp-left::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:55%;
+  background:
+    radial-gradient(ellipse 30% 80% at 15% 100%, #1a0e08 40%, transparent 70%),
+    radial-gradient(ellipse 25% 70% at 35% 100%, #120c06 35%, transparent 65%),
+    radial-gradient(ellipse 20% 60% at 55% 100%, #1a1008 30%, transparent 60%),
+    radial-gradient(ellipse 30% 80% at 75% 100%, #150a05 40%, transparent 70%),
+    radial-gradient(ellipse 25% 65% at 90% 100%, #120c06 35%, transparent 65%);
+  mix-blend-mode:multiply;
+}
+/* Korea — right side, revealed by clip */
+.cmp-right{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,
+      #0a1a2e 0%,#1a3550 20%,#2a5f7a 38%,
+      #3d8a7a 55%,#5aaa8a 68%,#8bc4a0 82%,#b8d8c0 100%);
+  clip-path:inset(0 0 0 50%);
+  transition:clip-path .05s;
+}
+.cmp-right::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:45%;
+  background:
+    radial-gradient(ellipse 25% 70% at 10% 100%, #060e12 30%, transparent 60%),
+    radial-gradient(ellipse 20% 60% at 30% 100%, #081218 25%, transparent 55%),
+    radial-gradient(ellipse 25% 65% at 55% 100%, #060e12 30%, transparent 60%),
+    radial-gradient(ellipse 20% 55% at 78% 100%, #081218 25%, transparent 55%),
+    radial-gradient(ellipse 15% 50% at 93% 100%, #060e12 20%, transparent 50%);
+  mix-blend-mode:multiply;
+}
+
+/* Labels */
+.cmp-label{
+  position:absolute;top:1.5rem;
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;font-style:italic;
+  color:rgba(255,255,255,.85);pointer-events:none;
+  text-shadow:0 1px 8px rgba(0,0,0,.6);
+}
+.cmp-label-l{left:1.5rem;}
+.cmp-label-r{right:1.5rem;text-align:right;}
+
+/* Drag handle */
+.cmp-handle{
+  position:absolute;top:0;bottom:0;
+  left:50%;transform:translateX(-50%);
+  width:2px;background:rgba(255,255,255,.65);
+  pointer-events:none;
+}
+.cmp-handle::before{
+  content:'';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 2px 12px rgba(0,0,0,.4);
+}
+.cmp-handle::after{
+  content:'◁ ▷';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:.6rem;color:rgba(0,0,0,.7);font-weight:700;
+  letter-spacing:2px;white-space:nowrap;
+}
+.cmp-range{
+  position:absolute;inset:0;opacity:0;cursor:ew-resize;
+  width:100%;height:100%;z-index:10;margin:0;
+  -webkit-appearance:none;appearance:none;
+}
+.cmp-sub{
+  background:var(--bg-soft);border-top:1px solid var(--border);
+  padding:1.1rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.cmp-caption{
+  font-size:.82rem;color:var(--text-2);font-style:italic;
+}
+.cmp-caption strong{color:var(--text-1);}
+
+/* ══════════════════════════════════════
+   ANIMATED GRADIENT RULE on list hover
+   (reused for research, teaching, labs)
+══════════════════════════════════════ */
+.glist{display:flex;flex-direction:column;}
+
+/* Base list item */
+.gli{
+  position:relative;padding:2rem 0;
+  /* no border-bottom */
+}
+.gli::before{
+  content:'';position:absolute;bottom:0;left:0;
+  height:1px;width:100%;background:var(--rule-clr);
+}
+.gli::after{
+  content:'';position:absolute;bottom:0;left:0;
+  height:1px;width:0%;
+  background:linear-gradient(90deg,var(--teal),var(--blue),var(--pink));
+  transition:width .45s ease;
+}
+.gli:hover::after{width:100%;}
+.gli:first-child::before{
+  top:0;bottom:auto;
+}
+.gli:first-child::after{
+  top:0;bottom:auto;
+}
+
+/* Teaching line — blue-dominant */
+.gli.teach-li::after{
+  background:linear-gradient(90deg,var(--blue),var(--teal),var(--purple));
+}
+/* Labs line — purple-dominant */
+.gli.lab-li::after{
+  background:linear-gradient(90deg,var(--purple),var(--blue),var(--teal));
+}
+
+.gli:hover{padding-left:.45rem;transition:padding-left .2s;}
+
+/* ══════════════════════════════════════
+   RESEARCH LIST
+══════════════════════════════════════ */
+.ritem{
+  display:grid;grid-template-columns:190px 1fr;
+  gap:2rem;align-items:start;
+}
+.ritem-meta{
+  font-size:.74rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--text-3);line-height:1.65;
+  margin-top:.2rem;
+}
+.rmeta-accent{color:var(--teal);display:block;margin-top:.25rem;}
+.rmeta-accent.b{color:var(--blue);}
+.ri-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.13rem;font-weight:600;
+  color:var(--text-1);line-height:1.3;margin-bottom:.5rem;
+}
+.ri-body{font-size:.9rem;color:var(--text-2);line-height:1.8;margin-bottom:.75rem;}
+
+/* tags */
+.tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.6rem;}
+.tag{
+  font-size:.67rem;font-weight:700;
+  padding:3px 9px;border-radius:5px;
+  border:1px solid var(--border-2);
+  letter-spacing:.03em;cursor:default;
+  position:relative;overflow:hidden;
+  transition:border-color .25s;
+}
+.tag::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--dim-t),transparent);
+  transform:translateX(-100%);
+  transition:transform .35s ease;
+  z-index:0;
+}
+.tag:hover::before{transform:translateX(0);}
+.tag:hover{border-color:var(--teal);}
+.tag span{position:relative;z-index:1;}
+.tag{color:var(--teal);}
+.tag.b{color:var(--blue);}
+.tag.b::before{background:linear-gradient(90deg,var(--dim-b),transparent);}
+.tag.b:hover{border-color:var(--blue);}
+.tag.p{color:var(--purple);}
+.tag.p::before{background:linear-gradient(90deg,var(--dim-p),transparent);}
+.tag.p:hover{border-color:var(--purple);}
+
+/* link row */
+.ri-links{display:flex;gap:.75rem;flex-wrap:wrap;}
+.ri-link{
+  font-size:.79rem;font-weight:600;
+  color:var(--teal);transition:opacity .2s;letter-spacing:.02em;
+}
+.ri-link:hover{opacity:.65;}
+.ri-link.b{color:var(--blue);}
+.ri-link.p{color:var(--purple);}
+
+/* ── Thumbnail overlays on the number ── */
+.num-wrap{
+  position:relative;display:inline-flex;
+  align-items:center;justify-content:center;
+  width:56px;height:56px;flex-shrink:0;
+}
+.item-thumb{
+  position:absolute;inset:0;border-radius:6px;
+  opacity:.5;transition:opacity .3s;
+}
+.num-wrap:hover .item-thumb{opacity:.7;}
+.item-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.7rem;font-weight:900;font-style:italic;
+  color:var(--border-2);line-height:1;
+  position:relative;z-index:1;
+  transition:color .25s;
+  text-shadow:0 1px 6px rgba(0,0,0,.3);
+}
+.gli:hover .item-num{color:var(--teal);}
+.gli.teach-li:hover .item-num{color:var(--blue);}
+.gli.lab-li:hover .item-num{color:var(--purple);}
+
+/* Teaching / Labs use grid with num */
+.tli-grid{
+  display:grid;grid-template-columns:60px 1fr;
+  gap:1.75rem;align-items:start;
+}
+
+/* ══════════════════════════════════════
+   SOCIETIES
+══════════════════════════════════════ */
+.societies{
+  padding:2rem 0;
+  border-top:1px solid var(--rule-clr);
+  border-bottom:1px solid var(--rule-clr);
+  margin-top:2rem;
+}
+.soc-label{
+  font-size:.67rem;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--text-3);margin-bottom:.85rem;
+}
+.soc-row{display:flex;flex-wrap:wrap;gap:.5rem;}
+.soc-pill{
+  font-size:.75rem;font-weight:600;
+  padding:5px 13px;border-radius:5px;
+  border:1px solid var(--border-2);
+  color:var(--text-2);background:transparent;
+  letter-spacing:.04em;transition:all .2s;
+}
+.soc-pill:hover{border-color:var(--teal);color:var(--teal);}
+
+/* ══════════════════════════════════════
+   DESIGN
+══════════════════════════════════════ */
+.design-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;
+}
+.di{
+  position:relative;border-radius:7px;overflow:hidden;
+  cursor:pointer;aspect-ratio:3/4;background:var(--bg-muted);
+  transition:transform .25s;
+}
+.di:hover{transform:scale(1.02) translateY(-2px);}
+.di img{width:100%;height:100%;object-fit:cover;display:block;}
+.di-ov{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,15,12,.9) 0%,transparent 50%);
+  opacity:0;transition:opacity .25s;
+  display:flex;align-items:flex-end;padding:.85rem;
+}
+.di:hover .di-ov{opacity:1;}
+.di-label{
+  font-family:'Playfair Display',serif;
+  font-size:.82rem;font-weight:600;font-style:italic;
+  color:#fff;line-height:1.3;
+}
+
+/* ══════════════════════════════════════
+   BLOG
+══════════════════════════════════════ */
+.blog-list{display:flex;flex-direction:column;}
+.bitem{
+  display:flex;align-items:baseline;
+  justify-content:space-between;gap:1.5rem;
+  padding:1.3rem 0;position:relative;
+}
+.bitem::before{content:'';position:absolute;bottom:0;left:0;height:1px;width:100%;background:var(--rule-clr);}
+.bitem::after{content:'';position:absolute;bottom:0;left:0;height:1px;width:0%;background:linear-gradient(90deg,var(--purple),var(--blue),var(--pink));transition:width .45s ease;}
+.bitem:hover::after{width:100%;}
+.bitem:last-child::before,.bitem:last-child::after{display:none;}
+.bitem:hover{padding-left:.45rem;transition:padding-left .2s;}
+.bitem:hover .btitle{color:var(--teal);}
+.btitle{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1rem,2.8vw,1.6rem);
+  font-weight:600;color:var(--text-1);
+  line-height:1.25;flex:1;transition:color .2s;
+}
+.btitle em{font-style:italic;}
+.bmeta{font-size:.74rem;color:var(--text-3);white-space:nowrap;letter-spacing:.04em;}
+
+/* ══════════════════════════════════════
+   BEYOND THE LAB
+══════════════════════════════════════ */
+#beyond{
+  background:var(--bg-soft);
+  border-top:1px solid var(--rule-clr);
+  border-bottom:1px solid var(--rule-clr);
+}
+.beyond-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
+}
+.b-item{padding:.25rem 0;}
+.b-icon{
+  font-size:1.3rem;margin-bottom:.5rem;line-height:1;
+}
+.b-title{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;font-weight:600;color:var(--text-1);
+  margin-bottom:.3rem;
+}
+.b-body{font-size:.85rem;color:var(--text-2);line-height:1.75;}
+
+/* ══════════════════════════════════════
+   FOOTER  ← aurora always visible here
+══════════════════════════════════════ */
+footer{
+  position:relative;overflow:hidden;
+  background:var(--bg-soft);
+  border-top:1px solid var(--border);
+  padding:4rem 0 3rem;
+}
+footer::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 100% 80% at 20% 120%, var(--aur-a) 0%,transparent 55%),
+    radial-gradient(ellipse  70% 60% at 75% 110%, var(--aur-b) 0%,transparent 50%),
+    radial-gradient(ellipse  50% 40% at 50%  90%, var(--aur-c) 0%,transparent 45%),
+    radial-gradient(ellipse  40% 30% at 90%  95%, var(--aur-d) 0%,transparent 40%);
+  opacity:.7;
+}
+footer > *{position:relative;z-index:1;}
+.foot-inner{
+  max-width:1060px;margin:0 auto;padding:0 2rem;
+  display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:start;
+}
+.foot-name{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;font-weight:700;color:var(--text-1);margin-bottom:.5rem;
+}
+.foot-name span{color:var(--teal);}
+.foot-info{font-size:.79rem;color:var(--text-3);line-height:1.9;}
+.foot-links{display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;}
+.fl-row{display:flex;gap:1.1rem;}
+.fl{font-size:.78rem;font-weight:600;transition:opacity .2s;}
+.fl:hover{opacity:.65;}
+.fl.t{color:var(--teal);}
+.fl.b{color:var(--blue);}
+.fl.p{color:var(--purple);}
+
+/* ══════════════════════════════════════
+   BILINGUAL
+══════════════════════════════════════ */
+[data-lang="en"] .ko{display:none!important;}
+[data-lang="ko"] .en{display:none!important;}
+
+/* ══════════════════════════════════════
+   FADE IN
+══════════════════════════════════════ */
+.rise{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.rise.in{opacity:1;transform:translateY(0);}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:900px){
+  .nav-ul{display:none;}
+  .hamburger{display:flex;}
+  .hero-grid{grid-template-columns:200px 1fr;gap:3rem;}
+  .ritem{grid-template-columns:1fr;gap:.65rem;}
+  .sec-hdr{flex-direction:column-reverse;}
+  .sec-img{width:100%;height:180px;}
+  .beyond-grid{grid-template-columns:1fr 1fr;}
+  .design-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:640px){
+  nav{padding:0 1.25rem;}
+  .nav-right .nbtn:not(.aurora-btn){display:none;}
+  .hero-grid{grid-template-columns:1fr;padding:3.5rem 1.25rem 5rem;}
+  .hero-photo{max-width:180px;}
+  .wrap{padding:0 1.25rem;}
+  .tli-grid{grid-template-columns:50px 1fr;gap:1.25rem;}
+  .beyond-grid{grid-template-columns:1fr;}
+  .foot-inner{grid-template-columns:1fr;}
+  .foot-links{align-items:flex-start;}
+  .compare-wrap{height:260px;}
+  h1{font-size:2.8rem;}
+  /* show all nav btns on mobile via overflow */
+  .nav-right{gap:.3rem;}
+  .nav-right .nbtn{padding:5px 8px;font-size:.7rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- ═══════════════════════
+     NAV
+══════════════════════════ -->
+<nav>
+  <div class="nav-logo">
+    Aaron Snowberger<span>, Ph.D.</span>
+  </div>
+
+  <ul class="nav-ul">
+    <li><a href="#research"><span class="en">Research</span><span class="ko">연구</span></a></li>
+    <li><a href="#teaching"><span class="en">Teaching</span><span class="ko">교육</span></a></li>
+    <li><a href="#labs">Labs</a></li>
+    <li><a href="#design"><span class="en">Design</span><span class="ko">디자인</span></a></li>
+    <li><a href="#blog"><span class="en">Writing</span><span class="ko">글쓰기</span></a></li>
+    <li><a href="#beyond"><span class="en">Beyond</span><span class="ko">랩 밖</span></a></li>
+  </ul>
+
+  <div class="nav-right">
+    <button class="nbtn aurora-btn" id="auroraToggle" aria-pressed="false" title="Toggle aurora">✦</button>
+    <button class="nbtn" id="langToggle">한국어</button>
+    <button class="nbtn" id="themeToggle">☀</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<nav class="mobile-menu" id="mobileMenu">
+  <a href="#research" class="en">Research</a>
+  <a href="#research" class="ko">연구</a>
+  <a href="#teaching" class="en">Teaching</a>
+  <a href="#teaching" class="ko">교육</a>
+  <a href="#labs">Labs</a>
+  <a href="#design" class="en">Design</a>
+  <a href="#design" class="ko">디자인</a>
+  <a href="#blog" class="en">Writing</a>
+  <a href="#blog" class="ko">글쓰기</a>
+  <a href="#beyond" class="en">Beyond the Lab</a>
+  <a href="#beyond" class="ko">랩 밖에서</a>
+</nav>
+
+<!-- ═══════════════════════
+     HERO
+══════════════════════════ -->
+<section id="hero">
+  <div class="hero-grid">
+
+    <div class="hero-photo">
+      <img
+        src="https://i0.wp.com/files.aaron.kr/media/2025/01/aaron.jpg?fit=460%2C460&ssl=1"
+        alt="Aaron Snowberger"
+        onerror="this.style.display='none'"
+      />
+      <div class="photo-affil">
+        <div class="affil-line"><span class="affil-dot"></span>KSPAI</div>
+        <div class="affil-line"><span class="affil-dot b"></span>KIICE</div>
+        <div class="affil-line"><span class="affil-dot p"></span>KLIFE</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-txt en">Jeonju, South Korea</span>
+        <span class="eyebrow-txt ko">전주, 대한민국</span>
+      </div>
+
+      <h1>
+        <span class="en">Aaron<br><em>Snowberger</em></span>
+        <span class="ko">에런<br><em>스노우버거</em></span>
+      </h1>
+
+      <p class="hero-cred">
+        <span class="en">Ph.D. · AI Researcher &amp; Educator · Wyoming</span>
+        <span class="ko">공학박사 · AI 연구자 &amp; 교육자 · 와이오밍 출신</span>
+      </p>
+
+      <p class="hero-tagline en">
+        "Bridging East and West through AI research, engineering education,
+        and the occasional good cup of Korean pour-over."
+      </p>
+      <p class="hero-tagline ko">
+        "AI 연구, 공학 교육, 그리고 가끔 한국 핸드드립 커피 한 잔으로
+        동서양을 잇습니다."
+      </p>
+
+      <p class="hero-bio en">
+        Lecturer across five Korean universities in AI, programming, IoT, and circuits.
+        Research focus: handwriting recognition, Physical AI curriculum, and CS education.
+        Twenty years in Korean academia — still a Wyoming cowboy at heart.
+      </p>
+      <p class="hero-bio ko">
+        다섯 개 한국 대학에서 AI, 프로그래밍, IoT, 회로를 강의합니다.
+        연구 분야: 필기 인식, 피지컬 AI 교육과정, CS 교육.
+        한국 학계에 20년 — 마음은 여전히 와이오밍 카우보이입니다.
+      </p>
+
+      <div class="social-row">
+        <a href="https://linkedin.com/in/aaronsnowberger/" class="slink slink-teal" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn
+        </a>
+        <a href="https://github.com/jekkilekki" class="slink slink-teal" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>GitHub
+        </a>
+        <a href="https://www.researchgate.net/profile/Aaron-Snowberger" class="slink slink-blue" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zM7 17V7h3a3 3 0 010 6H9v4H7zm12 0h-2l-2-4h-1v4h-2V7h3a3 3 0 011 5.82L19 17z"/></svg>ResearchGate
+        </a>
+        <a href="https://scholar.google.com/citations?user=JCbnnvUAAAAJ" class="slink slink-blue" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>Scholar
+        </a>
+        <a href="https://orcid.org" class="slink slink-purple" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M9 7h2v10H9zM13 7h2a5 5 0 010 10h-2z" fill="var(--bg)"/></svg>ORCID
+        </a>
+        <a href="https://kspai.org" class="slink slink-purple" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>KSPAI
+        </a>
+        <a href="mailto:hi@aaron.kr" class="slink slink-pink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>Email
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════
+     WYOMING / KOREA SLIDER
+══════════════════════════ -->
+<div id="wyo-korea">
+  <div class="compare-wrap" id="compareWrap">
+    <div class="cmp-left"></div>
+    <div class="cmp-right" id="cmpRight"></div>
+
+    <div class="cmp-label cmp-label-l">
+      <span class="en">Wyoming 🤠</span>
+      <span class="ko">와이오밍 🤠</span>
+    </div>
+    <div class="cmp-label cmp-label-r">
+      <span class="en">Korea 🇰🇷</span>
+      <span class="ko">대한민국 🇰🇷</span>
+    </div>
+
+    <div class="cmp-handle" id="cmpHandle"></div>
+    <input type="range" class="cmp-range" id="cmpRange" min="0" max="100" value="50"/>
+  </div>
+  <div class="cmp-sub">
+    <p class="cmp-caption en"><strong>From Big Sky Country to Land of the Morning Calm</strong> — drag to compare</p>
+    <p class="cmp-caption ko"><strong>빅 스카이 컨트리에서 조용한 아침의 나라로</strong> — 드래그하여 비교</p>
+    <p class="cmp-caption" style="color:var(--text-3);font-size:.75rem;" class="en">Wyoming → Korea, 2005</p>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- ═══════════════════════
+     RESEARCH
+══════════════════════════ -->
+<section class="pad sec-aurora" id="research">
+  <div class="wrap">
+
+    <div class="sec-hdr rise">
+      <div class="sec-hdr-text">
+        <div class="sec-label en">Research &amp; Publications</div>
+        <div class="sec-label ko">연구 및 논문</div>
+        <h2>
+          <span class="en">What I Work On</span>
+          <span class="ko">연구 분야</span>
+        </h2>
+        <p class="sec-intro en">
+          Computer vision, Physical AI, and engineering education — research that
+          lives at the intersection of intelligent systems and real-world application.
+        </p>
+        <p class="sec-intro ko">
+          컴퓨터 비전, 피지컬 AI, 공학 교육 — 지능 시스템과 실제 적용의 교차점에 위치한 연구.
+        </p>
+      </div>
+      <!-- right-aligned section image slot -->
+      <div class="sec-img">
+        <div class="img-ph grad-research" style="border-radius:8px;width:100%;height:100%;"></div>
+      </div>
+    </div>
+
+    <div class="glist rise">
+
+      <!-- Item 1 — with thumbnail -->
+      <div class="gli">
+        <div class="ritem">
+          <div>
+            <div class="ritem-meta">
+              <span class="en">Physical AI</span><span class="ko">피지컬 AI</span>
+              <span class="rmeta-accent">2024–Present</span>
+            </div>
+          </div>
+          <div>
+            <div class="ri-title en">Physical AI Curriculum Design</div>
+            <div class="ri-title ko">피지컬 AI 교육과정 설계</div>
+            <p class="ri-body en">
+              Developing university-level curriculum at the frontier of embodied intelligence —
+              where AI leaves the data center and operates in the physical world.
+              Contributing to the Korea Society for Physical AI (KSPAI).
+            </p>
+            <p class="ri-body ko">
+              체화된 지능의 최전선에서 대학 수준의 교육과정 개발 — AI가 데이터 센터를 떠나 물리적 세계에서 동작하는 영역. 한국피지컬AI학회(KSPAI)에 기여.
+            </p>
+            <div class="tags">
+              <span class="tag"><span>Physical AI</span></span>
+              <span class="tag"><span>Embodied Intelligence</span></span>
+              <span class="tag"><span>Curriculum</span></span>
+            </div>
+            <div class="ri-links">
+              <a href="https://kspai.org" class="ri-link" target="_blank">KSPAI →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 — with thumbnail -->
+      <div class="gli">
+        <div class="ritem">
+          <div>
+            <div class="ritem-meta">
+              <span class="en">Computer Vision</span><span class="ko">컴퓨터 비전</span>
+              <span class="rmeta-accent b en">Ph.D. · Best Thesis</span>
+              <span class="rmeta-accent b ko">박사 · 우수논문</span>
+            </div>
+          </div>
+          <div>
+            <div class="ri-title en">Handwriting Recognition: Manchu Script &amp; Hangul</div>
+            <div class="ri-title ko">필기 인식: 만주어 문자 &amp; 한글</div>
+            <p class="ri-body en">
+              Deep learning for historical Manchu script and modern Korean handwriting.
+              Awarded Best Ph.D. Thesis at Hanbat National University.
+            </p>
+            <p class="ri-body ko">
+              역사적 만주어 문자와 현대 한국어 필기를 위한 딥러닝. 한밭대학교 우수 박사학위 논문상 수상.
+            </p>
+            <div class="tags">
+              <span class="tag b"><span>OCR</span></span>
+              <span class="tag b"><span>Deep Learning</span></span>
+              <span class="tag b"><span>Computer Vision</span></span>
+              <span class="tag b"><span>Hangul</span></span>
+            </div>
+            <div class="ri-links">
+              <a href="https://www.researchgate.net/profile/Aaron-Snowberger" class="ri-link b" target="_blank">ResearchGate →</a>
+              <a href="https://scholar.google.com/citations?user=JCbnnvUAAAAJ" class="ri-link b" target="_blank">Google Scholar →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="gli">
+        <div class="ritem">
+          <div>
+            <div class="ritem-meta">
+              <span class="en">CS Education</span><span class="ko">CS 교육</span>
+              <span class="rmeta-accent b">JPEE · Published</span>
+            </div>
+          </div>
+          <div>
+            <div class="ri-title en">GitHub &amp; Developer Tools in CS Education</div>
+            <div class="ri-title ko">CS 교육에서의 GitHub 및 개발자 도구</div>
+            <p class="ri-body en">
+              Empirical study on integrating GitHub Classroom into university CS workflows.
+              Published in the Journal of Practical Engineering Education.
+            </p>
+            <p class="ri-body ko">
+              대학 CS 워크플로우에 GitHub Classroom을 통합하는 실증 연구. 실용공학교육 저널 게재.
+            </p>
+            <div class="tags">
+              <span class="tag p"><span>EdTech</span></span>
+              <span class="tag p"><span>GitHub Classroom</span></span>
+              <span class="tag p"><span>CS Education</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /glist -->
+
+    <div class="societies rise">
+      <div class="soc-label en">Member &amp; Contributor</div>
+      <div class="soc-label ko">학회 및 기여</div>
+      <div class="soc-row">
+        <a href="https://kspai.org"   class="soc-pill" target="_blank">KSPAI</a>
+        <a href="https://kiice.org"   class="soc-pill" target="_blank">KIICE</a>
+        <a href="https://klife.re.kr" class="soc-pill" target="_blank">KLIFE</a>
+        <a href="https://kipee.or.kr" class="soc-pill" target="_blank">KIPEE</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ═══════════════════════
+     TEACHING
+══════════════════════════ -->
+<section class="pad" id="teaching">
+  <div class="wrap">
+
+    <div class="sec-hdr rise">
+      <div class="sec-hdr-text">
+        <div class="sec-label blue en">Teaching &amp; Courses</div>
+        <div class="sec-label blue ko">강의 및 과목</div>
+        <h2>
+          <span class="en">Five Universities, <span class="ib">One Approach</span></span>
+          <span class="ko">다섯 개 대학, <span class="ib">하나의 방식</span></span>
+        </h2>
+        <p class="sec-intro en">
+          Visual, bilingual, project-based instruction — designed to be accessible
+          regardless of English proficiency or background.
+        </p>
+        <p class="sec-intro ko">
+          시각적이고, 이중 언어로, 프로젝트 중심의 수업 — 영어 수준이나 배경에 관계없이 접근 가능하게.
+        </p>
+      </div>
+      <div class="sec-img">
+        <div class="img-ph grad-lab" style="border-radius:8px;width:100%;height:100%;"></div>
+      </div>
+    </div>
+
+    <div class="glist rise">
+
+      <div class="gli teach-li">
+        <div class="tli-grid">
+          <div class="num-wrap">
+            <div class="item-thumb grad-lab"></div>
+            <div class="item-num">01</div>
+          </div>
+          <div>
+            <div class="ri-title en">Artificial Intelligence &amp; Machine Learning</div>
+            <div class="ri-title ko">인공지능 &amp; 머신러닝</div>
+            <p class="ri-body en">Python, neural networks, computer vision, deep learning — project-based with GitHub Classroom from week one.</p>
+            <p class="ri-body ko">Python, 신경망, 컴퓨터 비전, 딥러닝 — 첫 주부터 GitHub Classroom을 활용한 프로젝트 기반.</p>
+            <div class="tags">
+              <span class="tag b"><span>Python</span></span>
+              <span class="tag b"><span>ML / DL</span></span>
+              <span class="tag b"><span>Computer Vision</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gli teach-li">
+        <div class="tli-grid">
+          <div class="num-wrap">
+            <div class="item-thumb grad-cs" style="opacity:.45;"></div>
+            <div class="item-num">02</div>
+          </div>
+          <div>
+            <div class="ri-title en">IoT &amp; Embedded Systems</div>
+            <div class="ri-title ko">IoT &amp; 임베디드 시스템</div>
+            <p class="ri-body en">Circuits, microcontrollers, sensors — from breadboard prototype to real-world deployment.</p>
+            <p class="ri-body ko">회로, 마이크로컨트롤러, 센서 — 브레드보드 프로토타입에서 실제 배포까지.</p>
+            <div class="tags">
+              <span class="tag b"><span>Arduino</span></span>
+              <span class="tag b"><span>Raspberry Pi</span></span>
+              <span class="tag b"><span>Circuits</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gli teach-li">
+        <div class="tli-grid">
+          <div class="num-wrap">
+            <div class="item-num">03</div>
+          </div>
+          <div>
+            <div class="ri-title en">Programming Fundamentals</div>
+            <div class="ri-title ko">프로그래밍 기초</div>
+            <p class="ri-body en">C, Python, Java, web — clear bilingual instruction designed for all levels.</p>
+            <p class="ri-body ko">C, Python, Java, 웹 — 전 레벨을 위한 명확한 이중 언어 수업.</p>
+            <div class="tags">
+              <span class="tag b"><span>C / Python</span></span>
+              <span class="tag b"><span>Java</span></span>
+              <span class="tag b"><span>Web</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /glist -->
+
+    <div style="margin-top:1.75rem;" class="rise">
+      <a href="https://aaronkr-courses.github.io/courses/" class="slink slink-blue" target="_blank" style="display:inline-flex;">
+        <span class="en">View all courses →</span><span class="ko">모든 강의 보기 →</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ═══════════════════════
+     LABS
+══════════════════════════ -->
+<section class="pad" id="labs">
+  <div class="wrap">
+
+    <div class="sec-hdr rise">
+      <div class="sec-hdr-text">
+        <div class="sec-label en">Online Lab &amp; Experiments</div>
+        <div class="sec-label ko">온라인 연구실 &amp; 실험</div>
+        <h2>
+          <span class="en">Running <em>Experiments</em></span>
+          <span class="ko"><em>실험</em> 진행 중</span>
+        </h2>
+        <p class="sec-intro en">Code notebooks, benchmarks, and live investigations — work-in-progress published openly.</p>
+        <p class="sec-intro ko">코드 노트북, 벤치마크, 실시간 탐구 — 진행 중인 작업을 공개적으로 게시합니다.</p>
+      </div>
+    </div>
+
+    <div class="glist rise">
+
+      <div class="gli lab-li">
+        <div class="tli-grid">
+          <div class="num-wrap">
+            <div class="item-thumb grad-aurora" style="opacity:.4;"></div>
+            <div class="item-num">01</div>
+          </div>
+          <div>
+            <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.45rem;">
+              <span style="width:5px;height:5px;border-radius:50%;background:var(--teal);display:inline-block;"></span>
+              <span class="en">Active</span><span class="ko">진행 중</span>
+            </div>
+            <div class="ri-title en">Hangul OCR Benchmark</div>
+            <div class="ri-title ko">한글 OCR 벤치마크</div>
+            <p class="ri-body en">Transformer vs. CNN comparative study on Korean handwriting recognition datasets.</p>
+            <p class="ri-body ko">한국어 필기 인식 데이터셋에서 트랜스포머와 CNN 비교 연구.</p>
+            <div class="tags">
+              <span class="tag"><span>OCR</span></span>
+              <span class="tag"><span>Transformer</span></span>
+              <span class="tag b"><span>CNN</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gli lab-li">
+        <div class="tli-grid">
+          <div class="num-wrap"><div class="item-num">02</div></div>
+          <div>
+            <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.45rem;">
+              <span style="width:5px;height:5px;border-radius:50%;background:var(--purple);display:inline-block;"></span>
+              <span class="en">Coming Soon</span><span class="ko">준비 중</span>
+            </div>
+            <div class="ri-title en">Physical AI Interactive Demos</div>
+            <div class="ri-title ko">피지컬 AI 인터랙티브 데모</div>
+            <p class="ri-body en">Browser-based interactive visualizations of embodied AI for classroom and self-study use.</p>
+            <p class="ri-body ko">교실 및 자기 학습을 위한 브라우저 기반 체화된 AI 인터랙티브 시각화.</p>
+            <div class="tags">
+              <span class="tag p"><span>Physical AI</span></span>
+              <span class="tag p"><span>Interactive</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gli lab-li">
+        <div class="tli-grid">
+          <div class="num-wrap"><div class="item-num">03</div></div>
+          <div>
+            <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);display:inline-flex;align-items:center;gap:.35rem;margin-bottom:.45rem;">
+              <span style="width:5px;height:5px;border-radius:50%;background:var(--purple);display:inline-block;"></span>
+              <span class="en">Coming Soon</span><span class="ko">준비 중</span>
+            </div>
+            <div class="ri-title en">GitHub Classroom Analysis</div>
+            <div class="ri-title ko">GitHub Classroom 분석</div>
+            <p class="ri-body en">Live data analysis of assignment patterns and outcomes across five universities.</p>
+            <p class="ri-body ko">다섯 개 대학의 과제 패턴 및 결과 실시간 데이터 분석.</p>
+            <div class="tags">
+              <span class="tag b"><span>GitHub</span></span>
+              <span class="tag p"><span>EdTech</span></span>
+              <span class="tag"><span>Data</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /glist -->
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ═══════════════════════
+     DESIGN
+══════════════════════════ -->
+<section class="pad" id="design">
+  <div class="wrap">
+
+    <div class="sec-hdr rise">
+      <div class="sec-hdr-text">
+        <div class="sec-label purple en">Creative Work</div>
+        <div class="sec-label purple ko">크리에이티브 작업</div>
+        <h2>
+          <span class="en">Design &amp; <span class="ip">Visual Work</span></span>
+          <span class="ko">디자인 &amp; <span class="ip">시각 작업</span></span>
+        </h2>
+        <p class="sec-intro en">
+          Five years as English magazine designer for Jeonbuk Center for International Affairs (2018–2022).
+          Freelance branding and web development.
+        </p>
+        <p class="sec-intro ko">
+          전북국제교류센터 영문 매거진 디자이너 5년 (2018–2022). 프리랜서 브랜딩 및 웹.
+        </p>
+      </div>
+    </div>
+
+    <div class="design-grid rise">
+      <div class="di">
+        <img src="https://files.aaron.kr/media/2025/01/jblife-2022-vol3.jpg" alt="JB Life 2022 Vol 3"/>
+        <div class="di-ov"><div class="di-label">JB Life! 2022 · Vol. 3<br>Jeongeup Travel</div></div>
+      </div>
+      <div class="di">
+        <img src="https://files.aaron.kr/media/2025/01/jblife-2022-vol2.png" alt="JB Life 2022 Vol 2"/>
+        <div class="di-ov"><div class="di-label">2022 · Vol. 2<br>Slow Summer</div></div>
+      </div>
+      <div class="di">
+        <img src="https://files.aaron.kr/media/2025/01/jblife-2022-vol1.png" alt="JB Life 2022 Vol 1"/>
+        <div class="di-ov"><div class="di-label">2022 · Vol. 1<br>Art &amp; History</div></div>
+      </div>
+      <div class="di">
+        <img src="https://files.aaron.kr/media/2025/01/jblife-2021-winter.jpg" alt="JB Life 2021 Winter"/>
+        <div class="di-ov"><div class="di-label">2021 · Winter<br>Korean Games</div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.75rem;" class="rise">
+      <a href="https://aaron.kr/content/project-type/design" class="slink slink-purple" target="_blank" style="display:inline-flex;">
+        <span class="en">View all design work →</span><span class="ko">모든 디자인 작업 →</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ═══════════════════════
+     BLOG
+══════════════════════════ -->
+<section class="pad" id="blog">
+  <div class="wrap">
+
+    <div class="sec-hdr rise">
+      <div class="sec-hdr-text">
+        <div class="sec-label en">Writing</div>
+        <div class="sec-label ko">글쓰기</div>
+        <h2>
+          <span class="en">From the <em>Notebook</em></span>
+          <span class="ko"><em>노트</em>에서</span>
+        </h2>
+      </div>
+    </div>
+
+    <div class="blog-list rise">
+      <a href="https://aaron.kr/content" class="bitem">
+        <span class="btitle en">On Physical AI: What Embodied Intelligence Means for Education</span>
+        <span class="btitle ko">피지컬 AI에 대하여: 체화된 지능이 교육에 의미하는 것</span>
+        <span class="bmeta">2025 · Research</span>
+      </a>
+      <a href="https://aaron.kr/content" class="bitem">
+        <span class="btitle en">GitHub Classroom After One Year: What Actually Worked</span>
+        <span class="btitle ko">GitHub Classroom 1년 후: 실제로 효과가 있었던 것들</span>
+        <span class="bmeta">2024 · Teaching</span>
+      </a>
+      <a href="https://aaron.kr/content" class="bitem">
+        <span class="btitle en">Twenty Years in Korea: Observations on Education and Culture</span>
+        <span class="btitle ko">한국에서의 20년: 교육과 문화에 관한 관찰</span>
+        <span class="bmeta">2024 · Reflection</span>
+      </a>
+      <a href="https://aaron.kr/content/reflection/a-kind-no-is-kinder-than-a-wishy-washy-maybe/" class="bitem">
+        <span class="btitle"><em>"A kind 'no' is kinder than a wishy-washy 'maybe.'"</em></span>
+        <span class="bmeta">Aug 2022 · Reflection</span>
+      </a>
+      <a href="https://aaron.kr/content" class="bitem" style="border-bottom:none;">
+        <span class="btitle" style="color:var(--teal);flex:none;">
+          <span class="en">All posts →</span><span class="ko">모든 글 →</span>
+        </span>
+        <span class="bmeta"></span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ═══════════════════════
+     BEYOND THE LAB  (Lex Fridman style)
+══════════════════════════ -->
+<section class="pad" id="beyond" style="background:var(--bg-soft);border-top:1px solid var(--rule-clr);">
+  <div class="wrap">
+
+    <div class="sec-hdr rise">
+      <div class="sec-hdr-text">
+        <div class="sec-label pink en">Beyond the Lab</div>
+        <div class="sec-label pink ko">랩 밖에서</div>
+        <h2>
+          <span class="en">Beyond the <em>Research</em></span>
+          <span class="ko"><em>연구</em> 너머</span>
+        </h2>
+        <p class="sec-intro en">Work is not the whole person.</p>
+        <p class="sec-intro ko">일이 전부는 아닙니다.</p>
+      </div>
+    </div>
+
+    <div class="beyond-grid rise">
+      <div class="b-item">
+        <div class="b-icon">🥋</div>
+        <div class="b-title en">TaeKwonDo, 2nd Dan</div>
+        <div class="b-title ko">태권도 2단</div>
+        <p class="b-body en">Earned a second-degree black belt living in Korea. Still respect the discipline.</p>
+        <p class="b-body ko">한국에서 2단 검은 띠를 취득했습니다. 여전히 그 수련을 존중합니다.</p>
+      </div>
+      <div class="b-item">
+        <div class="b-icon">🏋️</div>
+        <div class="b-title en">Heavy Lifting &amp; Endurance</div>
+        <div class="b-title ko">근력 운동 &amp; 지구력</div>
+        <p class="b-body en">Five half-marathons, semi-pro cycling, and currently grinding through heavy compound lifts.</p>
+        <p class="b-body ko">하프마라톤 5회, 세미프로 사이클링, 현재는 무거운 복합 운동에 집중 중.</p>
+      </div>
+      <div class="b-item">
+        <div class="b-icon">🎸</div>
+        <div class="b-title en">Bass Guitar &amp; Drums</div>
+        <div class="b-title ko">베이스 기타 &amp; 드럼</div>
+        <p class="b-body en">Playing bass and drums. Baritone voice — lately experimenting with country phrasing.</p>
+        <p class="b-body ko">베이스와 드럼 연주. 바리톤 보이스 — 요즘은 컨트리 창법을 실험 중.</p>
+      </div>
+      <div class="b-item">
+        <div class="b-icon">☕</div>
+        <div class="b-title en">Ethiopian Pour-Over</div>
+        <div class="b-title ko">에티오피아 핸드드립</div>
+        <p class="b-body en">산미맛 single-origin coffee — Ethiopia, Kenya, black Americano. Korean specialty coffee culture is world-class.</p>
+        <p class="b-body ko">산미맛 싱글 오리진 커피 — 에티오피아, 케냐, 블랙 아메리카노. 한국 스페셜티 커피 문화는 세계 최고 수준.</p>
+      </div>
+      <div class="b-item">
+        <div class="b-icon">📖</div>
+        <div class="b-title en">Reading</div>
+        <div class="b-title ko">독서</div>
+        <p class="b-body en">Andy Weir, Terry Brooks, Jordan Peterson. Project Hail Mary is the best sci-fi in years.</p>
+        <p class="b-body ko">앤디 위어, 테리 브룩스, 조던 피터슨. 프로젝트 헤일 메리는 최근 몇 년 최고의 SF.</p>
+      </div>
+      <div class="b-item">
+        <div class="b-icon">🤠</div>
+        <div class="b-title en">Wyoming Roots</div>
+        <div class="b-title ko">와이오밍 뿌리</div>
+        <p class="b-body en">From Big Sky Country. The wide open West shaped how I think — still showing up in Seoul.</p>
+        <p class="b-body ko">빅 스카이 컨트리 출신. 드넓은 서부가 저의 사고방식을 형성했습니다.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════
+     FOOTER
+══════════════════════════ -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-name">Aaron Snowberger<span>, Ph.D.</span></div>
+      <p class="foot-info en">
+        AI Researcher &amp; Educator · Jeonju, Republic of Korea<br>
+        Lecturing at five Korean universities · hi@aaron.kr
+      </p>
+      <p class="foot-info ko">
+        AI 연구자 &amp; 교육자 · 전주, 대한민국<br>
+        다섯 개 한국 대학 강의 · hi@aaron.kr
+      </p>
+    </div>
+    <div class="foot-links">
+      <div class="fl-row">
+        <a href="https://linkedin.com/in/aaronsnowberger/" class="fl t">LinkedIn</a>
+        <a href="https://github.com/jekkilekki" class="fl t">GitHub</a>
+        <a href="https://aaronkr-courses.github.io/courses/" class="fl t">Courses</a>
+      </div>
+      <div class="fl-row">
+        <a href="https://www.researchgate.net/profile/Aaron-Snowberger" class="fl b">ResearchGate</a>
+        <a href="https://scholar.google.com/citations?user=JCbnnvUAAAAJ" class="fl b">Scholar</a>
+        <a href="https://orcid.org" class="fl b">ORCID</a>
+      </div>
+      <div class="fl-row">
+        <a href="https://kspai.org" class="fl p">KSPAI</a>
+        <a href="https://aaron.kr/content" class="fl p">Blog</a>
+        <a href="https://m.blog.naver.com/aaron_kr" class="fl p">Naver</a>
+      </div>
+      <p class="foot-info" style="text-align:right;margin-top:.4rem;">© 2026 Aaron Snowberger</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════
+     JS
+══════════════════════════ -->
+<script>
+const html = document.documentElement;
+
+/* ── Theme ── */
+const themeBtn = document.getElementById('themeToggle');
+themeBtn.addEventListener('click', function() {
+  const dark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', dark ? 'light' : 'dark');
+  this.textContent = dark ? '☾' : '☀';
+});
+
+/* ── Language ── */
+const langBtn = document.getElementById('langToggle');
+let lang = 'en';
+langBtn.addEventListener('click', function() {
+  lang = lang === 'en' ? 'ko' : 'en';
+  html.setAttribute('data-lang', lang);
+  this.textContent = lang === 'en' ? '한국어' : 'English';
+});
+
+/* ── Aurora Toggle ── */
+const auroraBtn = document.getElementById('auroraToggle');
+let aurora = false;
+auroraBtn.addEventListener('click', function() {
+  aurora = !aurora;
+  html.setAttribute('data-aurora', aurora ? 'on' : 'off');
+  this.setAttribute('aria-pressed', aurora);
+  this.title = aurora ? 'Aurora: ON' : 'Aurora: OFF';
+});
+
+/* ── Hamburger Menu ── */
+const ham = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+ham.addEventListener('click', function() {
+  const open = mobileMenu.classList.toggle('open');
+  this.classList.toggle('open', open);
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    ham.classList.remove('open');
+  });
+});
+
+/* ── Scroll Progress ── */
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('prog').style.width = Math.min(pct, 100) + '%';
+}, { passive: true });
+
+/* ── Fade-in ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.rise').forEach(el => observer.observe(el));
+
+/* ── Wyoming / Korea Comparison Slider ── */
+const range = document.getElementById('cmpRange');
+const right = document.getElementById('cmpRight');
+const handle = document.getElementById('cmpHandle');
+
+function updateSlider(val) {
+  right.style.clipPath = `inset(0 0 0 ${val}%)`;
+  handle.style.left = val + '%';
+}
+range.addEventListener('input', function() { updateSlider(this.value); });
+updateSlider(50);
+</script>
+</body>
+</html>
