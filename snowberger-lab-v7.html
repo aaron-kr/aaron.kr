@@ -99,7 +99,7 @@ footer::before {
 }
 .fs:hover::before, .fss:hover::before { transform: translateX(0); }
 .fs:hover  { color: var(--bg) !important; border-color: var(--sf, var(--teal)) !important; }
-.fss:hover { border-color: var(--sf, var(--teal)) !important; }
+/* .fss:hover { border-color: var(--sf, var(--teal)) !important; } */
 
 /* Per-element fill + border colors
    Slinks: full accent color border (ghost → solid on hover) */
@@ -241,13 +241,80 @@ footer::before {
 
 /* ══════════════════════════════
    MANUSCRIPT TEXTURE
+   Uses a real background image at low opacity
+   via ::before pseudo-element so it never
+   interferes with content layering.
+
+   TO USE:
+   1. Add class="ms" to any section or div
+   2. Set the --ms-url variable to your image path:
+      Option A — inline on the element:
+        <section id="hero" class="ms"
+          style="--ms-url: url('images/calligraphy.jpg');">
+
+      Option B — in CSS by element ID:
+        #hero  { --ms-url: url('images/calligraphy.jpg'); }
+        footer { --ms-url: url('images/manuscript.jpg'); }
+
+   IMAGE TIPS:
+   - High-contrast Korean calligraphy or Manchu script scans work best
+   - Light background images (paper/parchment) show more at low opacity
+   - Recommended sources: National Folk Museum of Korea open archive,
+     Wikimedia Commons (search "Joseon calligraphy")
+   - The image anchors top-left and covers; adjust --ms-position to move it
 ══════════════════════════════ */
-.ms {
-  background-image:
-    repeating-linear-gradient(0deg, transparent 0, transparent 39px, rgba(45,212,191,.04) 39px, rgba(45,212,191,.04) 40px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='40'%3E%3Crect x='10' y='18' width='8' height='1.5' rx='.5' fill='rgba(45,212,191,.09)'/%3E%3Crect x='12' y='13' width='1.5' height='11' rx='.5' fill='rgba(45,212,191,.06)'/%3E%3Crect x='55' y='18' width='7' height='1.5' rx='.5' fill='rgba(45,212,191,.09)'/%3E%3Crect x='58' y='13' width='1.5' height='12' rx='.5' fill='rgba(45,212,191,.06)'/%3E%3Crect x='80' y='16' width='12' height='1.5' rx='.5' fill='rgba(45,212,191,.09)'/%3E%3Crect x='85' y='16' width='1.5' height='14' rx='.5' fill='rgba(45,212,191,.06)'/%3E%3Crect x='80' y='27' width='12' height='1.5' rx='.5' fill='rgba(45,212,191,.07)'/%3E%3Crect x='180' y='16' width='10' height='1.5' rx='.5' fill='rgba(45,212,191,.09)'/%3E%3Crect x='184' y='16' width='1.5' height='13' rx='.5' fill='rgba(45,212,191,.06)'/%3E%3Crect x='280' y='16' width='11' height='1.5' rx='.5' fill='rgba(45,212,191,.09)'/%3E%3Crect x='285' y='16' width='1.5' height='14' rx='.5' fill='rgba(45,212,191,.06)'/%3E%3C/svg%3E");
+
+/* Default: no image (graceful fallback — element looks normal) */
+:root {
+  --ms-url:      none;
+  --ms-opacity:  0.08;   /* 8% — adjust per image; darker images may need 0.04 */
+  --ms-position: center center; /* adjust to reposition texture (e.g. 'top left') */
+  --ms-size:     cover;
+  --ms-blend:    multiply; /* 'multiply' works best on light mode;
+                              use 'screen' or 'luminosity' on dark mode */
 }
-[data-aurora="on"] .ms { filter: brightness(1.5); }
+
+.ms {
+  /* Parent must be positioned so ::before can fill it */
+  position: relative;
+  isolation: isolate; /* creates stacking context, keeps ::before behind content */
+}
+
+.ms::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1; /* always behind all content */
+  pointer-events: none;
+
+  background-image: var(--ms-url);
+  background-size: var(--ms-size);
+  background-position: var(--ms-position);
+  background-repeat: no-repeat;
+
+  opacity: var(--ms-opacity);
+  mix-blend-mode: var(--ms-blend);
+}
+
+/* When no image is set, ::before is invisible — no side effects */
+.ms[style*="--ms-url: none"]::before,
+.ms:not([style*="--ms-url"])::before {
+  display: none;
+}
+
+/* Aurora: slightly brighten the image when aurora is on */
+[data-aurora="on"] .ms::before {
+  opacity: calc(var(--ms-opacity) * 1.6);
+}
+
+/* Dark mode: switch blend mode so image reads against dark background */
+[data-theme="dark"] .ms::before {
+  mix-blend-mode: screen;  /* inverts blending for dark surfaces */
+  opacity: calc(var(--ms-opacity) * 0.75); /* slightly reduce on dark — screen amplifies */
+}
+
+#hero  { --ms-url: url('img/hangul-calligraphy.jpg'); }
+footer { --ms-url: url('img/hangul-calligraphy.jpg'); --ms-opacity: 0.05; }
 
 /* ══════════════════════════════
    RESET & BASE
@@ -350,8 +417,8 @@ h2 .ipk{ font-style:italic; color:var(--pink); }
 /* ══════════════════════════════
    HERO
 ══════════════════════════════ */
-#hero { padding-top:58px; min-height:clamp(600px,90vh,920px); display:flex; align-items:center; }
-.hero-grid { max-width:1060px; margin:0 auto; padding:4rem 2rem 5rem; display:grid; grid-template-columns:240px 1fr; gap:4.5rem; align-items:center; }
+#hero { padding-top:58px; min-height:clamp(600px,90vh,920px); display:flex; align-items:center; background: var(--bg-soft); }
+.hero-grid { max-width:1060px; margin:0 auto; padding:4rem 2rem 5rem; display:grid; grid-template-columns:240px 1fr; gap:4.5rem; align-items:center;   background-color: color-mix(in srgb, var(--bg-soft) 80%, transparent); border-radius: 4px; /* optional: softens the box edge slightly */ }
 .hero-photo img { width:100%; border-radius:5px; display:block; filter:grayscale(8%); transition:filter .3s; }
 .hero-photo:hover img { filter:grayscale(0%); }
 .photo-affil { margin-top:.9rem; display:flex; flex-direction:column; gap:.28rem; }
@@ -475,7 +542,9 @@ h1 em { font-style:italic; color:var(--teal); }
 /* ══════════════════════════════
    SOCIETIES + LOGO SUPPORT
 ══════════════════════════════ */
-.societies { padding:1.85rem 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); margin-top:2rem; }
+.societies { padding:1.85rem 0; margin-top:2rem; border-top:1px solid var(--rule); 
+  /* border-bottom:1px solid var(--rule);   */
+}
 .soc-lbl { font-size:.67rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--t3); margin-bottom:.8rem; }
 .soc-row { display:flex; flex-wrap:wrap; gap:.45rem; }
 .soc-pill {
@@ -602,6 +671,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
   line-height:0;
 }
 .wy-logo:hover { opacity:.8; color:var(--teal); }
+.wy-logo img { max-height: 60px; }
 .wy-sub {
   font-family:'Playfair Display',serif; font-size:.65rem; font-style:italic;
   color:var(--t3); opacity:.5; letter-spacing:.08em; text-align:center;
@@ -732,7 +802,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 <!-- ══════════════════════════════
      HERO
 ═══════════════════════════════ -->
-<section id="hero" class="ms">
+<section id="hero" class="ms" style="--ms-url: url('img/hangul-papers.jpg');">
   <div class="hero-grid">
     <div class="hero-photo">
       <img src="https://i0.wp.com/files.aaron.kr/media/2025/01/aaron.jpg?fit=460%2C460&ssl=1" alt="Aaron Snowberger" onerror="this.style.display='none'"/>
@@ -748,7 +818,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
     </div>
     <div>
       <div class="hero-eyebrow"><div class="ey-line"></div><span class="ey-txt en">Jeonju, South Korea</span><span class="ey-txt ko">전주, 대한민국</span></div>
-      <h1><span class="en">Aaron<br><em>Snowberger</em></span><span class="ko">에런<br><em>스노우버거</em></span></h1>
+      <h1><span class="en">Aaron <em>Snowberger</em></span><span class="ko">에런 <em>스노버거</em></span></h1>
       <p class="hero-cred"><span class="en">Ph.D. · AI Researcher &amp; Educator · Wyoming</span><span class="ko">공학박사 · AI 연구자 &amp; 교육자 · 와이오밍 출신</span></p>
       <p class="hero-tagline en">"Bridging East and West through AI research, engineering education, and the occasional good Korean pour-over."</p>
       <p class="hero-tagline ko">"AI 연구, 공학 교육, 그리고 가끔 한국 핸드드립 커피 한 잔으로 동서양을 잇습니다."</p>
@@ -757,10 +827,10 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       <div class="srow">
         <a href="https://linkedin.com/in/aaronsnowberger/" class="slink sl-t fs" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
         <a href="https://github.com/jekkilekki" class="slink sl-t fs" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>GitHub</a>
-        <a href="https://www.researchgate.net/profile/Aaron-Snowberger" class="slink sl-b fs" target="_blank">ResearchGate</a>
-        <a href="https://scholar.google.com/citations?user=JCbnnvUAAAAJ" class="slink sl-b fs" target="_blank">Scholar</a>
-        <a href="https://orcid.org/0000-0001-8652-0936" class="slink sl-p fs" target="_blank">ORCID</a>
-        <a href="https://kspai.org" class="slink sl-p fs" target="_blank">KSPAI</a>
+        <a href="https://www.researchgate.net/profile/Aaron-Snowberger" class="slink sl-b fs" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zM7 17V7h3a3 3 0 010 6H9v4H7zm12 0h-2l-2-4h-1v4h-2V7h3a3 3 0 011 5.82L19 17z"/></svg>ResearchGate</a>
+        <a href="https://scholar.google.com/citations?user=JCbnnvUAAAAJ" class="slink sl-b fs" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>Scholar</a>
+        <a href="https://orcid.org/0000-0001-8652-0936" class="slink sl-p fs" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M9 7h2v10H9zM13 7h2a5 5 0 010 10h-2z" fill="var(--bg)"/></svg>ORCID</a>
+        <a href="https://kspai.org" class="slink sl-p fs" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>KSPAI</a>
         <a href="mailto:hi@aaron.kr" class="slink sl-pk fs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>Email</a>
       </div>
     </div>
@@ -810,7 +880,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
     <div class="glist rise">
       <div class="gli">
         <div class="ritem">
-          <div class="rm"><div class="rm-lbl"><span class="en">Physical AI</span><span class="ko">피지컬 AI</span><span class="rm-acc">2024–Present</span></div></div>
+          <div class="rm"><div class="rm-lbl"><span class="en">Physical AI</span><span class="ko">피지컬 AI</span><span class="rm-acc">2025–Present</span></div></div>
           <div class="rc">
             <div class="ri-title en">Physical AI Curriculum Design</div><div class="ri-title ko">피지컬 AI 교육과정 설계</div>
             <p class="ri-body en">Developing university-level curriculum at the frontier of embodied intelligence — where AI leaves the data center and operates in the physical world. Contributing to KSPAI.</p>
@@ -823,7 +893,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       </div>
       <div class="gli">
         <div class="ritem">
-          <div class="rm"><div class="rm-lbl"><span class="en">Computer Vision</span><span class="ko">컴퓨터 비전</span><span class="rm-acc b en">Ph.D. · Best Thesis</span><span class="rm-acc b ko">박사 · 우수논문</span></div></div>
+          <div class="rm"><div class="rm-lbl"><span class="en">Info-Comm Engineeering</span><span class="ko">정보통신공학</span><span class="rm-acc b en">Ph.D. · Best Thesis</span><span class="rm-acc b ko">박사 · 우수논문</span></div></div>
           <div class="rc">
             <div class="ri-title en">Handwriting Recognition: Manchu Script &amp; Hangul</div><div class="ri-title ko">필기 인식: 만주어 문자 &amp; 한글</div>
             <p class="ri-body en">Deep learning for historical Manchu script and modern Korean handwriting. Awarded Best Ph.D. Thesis at Hanbat National University.</p>
@@ -836,7 +906,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       </div>
       <div class="gli">
         <div class="ritem">
-          <div class="rm"><div class="rm-lbl"><span class="en">CS Education</span><span class="ko">CS 교육</span><span class="rm-acc b">JPEE · Published</span></div></div>
+          <div class="rm"><div class="rm-lbl"><span class="en">CS Education</span><span class="ko">CS 교육</span><span class="rm-acc b">Several Published</span></div></div>
           <div class="rc">
             <div class="ri-title en">GitHub &amp; Developer Tools in CS Education</div><div class="ri-title ko">CS 교육에서의 GitHub 및 개발자 도구</div>
             <p class="ri-body en">Empirical study integrating GitHub Classroom into university CS workflows. Published in the Journal of Practical Engineering Education.</p>
@@ -896,35 +966,28 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
          Keep ALL past universities — breadth of teaching is a credibility signal.
     ── -->
     <div class="uni-strip rise">
-      <div class="uni-strip-lbl en">Teaching Experience</div>
+      <div class="uni-strip-lbl en">University Teaching Experience</div>
       <div class="uni-strip-lbl ko">강의 경험</div>
-      <a class="uni-logo-wrap">
+      <a class="uni-logo-wrap" data-tip="Jeonbuk National University">
         <img src="https://aaronkr-courses.github.io/assets/img/jbnu-logo-2.png" alt="Jeonbuk National University" class="uni-logo"/>
-        <span class="uni-name en">Jeonbuk University</span><span class="uni-name ko">전북대학교</span>
       </a>
-      <a class="uni-logo-wrap">
+      <a class="uni-logo-wrap" data-tip="Korea National University of Transportation">
         <img src="https://aaronkr-courses.github.io/assets/img/ut-logo.png" alt="Korea National University of Transportation" class="uni-logo"/>
-        <span class="uni-name en">Korea Transportation University</span><span class="uni-name ko">한국교통대학</span>
       </a>
-      <a class="uni-logo-wrap">
+      <a class="uni-logo-wrap" data-tip="Hanbat National University">
         <img src="https://aaronkr-courses.github.io/assets/img/hanbat-logo.png" alt="Hanbat National University" class="uni-logo"/>
-        <span class="uni-name en">Hanbat University</span><span class="uni-name ko">한밭대학교</span>
       </a>
-      <a class="uni-logo-wrap">
+      <a class="uni-logo-wrap" data-tip="Jeonju National University of Education">
         <img src="https://aaronkr-courses.github.io/assets/img/jnue-logo.png" alt="Jeonju National University of Education" class="uni-logo"/>
-        <span class="uni-name en">Jeonju University of Education</span><span class="uni-name ko">전주교육대학교</span>
       </a>
-      <a class="uni-logo-wrap">
+      <a class="uni-logo-wrap" data-tip="Wonkwang University">
         <img src="https://aaronkr-courses.github.io/assets/img/wku-logo.png" alt="Wonkwang University" class="uni-logo"/>
-        <span class="uni-name en">Wonkwang University</span><span class="uni-name ko">원광대학교</span> 
       </a>
-      <a class="uni-logo-wrap">
+      <a class="uni-logo-wrap" data-tip="Daejeon University">
         <img src="https://aaronkr-courses.github.io/assets/img/dju-logo-2.png" alt="Daejeon University" class="uni-logo"/>
-        <span class="uni-name en">Daejeon University</span><span class="uni-name ko">대전대학교</span>
       </a>
-      <a class="uni-logo-wrap">
+      <a class="uni-logo-wrap" data-tip="Jeonju University">
         <img src="https://aaronkr-courses.github.io/assets/img/jju-logo.png" alt="Jeonju University" class="uni-logo"/>
-        <span class="uni-name en">Jeonju University</span><span class="uni-name ko">전주대학교</span>
       </a>
     </div>
 
@@ -960,6 +1023,40 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       <div class="di"><img src="https://files.aaron.kr/media/2025/01/jblife-2022-vol1.png" alt=""/><div class="di-ov"><div class="di-lbl">2022 · Vol. 1<br>Art &amp; History</div></div></div>
       <div class="di"><img src="https://files.aaron.kr/media/2025/01/jblife-2021-winter.jpg" alt=""/><div class="di-ov"><div class="di-lbl">2021 · Winter<br>Korean Games</div></div></div>
     </div>
+
+    <!-- ── DESIGN EXPERIENCE (logos from AaronSnowberger.com)
+         TO USE LOGOS: replace <span class="uni-name"> with:
+           <a href="https://hanbat.ac.kr" class="uni-logo-wrap" target="_blank">
+             <img class="uni-logo" src="logos/hanbat.png" alt="Hanbat National University">
+           </a>
+         Keep ALL past universities — breadth of teaching is a credibility signal.
+    ── -->
+    <div class="uni-strip rise">
+      <div class="uni-strip-lbl en">Selected Clients</div>
+      <div class="uni-strip-lbl ko">선택된 클라이언트</div>
+      <a class="uni-logo-wrap" data-tip="Key To Korean">
+        <img src="https://aaronsnowberger.com/wp-content/uploads/2015/05/k2k-client-logo-300x188.png" alt="Key To Korean" class="uni-logo"/>
+      </a>
+      <a class="uni-logo-wrap" data-tip="Korea TESOL">
+        <img src="https://aaronsnowberger.com/wp-content/uploads/2015/05/KOTESOL-Logo-2010-GIF-285x300.gif" alt="Korea TESOL" class="uni-logo"/>
+      </a>
+      <a class="uni-logo-wrap" data-tip="Jeollabuk-do Center for International Affairs">
+        <img src="https://aaronsnowberger.com/wp-content/uploads/2020/07/1-1%E1%84%90%E1%85%AE%E1%84%86%E1%85%A7%E1%86%BC-300x178.png" alt="Jeollabuk-do Center for International Affairs" class="uni-logo"/>
+      </a>
+      <a class="uni-logo-wrap" data-tip="Global Prodigy Academy">
+        <img src="https://aaronsnowberger.com/wp-content/uploads/2016/06/gpa-logo-black-png-300x93.png" alt="Global Prodigy Academy" class="uni-logo"/>
+      </a>
+      <a class="uni-logo-wrap" data-tip="Jeonju University">
+        <img src="https://aaronsnowberger.com/wp-content/uploads/2015/05/jju-client-logo-267x300.png" alt="WJeonju University" class="uni-logo"/>
+      </a>
+      <a class="uni-logo-wrap" data-tip="Antioch International Christian Family">
+        <img src="https://aaronsnowberger.com/wp-content/uploads/2015/05/aicf-client-logo-300x297.png" alt="Antioch International Christian Family" class="uni-logo"/>
+      </a>
+      <a class="uni-logo-wrap" data-tip="Full Sail University">
+        <img src="https://aaronsnowberger.com/wp-content/uploads/2015/05/full-sail-client-logo-300x209.png" alt="Full Sail University" class="uni-logo"/>
+      </a>
+    </div>
+    
     <div style="margin-top:1.75rem;" class="rise"><a href="https://aaron.kr/content/project-type/design" class="slink sl-p fs" target="_blank" style="display:inline-flex;"><span class="en">View all design work →</span><span class="ko">모든 디자인 작업 →</span></a></div>
   </div>
 </section>
@@ -971,6 +1068,10 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
   <div class="wrap">
     <div class="sec-hdr rise"><div class="sec-hdr-txt"><div class="sec-lbl en">Writing</div><div class="sec-lbl ko">글쓰기</div><h2><span class="en">From the <em>Notebook</em></span><span class="ko"><em>노트</em>에서</span></h2></div></div>
     <div class="blist rise">
+      <a href="https://aaron.kr/content" class="bi"><span class="bt en">On Physical AI: What Embodied Intelligence Means for Education</span><span class="bt ko">피지컬 AI에 대하여: 체화된 지능이 교육에 의미하는 것</span><span class="bm">2025 · Research</span></a>
+      <a href="https://aaron.kr/content" class="bi"><span class="bt en">GitHub Classroom After One Year: What Actually Worked</span><span class="bt ko">GitHub Classroom 1년 후: 실제로 효과가 있었던 것들</span><span class="bm">2024 · Teaching</span></a>
+      <a href="https://aaron.kr/content" class="bi"><span class="bt en">Twenty Years in Korea: Observations on Education and Culture</span><span class="bt ko">한국에서의 20년: 교육과 문화에 관한 관찰</span><span class="bm">2024 · Reflection</span></a>
+      <a href="https://aaron.kr/content/reflection/a-kind-no-is-kinder-than-a-wishy-washy-maybe/" class="bi"><span class="bt"><em>"A kind 'no' is kinder than a wishy-washy 'maybe.'"</em></span><span class="bm">Aug 2022</span></a>
       <a href="https://aaron.kr/content" class="bi"><span class="bt en">On Physical AI: What Embodied Intelligence Means for Education</span><span class="bt ko">피지컬 AI에 대하여: 체화된 지능이 교육에 의미하는 것</span><span class="bm">2025 · Research</span></a>
       <a href="https://aaron.kr/content" class="bi"><span class="bt en">GitHub Classroom After One Year: What Actually Worked</span><span class="bt ko">GitHub Classroom 1년 후: 실제로 효과가 있었던 것들</span><span class="bm">2024 · Teaching</span></a>
       <a href="https://aaron.kr/content" class="bi"><span class="bt en">Twenty Years in Korea: Observations on Education and Culture</span><span class="bt ko">한국에서의 20년: 교육과 문화에 관한 관찰</span><span class="bm">2024 · Reflection</span></a>
@@ -1070,7 +1171,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 <!-- ══════════════════════════════
      FOOTER  —  3 columns: info | cowboy hat | links
 ═══════════════════════════════ -->
-<footer class="ms">
+<footer class="ms" style="--ms-url: url('img/hangul-papers.jpg');">
   <div class="foot-inner">
 
     <!-- LEFT: info -->
@@ -1083,19 +1184,10 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
     <!-- CENTER: Wyoming cowboy hat SVG -->
     <div class="foot-center">
       <a href="https://en.wikipedia.org/wiki/Wyoming" class="wy-logo" target="_blank" title="Wyoming, USA — Big Sky Country">
-        <svg width="52" height="42" viewBox="0 0 104 84" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-          <!-- Brim: wide, slightly curved up at sides -->
-          <path d="M 4 54 C 8 46 20 44 52 44 C 84 44 96 46 100 54 C 96 62 84 60 52 60 C 20 60 8 62 4 54 Z"/>
-          <!-- Crown body: trapezoidal, tapers up -->
-          <path d="M 22 54 C 23 40 27 28 34 20 Q 42 12 52 11 Q 62 12 70 20 C 77 28 81 40 82 54 Z"/>
-          <!-- Crease at top: two lines converging to suggest pinch -->
-          <path d="M 43 14 C 46 8 49 8 52 11 C 55 8 58 8 61 14" fill="none" stroke="var(--bg-soft)" stroke-width="3.5" stroke-linecap="round" opacity=".45"/>
-          <!-- Hat band: thin stripe at base of crown -->
-          <rect x="22" y="50" width="60" height="4" rx="2" fill="var(--bg-soft)" opacity=".15"/>
-        </svg>
+        <img src="./img/wyoming_cowboys_no-txt.webp" alt="Wyoming Cowboy" class="wy-svg"/>
       </a>
-      <span class="wy-sub en">Wyoming</span>
-      <span class="wy-sub ko">와이오밍</span>
+      <!-- <span class="wy-sub en">Wyoming</span>
+      <span class="wy-sub ko">와이오밍</span> -->
     </div>
 
     <!-- RIGHT: links -->
@@ -1147,29 +1239,67 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
+/* ══════════════════════════════════════
+   USER PREFERENCE PERSISTENCE
+   Saves: theme, lang, aurora to localStorage.
+   Keys: 'as_theme', 'as_lang', 'as_aurora'
+   (Prefix 'as_' = Aaron Snowberger, avoids
+   collisions with other sites on same domain)
+══════════════════════════════════════ */
+
 const html = document.documentElement;
 
-document.getElementById('themeBtn').addEventListener('click', function() {
-  const dark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', dark ? 'light' : 'dark');
-  this.textContent = dark ? '☾' : '☀';
+// ── Read saved prefs on page load (before paint) ──
+const PREFS = {
+  theme:  localStorage.getItem('as_theme')  || 'dark',
+  lang:   localStorage.getItem('as_lang')   || 'en',
+  aurora: localStorage.getItem('as_aurora') || 'off',
+};
+
+// Apply immediately (avoids flash of wrong theme)
+html.setAttribute('data-theme',  PREFS.theme);
+html.setAttribute('data-lang',   PREFS.lang);
+html.setAttribute('data-aurora', PREFS.aurora);
+
+// ── Helper: save + apply a pref ──
+function setPref(key, value, attr) {
+  localStorage.setItem(key, value);
+  html.setAttribute(attr, value);
+}
+
+// ── Theme ──
+const themeBtn = document.getElementById('themeBtn');
+// Sync button label to loaded pref
+themeBtn.textContent = PREFS.theme === 'dark' ? '☀' : '☾';
+
+themeBtn.addEventListener('click', function() {
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  setPref('as_theme', next, 'data-theme');
+  this.textContent = next === 'dark' ? '☀' : '☾';
 });
 
-let lang = 'en';
-document.getElementById('langBtn').addEventListener('click', function() {
-  lang = lang === 'en' ? 'ko' : 'en';
-  html.setAttribute('data-lang', lang);
-  this.textContent = lang === 'en' ? '한국어' : 'English';
+// ── Language ──
+const langBtn = document.getElementById('langBtn');
+langBtn.textContent = PREFS.lang === 'en' ? '한국어' : 'English';
+
+langBtn.addEventListener('click', function() {
+  const next = html.getAttribute('data-lang') === 'en' ? 'ko' : 'en';
+  setPref('as_lang', next, 'data-lang');
+  this.textContent = next === 'en' ? '한국어' : 'English';
 });
 
+// ── Aurora ──
 const auroraBtn = document.getElementById('auroraBtn');
-let aurora = false;
+// Sync button state to loaded pref
+auroraBtn.setAttribute('aria-pressed', PREFS.aurora === 'on' ? 'true' : 'false');
+
 auroraBtn.addEventListener('click', function() {
-  aurora = !aurora;
-  html.setAttribute('data-aurora', aurora ? 'on' : 'off');
-  this.setAttribute('aria-pressed', String(aurora));
+  const next = html.getAttribute('data-aurora') === 'on' ? 'off' : 'on';
+  setPref('as_aurora', next, 'data-aurora');
+  this.setAttribute('aria-pressed', next === 'on' ? 'true' : 'false');
 });
 
+// ── Hamburger (no persistence needed) ──
 const ham = document.getElementById('ham');
 const mob = document.getElementById('mobMenu');
 ham.addEventListener('click', function() {
@@ -1177,33 +1307,30 @@ ham.addEventListener('click', function() {
   this.classList.toggle('open', mob.classList.contains('open'));
 });
 mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  mob.classList.remove('open'); ham.classList.remove('open');
+  mob.classList.remove('open');
+  ham.classList.remove('open');
 }));
 
+// ── Scroll progress ──
 window.addEventListener('scroll', () => {
   document.getElementById('prog').style.width =
     Math.min(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100, 100) + '%';
 }, { passive: true });
 
-new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); } });
-}, { threshold: 0.07 }).observe.length || (() => {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); } });
-  }, { threshold: 0.07 });
-  document.querySelectorAll('.rise').forEach(el => obs.observe(el));
-})();
-
-// Run observer properly
+// ── Fade-in observer ──
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); } });
 }, { threshold: 0.07 });
 document.querySelectorAll('.rise').forEach(el => obs.observe(el));
 
+// ── Slider ──
 const cmpRange = document.getElementById('cmpRange');
 const cmpRight = document.getElementById('cmpRight');
 const cmpHdl   = document.getElementById('cmpHdl');
-function setSlider(v) { cmpRight.style.clipPath = `inset(0 0 0 ${v}%)`; cmpHdl.style.left = v + '%'; }
+function setSlider(v) {
+  cmpRight.style.clipPath = `inset(0 0 0 ${v}%)`;
+  cmpHdl.style.left = v + '%';
+}
 cmpRange.addEventListener('input', e => setSlider(e.target.value));
 setSlider(50);
 
