@@ -333,7 +333,7 @@ footer  { position:relative; overflow:hidden; }
 nav {
   position:fixed; top:0; left:0; right:0; z-index:200; height:58px;
   display:flex; align-items:center; justify-content:space-between; padding:0 1.75rem; gap:1rem;
-  background:var(--nav-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  background:var(--bg-soft); background:var(--nav-bg);backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid var(--brd);
 }
 .nav-logo { font-family:'Playfair Display',serif; font-weight:700; font-size:.9rem; color:var(--t1); white-space:nowrap; flex-shrink:0; }
@@ -481,8 +481,10 @@ h1 em { font-style:italic; color:var(--teal); }
 .cmp-lbl-l { left:1.25rem; }
 .cmp-lbl-r { right:1.25rem; text-align:right; }
 .cmp-hdl   { position:absolute; top:0; bottom:0; left:50%; transform:translateX(-50%); width:2px; background:rgba(255,255,255,.6); pointer-events:none; }
-.cmp-hdl::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.9); box-shadow:0 2px 10px rgba(0,0,0,.4); }
-.cmp-hdl::after { content:'◁  ▷'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:.55rem; color:rgba(0,0,0,.65); font-weight:700; letter-spacing:1.5px; white-space:nowrap; }
+.cmp-hdl::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:8px; height:32px; border-radius:6px; background:rgba(255,255,255,.9); box-shadow:0 2px 10px rgba(0,0,0,.4); }
+.cmp-hdl::after { 
+  /* content:'◁  ▷';  */
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:.55rem; color:rgba(0,0,0,.65); font-weight:700; letter-spacing:1.5px; white-space:nowrap; }
 .cmp-range { position:absolute; inset:0; opacity:0; cursor:ew-resize; width:100%; height:100%; z-index:10; -webkit-appearance:none; appearance:none; }
 .cmp-sub { background:var(--bg-soft); border-top:1px solid var(--brd); padding:.9rem 2rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem; }
 .cmp-cap { font-size:.8rem; color:var(--t2); font-style:italic; }
@@ -1101,10 +1103,11 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       <div class="byd-item">
         <a href="#blog" class="byd-img">
           <!-- Replace <div class="ph g-tkd"></div> with <img src="your-photo.jpg" alt="TaeKwonDo"> -->
-          <div class="ph g-tkd"></div>
+          <!-- <div class="ph g-tkd"></div> -->
+          <img src="./img/bike2.jpeg" alt="TaeKwonDo">
           <span class="byd-img-lnk en">Read posts →</span><span class="byd-img-lnk ko">글 읽기 →</span>
         </a>
-        <a href="#blog" class="byd-ta"><span class="byd-title en">TaeKwonDo, 2nd Dan</span><span class="byd-title ko">태권도 2단</span></a>
+        <a href="#blog" class="byd-ta"><span class="byd-title en">Sport</span><span class="byd-title ko">운동</span></a>
         <p class="byd-body en">Second-degree black belt earned in Korea.</p>
         <p class="byd-body ko">한국에서 2단 검은 띠 취득.</p>
       </div>
@@ -1112,10 +1115,11 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       <div class="byd-item">
         <a href="#blog" class="byd-img">
           <!-- Replace with <img src="lifting.jpg" alt="Lifting"> -->
-          <div class="ph g-lift"></div>
+          <!-- <div class="ph g-lift"></div> -->
+          <img src="./img/muscle-support-gym.png" alt="Lifting">
           <span class="byd-img-lnk en">Read posts →</span><span class="byd-img-lnk ko">글 읽기 →</span>
         </a>
-        <a href="#blog" class="byd-ta"><span class="byd-title en">Lifting, Cycling &amp; Endurance</span><span class="byd-title ko">근력 운동, 사이클링 &amp; 지구력</span></a>
+        <a href="#blog" class="byd-ta"><span class="byd-title en">Health</span><span class="byd-title ko">건강</span></a>
         <p class="byd-body en">Five half-marathons, semi-pro cycling, heavy compound lifts.</p>
         <p class="byd-body ko">하프마라톤 5회, 세미프로 사이클링, 복합 운동.</p>
       </div>
@@ -1123,10 +1127,11 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       <div class="byd-item">
         <a href="#blog" class="byd-img">
           <!-- Replace with <img src="music.jpg" alt="Bass guitar"> -->
-          <div class="ph g-music"></div>
+          <!-- <div class="ph g-music"></div> -->
+          <img src="./img/bass.jpg" alt="Bass guitar">
           <span class="byd-img-lnk en">Read posts →</span><span class="byd-img-lnk ko">글 읽기 →</span>
         </a>
-        <a href="#blog" class="byd-ta"><span class="byd-title en">Bass, Drums &amp; Baritone</span><span class="byd-title ko">베이스, 드럼 &amp; 바리톤</span></a>
+        <a href="#blog" class="byd-ta"><span class="byd-title en">Music</span><span class="byd-title ko">음악</span></a>
         <p class="byd-body en">Playing bass and drums. Baritone — experimenting with country phrasing.</p>
         <p class="byd-body ko">베이스와 드럼 연주. 바리톤 — 컨트리 창법 실험 중.</p>
       </div>
@@ -1134,10 +1139,11 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       <div class="byd-item">
         <a href="#blog" class="byd-img">
           <!-- Replace with <img src="coffee.jpg" alt="Pour over coffee"> -->
-          <div class="ph g-coffee"></div>
+          <!-- <div class="ph g-coffee"></div> -->
+          <img src="./img/coffee.jpg" alt="Coffee">
           <span class="byd-img-lnk en">Read posts →</span><span class="byd-img-lnk ko">글 읽기 →</span>
         </a>
-        <a href="#blog" class="byd-ta"><span class="byd-title en">Ethiopian Pour-Over</span><span class="byd-title ko">에티오피아 핸드드립</span></a>
+        <a href="#blog" class="byd-ta"><span class="byd-title en">Coffee</span><span class="byd-title ko">커피</span></a>
         <p class="byd-body en">산미맛 single-origin — Ethiopia, Kenya, black Americano.</p>
         <p class="byd-body ko">산미맛 싱글 오리진 — 에티오피아, 케냐, 블랙 아메리카노.</p>
       </div>
@@ -1145,10 +1151,11 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       <div class="byd-item">
         <a href="#blog" class="byd-img">
           <!-- Replace with <img src="books.jpg" alt="Reading"> -->
-          <div class="ph g-books"></div>
+          <!-- <div class="ph g-books"></div> -->
+          <img src="./img/books2.jpg" alt="Books">
           <span class="byd-img-lnk en">Read posts →</span><span class="byd-img-lnk ko">글 읽기 →</span>
         </a>
-        <a href="#blog" class="byd-ta"><span class="byd-title en">Reading: Sci-Fi &amp; Ideas</span><span class="byd-title ko">독서: SF &amp; 아이디어</span></a>
+        <a href="#blog" class="byd-ta"><span class="byd-title en">Books</span><span class="byd-title ko">독서</span></a>
         <p class="byd-body en">Andy Weir, Terry Brooks, Jordan Peterson. Project Hail Mary.</p>
         <p class="byd-body ko">앤디 위어, 테리 브룩스, 조던 피터슨.</p>
       </div>
@@ -1156,10 +1163,11 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
       <div class="byd-item">
         <a href="#wyo-korea" class="byd-img">
           <!-- Replace with <img src="wyoming.jpg" alt="Wyoming landscape"> -->
-          <div class="ph g-wy2"></div>
+          <!-- <div class="ph g-wy2"></div> -->
+          <img src="./img/wyoming-yellowstone-plains.jpg" alt="Wyoming landscape">
           <span class="byd-img-lnk en">See Wyoming ↑</span><span class="byd-img-lnk ko">와이오밍 보기 ↑</span>
         </a>
-        <a href="#wyo-korea" class="byd-ta"><span class="byd-title en">Wyoming Roots</span><span class="byd-title ko">와이오밍 뿌리</span></a>
+        <a href="#wyo-korea" class="byd-ta"><span class="byd-title en">Wyoming</span><span class="byd-title ko">와이오밍</span></a>
         <p class="byd-body en">From Big Sky Country. The wide open West shaped how I think.</p>
         <p class="byd-body ko">빅 스카이 컨트리 출신. 드넓은 서부가 저의 사고방식을 형성했습니다.</p>
       </div>
