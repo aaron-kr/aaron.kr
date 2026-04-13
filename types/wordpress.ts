@@ -15,7 +15,6 @@ export interface WPPost {
   tags: number[]
   author: number
 
-  // ── Custom fields added by aaron-kr-api.php mu-plugin ──────────────────────
   reading_time_minutes?: number
   excerpt_plain?: string
 
@@ -32,11 +31,18 @@ export interface WPPost {
     description: string
     url:         string
     avatar:      string
-    twitter:     string
   }
 
   category_list?: Array<{ id: number; name: string; slug: string }>
   tag_list?:      Array<{ id: number; name: string; slug: string }>
+
+  seo?: {
+    title:       string
+    description: string
+    canonical:   string
+    no_index:    boolean
+    og_image:    string
+  }
 
   research_meta?: {
     venue: string; year: string; doi: string
@@ -48,7 +54,15 @@ export interface WPPost {
     slides_url: string; video_url: string; language: string
   }
 
-  // ── Standard _embed fields (fallback) ────────────────────────────────────
+  testimonial_meta?: {
+    person_name: string; person_title: string; person_org: string
+    rating: string; language: string; context: string
+  }
+
+  portfolio_meta?: {
+    client: string; year: string; tools: string; project_url: string
+  }
+
   _embedded?: {
     'wp:featuredmedia'?: Array<{
       source_url: string

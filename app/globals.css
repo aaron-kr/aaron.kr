@@ -554,3 +554,65 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
   .qr-box-lg { width:260px; height:260px; }
   .qtab { font-size:.72rem; padding:.45rem .3rem; }
 }
+
+/* ══════════════════════════════
+   WP CONTENT PROSE
+   Styles for HTML rendered from WordPress post_content.
+   Applied to .wp-content wrapper on single post pages.
+══════════════════════════════ */
+.wp-content {
+  font-size: .97rem;
+  line-height: 1.9;
+  color: var(--t2);
+}
+.wp-content p  { margin-bottom: 1.4rem; }
+.wp-content h2 { font-size: clamp(1.4rem,3vw,1.9rem); margin: 2.5rem 0 .9rem; color: var(--t1); }
+.wp-content h3 { font-size: clamp(1.1rem,2.5vw,1.4rem); margin: 2rem 0 .7rem; color: var(--t1); }
+.wp-content h4 { font-size: 1rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: var(--t1); }
+.wp-content ul, .wp-content ol { margin: 0 0 1.4rem 1.5rem; }
+.wp-content li { margin-bottom: .4rem; }
+.wp-content a  { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
+.wp-content a:hover { opacity: .75; }
+.wp-content blockquote {
+  margin: 2rem 0; padding: 1.2rem 1.5rem;
+  border-left: 3px solid var(--teal);
+  background: var(--bg-muted); border-radius: 0 8px 8px 0;
+  font-family: var(--font-playfair), serif; font-style: italic;
+  color: var(--t1);
+}
+.wp-content blockquote p:last-child { margin-bottom: 0; }
+.wp-content img {
+  max-width: 100%; height: auto; border-radius: 6px;
+  display: block; margin: 1.5rem auto;
+}
+.wp-content figure { margin: 2rem 0; }
+.wp-content figcaption {
+  font-size: .78rem; color: var(--t3); text-align: center;
+  margin-top: .5rem; font-style: italic;
+}
+.wp-content code {
+  font-size: .85em; background: var(--bg-muted);
+  padding: 2px 6px; border-radius: 4px;
+  color: var(--teal); font-family: 'Courier New', monospace;
+}
+.wp-content pre {
+  background: var(--bg-muted); border: 1px solid var(--brd);
+  border-radius: 8px; padding: 1.25rem; overflow-x: auto;
+  margin-bottom: 1.4rem;
+}
+.wp-content pre code {
+  background: transparent; padding: 0; color: var(--t1);
+  font-size: .83rem; line-height: 1.65;
+}
+.wp-content hr {
+  border: none; border-top: 1px solid var(--rule);
+  margin: 2.5rem 0;
+}
+.wp-content table { width: 100%; border-collapse: collapse; margin-bottom: 1.4rem; }
+.wp-content th, .wp-content td {
+  padding: .6rem .9rem; text-align: left;
+  border-bottom: 1px solid var(--rule); font-size: .88rem;
+}
+.wp-content th { color: var(--t1); font-weight: 600; }
+.wp-content .wp-block-image,
+.wp-content .wp-caption { margin: 2rem 0; }

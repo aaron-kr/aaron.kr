@@ -128,3 +128,41 @@ export function getFeaturedImage(post: WPPost): string | null {
     null
   )
 }
+
+// ── Single post fetchers ───────────────────────────────────────────────────────
+
+/** Fetch a single post by slug from any post type */
+export async function getPostBySlug(
+  postType: string,
+  slug: string
+): Promise<WPPost | null> {
+  const data = await fetchWP<WPPost[]>(postType, {
+    slug,
+    _embed: '1',
+    per_page: '1',
+  })
+  return data?.[0] ?? null
+}
+
+/** Map a URL path segment to a WP REST endpoint slug */
+export const POST_TYPE_MAP: Record<string, string> = {
+  blog:        'posts',
+  portfolio:   'portfolio',
+  research:    'research',
+  talks:       'talks',
+  courses:     'courses',
+  testimonials:'testimonials',
+}
+
+/** Generate static params for a post type (used in generateStaticParams) */
+export async function getAllSlugs(
+  postType: string
+): Promise<{ slug: string }[]> {
+  const data = await fetchWP<WPPost[]>(postType, {
+    per_page: '100',
+    _fields:  'slug',
+    orderby:  'date',
+    order:    'desc',
+  })
+  return (data ?? []).map( (p) => ({ slug: p.slug }) )
+}
