@@ -29,7 +29,7 @@ async function fetchWP<T>(
 // Assumes a custom post type registered as `project` in WordPress.
 // Adjust WP_PROJECT_POST_TYPE env var if your slug differs (e.g. "portfolio").
 export async function getDesignPosts(perPage = 4): Promise<WPPost[]> {
-  const type = process.env.WP_PROJECT_POST_TYPE ?? 'project'
+  const type = process.env.WP_PROJECT_POST_TYPE ?? 'portfolio'
   const data = await fetchWP<WPPost[]>(type, {
     per_page: String(perPage),
     _embed: '1',
@@ -56,8 +56,6 @@ export async function getWritingPosts(
 // ── Beyond Posts (personal interest category) ─────────────────────────────────
 export async function getBeyondPosts(perPage = 6): Promise<WPPost[]> {
   const slug = process.env.WP_BEYOND_CATEGORY ?? 'beyond'
-  // WP REST API accepts category slug via the `slug` filter on /categories first,
-  // then filters posts — or you can use category IDs. This approach fetches by slug.
   const cats = await fetchWP<{ id: number }[]>('categories', { slug })
   const catId = cats?.[0]?.id
 
@@ -72,9 +70,30 @@ export async function getBeyondPosts(perPage = 6): Promise<WPPost[]> {
 }
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
-/** Strip HTML tags from WP rendered title/excerpt */
+
+/** Strip HTML tags AND decode HTML entities from WP rendered fields.
+ *  Runs server-side (no DOM), so we use a lookup table for the most
+ *  common WP entities plus a numeric-codepoint fallback. */
 export function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '').trim()
+  // 1. Remove all HTML tags
+  const noTags = html.replace(/<[^>]*>/g, '')
+
+  // Named entity lookup — covers everything WP's wpautop / wptexturize emits
+  const named: Record<string, string> = {
+    '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"',
+    '&apos;': "'", '&nbsp;': ' ',
+    // Smart quotes / dashes / ellipsis (wptexturize output)
+    '&#8216;': '\u2018', '&#8217;': '\u2019',
+    '&#8220;': '\u201C', '&#8221;': '\u201D',
+    '&#8212;': '\u2014', '&#8211;': '\u2013',
+    '&#8230;': '\u2026',
+  }
+
+  return noTags
+    .replace(/&[a-zA-Z]+;/g,      (m) => named[m] ?? m)
+    .replace(/&#(\d+);/g,         (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .trim()
 }
 
 /** Format a WP ISO date string → "Jan 2025" */
@@ -85,8 +104,21 @@ export function formatWPDate(date: string): string {
   })
 }
 
-/** Get the best available featured image URL from an embedded WP post */
+
+
+/** Get the best available featured image — prefers the inline `featured_image_urls`
+ *  field (no extra API call) over the legacy _embed approach. */
 export function getFeaturedImage(post: WPPost): string | null {
+  // Prefer the new inline field from the mu-plugin (no _embed needed)
+  if (post.featured_image_urls) {
+    return (
+      post.featured_image_urls.large ??
+      post.featured_image_urls.medium ??
+      post.featured_image_urls.full ??
+      null
+    )
+  }
+  // Fallback: old _embed approach
   const media = post._embedded?.['wp:featuredmedia']?.[0]
   if (!media) return null
   return (
