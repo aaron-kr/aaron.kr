@@ -10,8 +10,10 @@ export default function Labs() {
             <div className="sec-lbl en">Online Lab &amp; Experiments</div>
             <div className="sec-lbl ko">온라인 연구실 &amp; 실험</div>
             <h2>
-              <span className="en">Running <em>Experiments</em></span>
-              <span className="ko"><em>실험</em> 진행 중</span>
+              <a href="https://pailab.io" className="sec-h2-link" target="_blank" rel="noopener noreferrer">
+                <span className="en">Running <em>Experiments</em></span>
+                <span className="ko"><em>실험</em> 진행 중</span>
+              </a>
             </h2>
             <p className="sec-intro en">
               Code notebooks, benchmarks, and investigations — work-in-progress published openly.

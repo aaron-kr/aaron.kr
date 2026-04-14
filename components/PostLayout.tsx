@@ -5,19 +5,27 @@ import type { WPPost } from '@/types/wordpress'
 import {
   stripHtml, formatWPDate, getFeaturedImage, wpLinkToPath,
 } from '@/lib/wordpress'
-import Nav          from '@/components/Nav'
-import Footer       from '@/components/Footer'
-import ClientInit   from '@/components/ClientInit'
-import PostSidebar  from '@/components/PostSidebar'
-import PostFooter   from '@/components/PostFooter'
-import PostLightbox from '@/components/PostLightbox'
+import Nav              from '@/components/Nav'
+import Footer           from '@/components/Footer'
+import ClientInit       from '@/components/ClientInit'
+import PostSidebar      from '@/components/PostSidebar'
+import PostFooter       from '@/components/PostFooter'
+import PostLightbox     from '@/components/PostLightbox'
+import ShareButtons     from '@/components/ShareButtons'
+import GiscusComments   from '@/components/GiscusComments'
+import Breadcrumbs      from '@/components/Breadcrumbs'
 import Link from 'next/link'
 
 interface Props {
-  post:    WPPost
-  related: WPPost[]
-  prev:    WPPost | null
-  next:    WPPost | null
+  post:          WPPost
+  related:       WPPost[]
+  prev:          WPPost | null
+  next:          WPPost | null
+  // showShare: default true for all post types.
+  // showComments: default true for standard 'post', false for CPTs.
+  //   Pass showComments={true} on a CPT page to opt that type in.
+  showShare?:    boolean
+  showComments?: boolean
 }
 
 const SECTION_LABELS: Record<string, string> = {
@@ -30,7 +38,14 @@ const SECTION_LABELS: Record<string, string> = {
   page:        '',
 }
 
-export default function PostLayout({ post, related, prev, next }: Props) {
+export default function PostLayout({
+  post, related, prev, next,
+  showShare    = true,
+  showComments,
+}: Props) {
+  // Comments default: on for standard posts, off for CPTs.
+  // Callers can override by passing showComments explicitly.
+  const commentsOn = showComments ?? (post.type === 'post')
   const title       = stripHtml(post.title.rendered)
   const date        = formatWPDate(post.date)
   const image       = getFeaturedImage(post)
@@ -41,6 +56,21 @@ export default function PostLayout({ post, related, prev, next }: Props) {
   const section     = SECTION_LABELS[post.type] ?? post.type
   const isPost      = post.type === 'post'
   const isPortfolio = post.type === 'portfolio'
+
+  // Breadcrumb trail: Home > Section > Title
+  const SECTION_HREF: Record<string, string> = {
+    post:        '/writing',
+    portfolio:   '/portfolio',
+    research:    '/#research',
+    talk:        '/#research',
+    testimonial: '/#research',
+    course:      'https://courses.aaron.kr/',
+  }
+  const breadcrumbs = [
+    { label: 'Home', href: '/' },
+    ...(section ? [{ label: section, href: SECTION_HREF[post.type] }] : []),
+    { label: title },
+  ]
 
   // Portfolio type taxonomy (from mu-plugin's portfolio_type taxonomy)
   const portfolioTypes = (post._embedded?.['wp:term'] ?? [])
@@ -64,6 +94,9 @@ export default function PostLayout({ post, related, prev, next }: Props) {
 
           {/* ── Article ── */}
           <article>
+
+            {/* Breadcrumbs */}
+            <Breadcrumbs crumbs={breadcrumbs} />
 
             {/* Eyebrow */}
             {section && (
@@ -227,6 +260,9 @@ export default function PostLayout({ post, related, prev, next }: Props) {
               </div>
             )}
 
+            {/* ── Share buttons ── */}
+            {showShare && <ShareButtons title={title} />}
+
           </article>
 
           {/* ── Sidebar (blog posts only) ── */}
@@ -235,6 +271,14 @@ export default function PostLayout({ post, related, prev, next }: Props) {
           )}
 
         </div>
+
+        {/* ── Comments (Giscus) — full article width, below sidebar grid ── */}
+        {commentsOn && (
+          <div className="comments-wrap">
+            <GiscusComments />
+          </div>
+        )}
+
       </main>
 
       {/* Full-width footer section — outside the constrained layout */}

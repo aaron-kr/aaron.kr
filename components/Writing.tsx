@@ -5,6 +5,10 @@ import type { WPPost } from '@/types/wordpress'
 import Link from 'next/link'
 import { stripHtml, formatWPDate, wpLinkToPath } from '@/lib/wordpress'
 
+// ── Configurable: how many posts to show in the Writing section ───────────────
+// Change this number, then it auto-flows to the WP fetch in app/page.tsx.
+export const WRITING_COUNT = 8
+
 // ── Static fallback posts (from v7 HTML) ──────────────────────────────────────
 const FALLBACK_POSTS = [
   { id: 1, title: 'On Physical AI: What Embodied Intelligence Means for Education',       titleKo: '피지컬 AI에 대하여: 체화된 지능이 교육에 의미하는 것', date: '2025 · Research', href: 'https://aaron.kr', italic: false },
@@ -39,8 +43,10 @@ export default function Writing({ posts }: Props) {
             <div className="sec-lbl en">Writing</div>
             <div className="sec-lbl ko">글쓰기</div>
             <h2>
-              <span className="en">From the <em>Notebook</em></span>
-              <span className="ko"><em>노트</em>에서</span>
+              <a href="/writing" className="sec-h2-link">
+                <span className="en">From the <em>Notebook</em></span>
+                <span className="ko"><em>노트</em>에서</span>
+              </a>
             </h2>
           </div>
         </div>
@@ -63,10 +69,8 @@ export default function Writing({ posts }: Props) {
 
           {/* All posts link */}
           <a
-            href="https://aaron.kr"
+            href="/writing"
             className="bi"
-            target="_blank"
-            rel="noopener noreferrer"
             style={{ borderBottom: 'none' }}
           >
             <span className="bt" style={{ color: 'var(--teal)', flex: 'none' }}>

@@ -18,8 +18,11 @@ import QRModal  from '@/components/QRModal'
 import ClientInit from '@/components/ClientInit'
 
 import {
-  getDesignPosts, getWritingPosts, getBeyondCategories, getPostById, wpLinkToPath,
+  getDesignPosts, getWritingPosts, getBeyondCategories, getAllBlogCategories,
+  getPostById, wpLinkToPath,
 } from '@/lib/wordpress'
+import { DESIGN_COUNT  } from '@/components/Design'
+import { WRITING_COUNT } from '@/components/Writing'
 
 interface Props {
   searchParams: Promise<{ p?: string; preview?: string; page_id?: string }>
@@ -37,10 +40,11 @@ export default async function Home({ searchParams }: Props) {
   }
 
   // Fetch WP data in parallel — each call falls back to [] on failure.
-  const [designPosts, writingPosts, beyondCategories] = await Promise.all([
-    getDesignPosts(4),
-    getWritingPosts(),
+  const [designPosts, writingPosts, beyondCategories, allCategories] = await Promise.all([
+    getDesignPosts(DESIGN_COUNT),
+    getWritingPosts(WRITING_COUNT),
     getBeyondCategories(6),
+    getAllBlogCategories(),
   ])
 
   return (
@@ -63,7 +67,7 @@ export default async function Home({ searchParams }: Props) {
         <div className="rule" />
         <Writing posts={writingPosts} />
         <div className="rule" />
-        <Beyond categories={beyondCategories} />
+        <Beyond categories={beyondCategories} allCategories={allCategories} />
       </main>
 
       <Footer />

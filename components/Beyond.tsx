@@ -1,12 +1,18 @@
 // components/Beyond.tsx
 // Receives WP *categories* (children of the "beyond" parent) from the server.
-// Each card links to its /category/[slug] archive page.
+// Featured categories are shown as image cards; all remaining blog categories
+// appear as tag-style buttons below the grid.
 // Falls back to static data if WP is offline or categories aren't set up yet.
 
 import Link from 'next/link'
 import type { WPCategory } from '@/types/wordpress'
 
-// ── Static fallback — update hrefs to match WP category slugs you create ─────
+// ── Configurable: which slugs get the large image card treatment ───────────────
+// Edit this list to change which categories appear as image cards.
+// Keep in sync with BEYOND_ITEMS in Nav.tsx (the dropdown list).
+export const FEATURED_SLUGS = ['sport', 'health', 'music', 'coffee', 'books', 'wyoming']
+
+// ── Static fallback — update to match WP category slugs you create ─────────────
 const FALLBACK: {
   id: number; slug: string; name: string; nameKo: string
   body: string; bodyKo: string; link: string; img: string
@@ -37,19 +43,22 @@ const FALLBACK: {
     link: '/category/wyoming', img: '/img/wyoming-yellowstone-plains.jpg' },
 ]
 
+// Slugs that are never shown as tag buttons (WP system categories + the parent)
+const EXCLUDED_SLUGS = new Set(['uncategorized', 'beyond'])
+
 interface Props {
-  categories: WPCategory[]
+  categories:    WPCategory[]  // Children of "beyond" parent (image cards)
+  allCategories: WPCategory[]  // All blog categories (for the tag list)
 }
 
-export default function Beyond({ categories }: Props) {
-  // If WP has categories set up, use them; otherwise use fallback.
-  // Always show exactly 6 items.
+export default function Beyond({ categories, allCategories }: Props) {
+  // ── Featured image cards ───────────────────────────────────────────────────
   const wpItems = categories.slice(0, 6).map(c => ({
     id:     c.id,
     slug:   c.slug,
     name:   c.name,
     nameKo: '',
-    body:   c.description.slice(0, 120) || '',
+    body:   c.description?.slice(0, 120) || '',
     bodyKo: '',
     link:   `/category/${c.slug}`,
     img:    c.meta?.category_image_url ?? '',
@@ -58,6 +67,13 @@ export default function Beyond({ categories }: Props) {
   const items = wpItems.length >= 6
     ? wpItems
     : [...wpItems, ...FALLBACK.slice(wpItems.length)]
+
+  // ── Remaining categories as tag buttons ───────────────────────────────────
+  // Exclude: the 6 featured slugs, system slugs, and zero-count categories.
+  const shownSlugs = new Set(items.map(i => i.slug))
+  const tagCategories = allCategories.filter(
+    c => !shownSlugs.has(c.slug) && !EXCLUDED_SLUGS.has(c.slug) && c.count > 0
+  )
 
   return (
     <section
@@ -72,15 +88,17 @@ export default function Beyond({ categories }: Props) {
             <div className="sec-lbl pk en">Beyond the Lab</div>
             <div className="sec-lbl pk ko">랩 밖에서</div>
             <h2>
-              <span className="en">Beyond the <span className="ipk">Research</span></span>
-              <span className="ko"><span className="ipk">연구</span> 너머</span>
+              <a href="#beyond" className="sec-h2-link">
+                <span className="en">Beyond the <span className="ipk">Research</span></span>
+                <span className="ko"><span className="ipk">연구</span> 너머</span>
+              </a>
             </h2>
             <p className="sec-intro en">Work is not the whole person.</p>
             <p className="sec-intro ko">일이 전부는 아닙니다.</p>
           </div>
         </div>
 
-        {/* ── Beyond grid ── */}
+        {/* ── Beyond grid (featured image cards) ── */}
         <div className="byd-grid rise">
           {items.map((item) => (
             <div key={item.id} className="byd-item">
@@ -96,7 +114,7 @@ export default function Beyond({ categories }: Props) {
               </Link>
 
               <Link href={item.link} className="byd-ta">
-                {item.name  && <span className="byd-title en">{item.name}</span>}
+                {item.name   && <span className="byd-title en">{item.name}</span>}
                 {item.nameKo && <span className="byd-title ko">{item.nameKo}</span>}
               </Link>
 
@@ -105,6 +123,21 @@ export default function Beyond({ categories }: Props) {
             </div>
           ))}
         </div>
+
+        {/* ── All other blog categories as tag buttons ── */}
+        {tagCategories.length > 0 && (
+          <div className="byd-all-cats rise">
+            <div className="byd-all-lbl en">More Topics</div>
+            <div className="byd-all-lbl ko">더 많은 주제</div>
+            <div className="byd-tag-row">
+              {tagCategories.map(c => (
+                <Link key={c.id} href={`/category/${c.slug}`} className="tag fss">
+                  <span>{c.name}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )

@@ -14,7 +14,8 @@ Deployed on Vercel. Content served from headless WordPress at `notes.aaron.kr` v
 | Deployment | Vercel (ISR — pages revalidate hourly) |
 | CMS | WordPress REST API (`notes.aaron.kr`) |
 | Fonts | Google Fonts via `<link>` — Playfair Display, DM Sans, Noto Sans KR |
-| Styling | Global CSS (no Tailwind, no CSS modules) — v7 design system |
+| Styling | Global CSS (no Tailwind, no CSS modules) — custom design system |
+| Comments | Giscus (GitHub Discussions) — optional, configured via env vars |
 | QR codes | `react-qr-code` |
 
 ---
@@ -39,105 +40,139 @@ The entire visual language lives in `app/globals.css`. Key concepts:
 
 ```
 app/
-  layout.tsx          Root layout: anti-flash script, Google Fonts link, metadata
-  page.tsx            Home page (server component) — fetches WP data in parallel
-  globals.css         Complete v7 design system
+  layout.tsx            Root layout: anti-flash script, Google Fonts link, metadata
+  page.tsx              Home page (server component) — fetches WP data in parallel
+  globals.css           Complete design system
+  writing/page.tsx      Blog post archive
+  portfolio/page.tsx    Portfolio archive
+  category/[slug]/      Category archive + full category list
+  tag/[slug]/           Tag archive + full tag cloud
   [...segments]/
-    page.tsx          Catch-all route — handles /%category%/%postname%/ and CPT slugs
+    page.tsx            Catch-all route — handles /%category%/%postname%/ and CPT slugs
 
 components/
-  Nav.tsx             Fixed nav with theme/lang/aurora toggles + mobile menu (client)
-  Hero.tsx            Hero section — static server component
-  WyoKoreaSlider.tsx  Wyoming/Korea comparison slider (client)
-  Research.tsx        Research section — static, links to pailab.io
-  Teaching.tsx        Teaching section — static, links to courses.aaron.kr
-  Labs.tsx            Labs section — static, links to pailab.io
-  Design.tsx          Design grid — WP portfolio posts + static fallback
-  Writing.tsx         Blog post list — WP posts + static fallback
-  Beyond.tsx          Personal interests grid — WP posts + static fallback
-  Footer.tsx          3-column footer with Wyoming logo (server)
-  QRModal.tsx         QR code modal with tabs + .vcf download (client)
-  ClientInit.tsx      Scroll progress bar + IntersectionObserver for .rise (client)
+  Nav.tsx               Fixed nav: theme/lang/aurora toggles, Beyond dropdown (click), mobile menu
+  Hero.tsx              Hero section — static
+  WyoKoreaSlider.tsx    Wyoming/Korea comparison slider (client)
+  Research.tsx          Research section — static, links to pailab.io
+  Teaching.tsx          Teaching section — static, links to courses.aaron.kr
+  Labs.tsx              Labs section — static, links to pailab.io
+  Design.tsx            Design grid — WP portfolio posts + static fallback (export: DESIGN_COUNT)
+  Writing.tsx           Blog post list — WP posts + static fallback (export: WRITING_COUNT)
+  Beyond.tsx            Personal interests — WP category cards + tag list (export: FEATURED_SLUGS)
+  PostLayout.tsx        Shared layout for all single-post pages
+  PostSidebar.tsx       Sticky sidebar: author card + related posts (blog only)
+  PostFooter.tsx        Full-width prev/next + related posts
+  PostLightbox.tsx      Click-to-enlarge images with caption support (client)
+  ShareButtons.tsx      Share bar: native / X / LinkedIn / copy link (client)
+  GiscusComments.tsx    GitHub Discussions comments embed (client)
+  Breadcrumbs.tsx       Breadcrumb trail for post and archive pages
+  Footer.tsx            3-column footer with Wyoming logo
+  QRModal.tsx           QR code modal with tabs + .vcf download (client)
+  ClientInit.tsx        Scroll progress bar + IntersectionObserver for .rise (client)
 
 lib/
-  wordpress.ts        WP REST API helpers with ISR fetch, entity decoding, utilities
-
+  wordpress.ts          WP REST API helpers with ISR fetch, entity decoding, all fetchers
 types/
-  wordpress.ts        WPPost type with all custom fields from the mu-plugin
+  wordpress.ts          WPPost, WPCategory, WPTag interfaces
 ```
+
+---
+
+## Configurable constants
+
+These are defined at the top of their component files — edit there, no env var needed:
+
+| Constant | File | Purpose |
+|---|---|---|
+| `DESIGN_COUNT` | `Design.tsx` | Portfolio posts shown on homepage |
+| `WRITING_COUNT` | `Writing.tsx` | Blog posts shown on homepage |
+| `FEATURED_SLUGS` | `Beyond.tsx` | Category slugs shown as image cards |
+| `BEYOND_ITEMS` | `Nav.tsx` | Category links in the nav Beyond dropdown |
+
+> Keep `BEYOND_ITEMS` and `FEATURED_SLUGS` in sync — they represent the same 6 categories.
 
 ---
 
 ## WordPress data flow
 
-`app/page.tsx` is a **server component** that runs three WP fetches in parallel at build/ISR time:
+`app/page.tsx` fetches four WP data sets in parallel at build/ISR time:
 
 ```typescript
-const [designPosts, writingPosts, beyondPosts] = await Promise.all([
-  getDesignPosts(4),     // /wp-json/wp/v2/portfolio
-  getWritingPosts(),     // /wp-json/wp/v2/posts
-  getBeyondPosts(6),     // /wp-json/wp/v2/posts?categories=beyond
+const [designPosts, writingPosts, beyondCategories, allCategories] = await Promise.all([
+  getDesignPosts(DESIGN_COUNT),    // /wp-json/wp/v2/portfolio
+  getWritingPosts(WRITING_COUNT),  // /wp-json/wp/v2/posts
+  getBeyondCategories(6),          // child categories of "beyond"
+  getAllBlogCategories(),           // all categories (for tag buttons)
 ])
 ```
 
-Each function returns `[]` on network failure, so the page always renders using the static fallback data in each component. The site works in local development before WordPress is configured.
+Each function returns `[]` on failure so the page always renders using fallback data.
 
-**ISR revalidation:** `next: { revalidate: 3600 }` on all fetches. Pages rebuild at most once per hour. Trigger an immediate rebuild from the Vercel dashboard for urgent publishes.
+**ISR:** `next: { revalidate: 3600 }` on all fetches. Trigger an immediate rebuild from Vercel for urgent publishes.
 
 ---
 
 ## URL routing
 
-WordPress permalink structure is `/%category%/%postname%/`. The catch-all route `app/[...segments]/page.tsx` handles all post URLs:
+WordPress permalink structure is `/%category%/%postname%/`. The catch-all route handles all post URLs:
 
-- `/design/my-project` → finds portfolio post by slug `my-project`
-- `/teaching/lecture-notes` → finds post by slug `lecture-notes`
-- `/portfolio/my-item` → first segment `portfolio` hints at CPT, tries that first
-- `/research/paper-title` → same CPT hint logic
-
-The last URL segment is always the WP slug. Category/type prefix is used as a hint only — WP slugs are unique site-wide so the lookup is reliable.
+- `/writing/my-post` → blog post by slug `my-post`
+- `/portfolio/my-item` → portfolio CPT, tries that first
+- `/research/paper-title` → research CPT hint
+- `/category/music` → category archive for "music"
+- `/tag/korea` → tag archive for "korea"
 
 ---
 
-## Custom WP REST fields consumed
+## Post page features
 
-All provided by the mu-plugin in `aaron-kr-wp`:
+All post types render via `PostLayout` which accepts:
 
-| Field | Used in |
-|---|---|
-| `featured_image_urls.large` | Design, Beyond, catch-all pages |
-| `excerpt_plain` | Writing, Beyond |
-| `reading_time_minutes` | Post pages |
-| `category_list` | Post pages |
-| `tag_list` | Post pages, Design |
-| `seo.description` | generateMetadata on all post pages |
-| `seo.og_image` | generateMetadata on all post pages |
-| `research_meta` | Research post pages |
-| `talk_meta` | Talk post pages |
+```typescript
+showShare?:    boolean  // default true — share bar below tags
+showComments?: boolean  // default true for 'post', false for CPTs
+```
+
+Pass `showComments={true}` on any CPT page route to enable Giscus there.
+
+**Breadcrumbs** appear at the top of every post (Home › Section › Title).
+
+**Share buttons** — native Web Share API on mobile, with X / LinkedIn / copy-link fallback.
+
+**Giscus comments** — GitHub Discussions embed. Requires env vars (see below). Theme syncs with dark/light toggle automatically.
+
+---
+
+## Giscus comments setup
+
+1. Enable Discussions on a GitHub repo (Settings → Features → Discussions)
+2. Install the [Giscus GitHub App](https://github.com/apps/giscus)
+3. Visit [giscus.app](https://giscus.app) with your repo → copy the IDs
+4. Set in `.env.local` and Vercel env vars:
+
+```bash
+NEXT_PUBLIC_GISCUS_REPO=username/repo
+NEXT_PUBLIC_GISCUS_REPO_ID=R_xxxxxxxxxx
+NEXT_PUBLIC_GISCUS_CATEGORY=Comments
+NEXT_PUBLIC_GISCUS_CATEGORY_ID=DIC_xxxxxxxxxx
+```
+
+The comments section renders nothing until these are set — safe to deploy without them.
 
 ---
 
 ## Getting started
 
 ```bash
-# Install
 npm install
 
-# Set up environment
+# Copy and configure environment
 cp .env.local.example .env.local
-# Edit .env.local — uncomment the local WP_API_URL line
+# Edit .env.local — set WP_API_URL to http://aaronkr.local for local dev
 
-# Copy your images to public/img/
-# Required: wyoming-tetons-oxbow-bend.jpg, korea-jeonju-hanok-village.jpg,
-#           hangul-calligraphy.jpg, hangul-papers.jpg,
-#           wyoming_cowboys_no-txt.webp, plus Beyond section photos
-
-# Run dev server
-npm run dev
-# → http://localhost:3000
-
-# Build check
-npm run build
+npm run dev     # → http://localhost:3000
+npm run build   # production build check
 ```
 
 ---
@@ -145,18 +180,21 @@ npm run build
 ## Environment variables
 
 ```bash
-# .env.local
-
-# ONE of these at a time:
+# WordPress API
 WP_API_URL=http://aaronkr.local/wp-json/wp/v2        # local dev
-# WP_API_URL=https://notes.aaron.kr/wp-json/wp/v2    # production
+# WP_API_URL=https://notes.aaron.kr/wp-json/wp/v2    # production (comment out local)
 
 WP_PROJECT_POST_TYPE=portfolio   # CPT slug for design posts
-WP_BEYOND_CATEGORY=beyond        # Category slug for personal posts
-WP_WRITING_PER_PAGE=8
+WP_BEYOND_CATEGORY=beyond        # Parent category slug for personal interests
+
+# Giscus (optional — comments hidden if unset)
+NEXT_PUBLIC_GISCUS_REPO=
+NEXT_PUBLIC_GISCUS_REPO_ID=
+NEXT_PUBLIC_GISCUS_CATEGORY=Comments
+NEXT_PUBLIC_GISCUS_CATEGORY_ID=
 ```
 
-Set the production values in **Vercel → Project → Settings → Environment Variables**.
+Set production values in **Vercel → Project → Settings → Environment Variables**.
 
 ---
 
@@ -164,7 +202,7 @@ Set the production values in **Vercel → Project → Settings → Environment V
 
 ```bash
 npm install -g vercel
-vercel          # first deploy
+vercel          # first deploy (prompts for project linking)
 vercel --prod   # subsequent deploys
 ```
 
@@ -172,17 +210,14 @@ Or connect the GitHub repo to Vercel for automatic deploys on push to `main`.
 
 ---
 
-## Images
+## Remote image domains (next.config.ts)
 
-Local images go in `public/img/` and are referenced in `globals.css` background properties and component `<img>` tags. `next/image` is used only for the hero photo (the one external image that benefits from optimization).
-
-Remote domains allowed in `next.config.ts`:
-- `notes.aaron.kr` — WordPress uploads (admin screenshots, etc.)
-- `files.aaron.kr` — main media library (all uploaded content lives here)
-- `i0.wp.com` — Jetpack CDN variants of files.aaron.kr images
-- `aaron.kr` — legacy references from before the subdomain migration
-- `aaronkr-courses.github.io` — university logos used in Teaching section
-- `aaronsnowberger.com` — client logos used in Design section
+- `notes.aaron.kr` — WordPress uploads
+- `files.aaron.kr` — main media library
+- `i0.wp.com` — Jetpack CDN
+- `aaron.kr` — legacy references
+- `aaronkr-courses.github.io` — university logos
+- `aaronsnowberger.com` — client logos
 
 ---
 
@@ -194,16 +229,3 @@ Toggle: `한국어 / English` button in nav. State in `localStorage` (`as_lang`)
 <span className="en">English text</span>
 <span className="ko">한국어 텍스트</span>
 ```
-
----
-
-## External links by section
-
-| Section | Links to |
-|---|---|
-| Research | pailab.io |
-| Teaching | courses.aaron.kr |
-| Labs | pailab.io |
-| Design (View all) | aaron.kr/portfolio |
-| Writing (All posts) | aaron.kr |
-| Nav Courses | courses.aaron.kr |

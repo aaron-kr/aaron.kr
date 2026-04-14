@@ -23,8 +23,10 @@ export default function Teaching() {
             <div className="sec-lbl bl en">Teaching &amp; Courses</div>
             <div className="sec-lbl bl ko">강의 및 과목</div>
             <h2>
-              <span className="en">Five Universities, <span className="ib">One Approach</span></span>
-              <span className="ko">다섯 개 대학, <span className="ib">하나의 방식</span></span>
+              <a href="https://courses.aaron.kr/" className="sec-h2-link" target="_blank" rel="noopener noreferrer">
+                <span className="en">Five Universities, <span className="ib">One Approach</span></span>
+                <span className="ko">다섯 개 대학, <span className="ib">하나의 방식</span></span>
+              </a>
             </h2>
             <p className="sec-intro en">
               Visual, bilingual, project-based — designed for all levels regardless of English proficiency.

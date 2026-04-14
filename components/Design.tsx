@@ -6,6 +6,10 @@ import Link from 'next/link'
 import type { WPPost } from '@/types/wordpress'
 import { getFeaturedImage, stripHtml, wpLinkToPath } from '@/lib/wordpress'
 
+// ── Configurable: how many portfolio posts to show on the homepage ────────────
+// Change this number, then it auto-flows to the WP fetch in app/page.tsx.
+export const DESIGN_COUNT = 4
+
 // ── Static fallback data (matches the v7 HTML exactly) ────────────────────────
 const FALLBACK_POSTS = [
   { id: 1, title: 'JB Life! 2022 · Vol. 3', subtitle: 'Jeongeup Travel',   img: 'https://files.aaron.kr/media/2025/01/jblife-2022-vol3.jpg', href: 'https://aaron.kr/portfolio' },
@@ -32,7 +36,7 @@ export default function Design({ posts }: Props) {
   // Build display items: prefer WP data, fall back to static
   const items =
     posts.length > 0
-      ? posts.slice(0, 4).map((p) => ({
+      ? posts.slice(0, DESIGN_COUNT).map((p) => ({
           id: p.id,
           title: stripHtml(p.title.rendered),
           subtitle: stripHtml(p.excerpt.rendered).slice(0, 60),
@@ -50,8 +54,10 @@ export default function Design({ posts }: Props) {
             <div className="sec-lbl pu en">Creative Work</div>
             <div className="sec-lbl pu ko">크리에이티브 작업</div>
             <h2>
-              <span className="en">Design &amp; <span className="ip">Visual Work</span></span>
-              <span className="ko">디자인 &amp; <span className="ip">시각 작업</span></span>
+              <a href="/portfolio" className="sec-h2-link">
+                <span className="en">Design &amp; <span className="ip">Visual Work</span></span>
+                <span className="ko">디자인 &amp; <span className="ip">시각 작업</span></span>
+              </a>
             </h2>
             <p className="sec-intro en">
               Five years as English magazine designer for Jeonbuk Center for

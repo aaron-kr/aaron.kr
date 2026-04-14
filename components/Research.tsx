@@ -11,8 +11,10 @@ export default function Research() {
             <div className="sec-lbl en">Research &amp; Publications</div>
             <div className="sec-lbl ko">연구 및 논문</div>
             <h2>
-              <span className="en">What I Work On</span>
-              <span className="ko">연구 분야</span>
+              <a href="https://pailab.io" className="sec-h2-link" target="_blank" rel="noopener noreferrer">
+                <span className="en">What I Work On</span>
+                <span className="ko">연구 분야</span>
+              </a>
             </h2>
             <p className="sec-intro en">
               Computer vision, Physical AI, and engineering education — at the

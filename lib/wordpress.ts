@@ -1,7 +1,7 @@
 // lib/wordpress.ts
 // WordPress REST API helpers — all fetches use Next.js ISR (revalidate: 3600)
 
-import type { WPPost, WPCategory } from '@/types/wordpress'
+import type { WPPost, WPCategory, WPTag } from '@/types/wordpress'
 
 const WP_API = process.env.WP_API_URL ?? 'https://notes.aaron.kr/wp-json/wp/v2'
 
@@ -124,9 +124,10 @@ export function getFeaturedImage(post: WPPost): string | null {
   // Prefer the new inline field from the mu-plugin (no _embed needed)
   if (post.featured_image_urls) {
     return (
-      post.featured_image_urls.large ??
-      post.featured_image_urls.medium ??
-      post.featured_image_urls.full ??
+      post.featured_image_urls.large        ??
+      post.featured_image_urls.medium_large ??
+      post.featured_image_urls.medium       ??
+      post.featured_image_urls.full         ??
       null
     )
   }
@@ -264,6 +265,28 @@ export async function getPostById(id: number): Promise<WPPost | null> {
     if (data?.[0]) return data[0]
   }
   return null
+}
+
+/** Fetch all tags with at least one post */
+export async function getAllTags(): Promise<WPTag[]> {
+  const data = await fetchWP<WPTag[]>('tags', {
+    per_page: '100',
+    orderby:  'count',
+    order:    'desc',
+    _fields:  'id,name,slug,count',
+  })
+  return (data ?? []).filter(t => t.count > 0)
+}
+
+/** Fetch ALL categories (used for the Beyond section's all-topics tag list) */
+export async function getAllBlogCategories(): Promise<WPCategory[]> {
+  const data = await fetchWP<WPCategory[]>('categories', {
+    per_page: '100',
+    orderby:  'count',
+    order:    'desc',
+    _fields:  'id,name,slug,count,parent',
+  })
+  return data ?? []
 }
 
 /** Fetch subcategories of the "beyond" parent category (for the Beyond section) */

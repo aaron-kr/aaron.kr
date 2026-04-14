@@ -5,11 +5,23 @@ import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
+// ── Dropdown items for "Beyond" nav link ──────────────────────────────────────
+// Keep these in sync with FEATURED_SLUGS in Beyond.tsx.
+const BEYOND_ITEMS = [
+  { slug: 'sport',   label: 'Sport',   labelKo: '운동' },
+  { slug: 'health',  label: 'Health',  labelKo: '건강' },
+  { slug: 'music',   label: 'Music',   labelKo: '음악' },
+  { slug: 'coffee',  label: 'Coffee',  labelKo: '커피' },
+  { slug: 'books',   label: 'Books',   labelKo: '독서' },
+  { slug: 'wyoming', label: 'Wyoming', labelKo: '와이오밍' },
+]
+
 export default function Nav() {
   const pathname   = usePathname()
   const isHome     = pathname === '/'
 
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileOpen,  setMobileOpen]  = useState(false)
+  const [beyondOpen,  setBeyondOpen]  = useState(false)
   const [theme,  setTheme]  = useState<'dark' | 'light'>('dark')
   const [lang,   setLang]   = useState<'en' | 'ko'>('en')
   const [aurora, setAurora] = useState<'on' | 'off'>('off')
@@ -32,6 +44,17 @@ export default function Nav() {
   function toggleLang()   { const n = lang   === 'en'   ? 'ko'   : 'en';    setLang(n);   setPref('as_lang',   n, 'data-lang') }
   function toggleAurora() { const n = aurora === 'on'   ? 'off'  : 'on';    setAurora(n); setPref('as_aurora', n, 'data-aurora') }
 
+  // Close Beyond dropdown when clicking outside it
+  useEffect(() => {
+    if (!beyondOpen) return
+    const handler = (e: MouseEvent) => {
+      const el = (e.target as Element).closest('.nav-li-drop')
+      if (!el) setBeyondOpen(false)
+    }
+    document.addEventListener('click', handler)
+    return () => document.removeEventListener('click', handler)
+  }, [beyondOpen])
+
   function openQR()      { window.dispatchEvent(new Event('openQRModal')) }
   function closeMobile() { setMobileOpen(false) }
 
@@ -53,7 +76,39 @@ export default function Nav() {
             <li><a href={s('#labs')}>Labs</a></li>
             <li><a href={s('#design')}><span className="en">Design</span><span className="ko">디자인</span></a></li>
             <li><a href={s('#blog')}><span className="en">Writing</span><span className="ko">글쓰기</span></a></li>
-            <li><a href={s('#beyond')}><span className="en">Beyond</span><span className="ko">랩 밖</span></a></li>
+            <li className="nav-li-drop">
+              <button
+                className="nav-dd-trigger"
+                onClick={() => setBeyondOpen(o => !o)}
+                aria-expanded={beyondOpen}
+                aria-haspopup="true"
+              >
+                <a href={s('#beyond')} onClick={e => e.preventDefault()} tabIndex={-1}>
+                  <span className="en">Beyond</span><span className="ko">랩 밖</span>
+                </a>
+                <svg className={`nav-dd-arrow${beyondOpen ? ' open' : ''}`}
+                     width="9" height="9" viewBox="0 0 10 10" fill="none"
+                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                     aria-hidden="true">
+                  <polyline points="2 3 5 7 8 3"/>
+                </svg>
+              </button>
+              <div className={`nav-dropdown${beyondOpen ? ' open' : ''}`}>
+                <a href={s('#beyond')} className="nav-dd-item nav-dd-top"
+                   onClick={() => setBeyondOpen(false)}>
+                  <span className="en">Beyond the Lab →</span>
+                  <span className="ko">랩 밖에서 →</span>
+                </a>
+                <div className="nav-dd-divider" />
+                {BEYOND_ITEMS.map(item => (
+                  <Link key={item.slug} href={`/category/${item.slug}`} className="nav-dd-item"
+                        onClick={() => setBeyondOpen(false)}>
+                    <span className="en">{item.label}</span>
+                    <span className="ko">{item.labelKo}</span>
+                  </Link>
+                ))}
+              </div>
+            </li>
           </ul>
           <a
             href="https://courses.aaron.kr/"
@@ -142,6 +197,13 @@ export default function Nav() {
         <a href={s('#blog')}     onClick={closeMobile} className="ko">글쓰기</a>
         <a href={s('#beyond')}   onClick={closeMobile} className="en">Beyond the Lab</a>
         <a href={s('#beyond')}   onClick={closeMobile} className="ko">랩 밖에서</a>
+        {BEYOND_ITEMS.map(item => (
+          <Link key={item.slug} href={`/category/${item.slug}`} onClick={closeMobile}
+                className="mob-dd-item">
+            <span className="en">↳ {item.label}</span>
+            <span className="ko">↳ {item.labelKo}</span>
+          </Link>
+        ))}
         <a
           href="https://courses.aaron.kr/"
           target="_blank"

@@ -19,10 +19,11 @@ export interface WPPost {
   excerpt_plain?: string
 
   featured_image_urls?: {
-    full:   string | null
-    large:  string | null
-    medium: string | null
-    alt:    string
+    full:         string | null
+    large:        string | null
+    medium_large: string | null
+    medium:       string | null
+    alt:          string
   }
 
   author_card?: {
@@ -86,4 +87,8 @@ export interface WPCategory {
   id: number; count: number; name: string; slug: string; parent: number
   description: string
   meta?: { category_image_url?: string }
+}
+
+export interface WPTag {
+  id: number; count: number; name: string; slug: string
 }
