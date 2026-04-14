@@ -1,87 +1,63 @@
 // components/Beyond.tsx
-// Receives WP posts from the server. Falls back to static data if WP is offline.
-// Category: 'beyond' (configure slug in .env.local → WP_BEYOND_CATEGORY)
+// Receives WP *categories* (children of the "beyond" parent) from the server.
+// Each card links to its /category/[slug] archive page.
+// Falls back to static data if WP is offline or categories aren't set up yet.
 
-import type { WPPost } from '@/types/wordpress'
-import { getFeaturedImage, stripHtml } from '@/lib/wordpress'
+import Link from 'next/link'
+import type { WPCategory } from '@/types/wordpress'
 
-// ── Static fallback items (from v7 HTML) ──────────────────────────────────────
-const FALLBACK_ITEMS = [
-  {
-    id: 1, href: '#blog',
-    img: '/img/bike2.jpeg',
-    titleEn: 'Sport',        titleKo: '운동',
-    bodyEn:  'Second-degree black belt earned in Korea.',
-    bodyKo:  '한국에서 2단 검은 띠 취득.',
-    linkEn: 'Read posts →',  linkKo: '글 읽기 →',
-  },
-  {
-    id: 2, href: '#blog',
-    img: '/img/muscle-support-gym.png',
-    titleEn: 'Health',       titleKo: '건강',
-    bodyEn:  'Five half-marathons, semi-pro cycling, heavy compound lifts.',
-    bodyKo:  '하프마라톤 5회, 세미프로 사이클링, 복합 운동.',
-    linkEn: 'Read posts →',  linkKo: '글 읽기 →',
-  },
-  {
-    id: 3, href: '#blog',
-    img: '/img/bass.jpg',
-    titleEn: 'Music',        titleKo: '음악',
-    bodyEn:  'Playing bass and drums. Baritone — experimenting with country phrasing.',
-    bodyKo:  '베이스와 드럼 연주. 바리톤 — 컨트리 창법 실험 중.',
-    linkEn: 'Read posts →',  linkKo: '글 읽기 →',
-  },
-  {
-    id: 4, href: '#blog',
-    img: '/img/coffee.jpg',
-    titleEn: 'Coffee',       titleKo: '커피',
-    bodyEn:  '산미맛 single-origin — Ethiopia, Kenya, black Americano.',
-    bodyKo:  '산미맛 싱글 오리진 — 에티오피아, 케냐, 블랙 아메리카노.',
-    linkEn: 'Read posts →',  linkKo: '글 읽기 →',
-  },
-  {
-    id: 5, href: '#blog',
-    img: '/img/books2.jpg',
-    titleEn: 'Books',        titleKo: '독서',
-    bodyEn:  'Andy Weir, Terry Brooks, Jordan Peterson. Project Hail Mary.',
-    bodyKo:  '앤디 위어, 테리 브룩스, 조던 피터슨.',
-    linkEn: 'Read posts →',  linkKo: '글 읽기 →',
-  },
-  {
-    id: 6, href: '#wyo-korea',
-    img: '/img/wyoming-yellowstone-plains.jpg',
-    titleEn: 'Wyoming',      titleKo: '와이오밍',
-    bodyEn:  'From Big Sky Country. The wide open West shaped how I think.',
-    bodyKo:  '빅 스카이 컨트리 출신. 드넓은 서부가 저의 사고방식을 형성했습니다.',
-    linkEn: 'See Wyoming ↑', linkKo: '와이오밍 보기 ↑',
-  },
+// ── Static fallback — update hrefs to match WP category slugs you create ─────
+const FALLBACK: {
+  id: number; slug: string; name: string; nameKo: string
+  body: string; bodyKo: string; link: string; img: string
+}[] = [
+  { id: 1, slug: 'sport',   name: 'Sport',   nameKo: '운동',
+    body: 'Second-degree black belt earned in Korea.',
+    bodyKo: '한국에서 2단 검은 띠 취득.', link: '/category/sport',
+    img: '/img/bike2.jpeg' },
+  { id: 2, slug: 'health',  name: 'Health',  nameKo: '건강',
+    body: 'Five half-marathons, semi-pro cycling, heavy compound lifts.',
+    bodyKo: '하프마라톤 5회, 세미프로 사이클링, 복합 운동.', link: '/category/health',
+    img: '/img/muscle-support-gym.png' },
+  { id: 3, slug: 'music',   name: 'Music',   nameKo: '음악',
+    body: 'Playing bass and drums. Baritone — experimenting with country phrasing.',
+    bodyKo: '베이스와 드럼 연주. 바리톤 — 컨트리 창법 실험 중.', link: '/category/music',
+    img: '/img/bass.jpg' },
+  { id: 4, slug: 'coffee',  name: 'Coffee',  nameKo: '커피',
+    body: '산미맛 single-origin — Ethiopia, Kenya, black Americano.',
+    bodyKo: '산미맛 싱글 오리진 — 에티오피아, 케냐, 블랙 아메리카노.', link: '/category/coffee',
+    img: '/img/coffee.jpg' },
+  { id: 5, slug: 'books',   name: 'Books',   nameKo: '독서',
+    body: 'Andy Weir, Terry Brooks, Jordan Peterson. Project Hail Mary.',
+    bodyKo: '앤디 위어, 테리 브룩스, 조던 피터슨.', link: '/category/books',
+    img: '/img/books2.jpg' },
+  { id: 6, slug: 'wyoming', name: 'Wyoming', nameKo: '와이오밍',
+    body: 'From Big Sky Country. The wide open West shaped how I think.',
+    bodyKo: '빅 스카이 컨트리 출신. 드넓은 서부가 저의 사고방식을 형성했습니다.',
+    link: '/category/wyoming', img: '/img/wyoming-yellowstone-plains.jpg' },
 ]
 
 interface Props {
-  posts: WPPost[]
+  categories: WPCategory[]
 }
 
-export default function Beyond({ posts }: Props) {
-  // If we have WP posts, map them to the same shape; else use static fallback.
-  // We always show exactly 6 items (pad with fallback if WP returns fewer).
-  const wpItems = posts.slice(0, 6).map((p, i) => ({
-    id: p.id,
-    href: p.link,
-    img: getFeaturedImage(p) ?? '',
-    titleEn: stripHtml(p.title.rendered),
-    titleKo: '',
-    bodyEn:  stripHtml(p.excerpt.rendered).slice(0, 120),
-    bodyKo:  '',
-    linkEn: 'Read post →',
-    linkKo: '글 읽기 →',
+export default function Beyond({ categories }: Props) {
+  // If WP has categories set up, use them; otherwise use fallback.
+  // Always show exactly 6 items.
+  const wpItems = categories.slice(0, 6).map(c => ({
+    id:     c.id,
+    slug:   c.slug,
+    name:   c.name,
+    nameKo: '',
+    body:   c.description.slice(0, 120) || '',
+    bodyKo: '',
+    link:   `/category/${c.slug}`,
+    img:    c.meta?.category_image_url ?? '',
   }))
 
-  const items = posts.length >= 6
+  const items = wpItems.length >= 6
     ? wpItems
-    : [
-        ...wpItems,
-        ...FALLBACK_ITEMS.slice(wpItems.length),
-      ]
+    : [...wpItems, ...FALLBACK.slice(wpItems.length)]
 
   return (
     <section
@@ -108,33 +84,23 @@ export default function Beyond({ posts }: Props) {
         <div className="byd-grid rise">
           {items.map((item) => (
             <div key={item.id} className="byd-item">
-              <a
-                href={item.href}
-                className="byd-img"
-                target={item.href.startsWith('http') ? '_blank' : undefined}
-                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              >
+              <Link href={item.link} className="byd-img">
                 {item.img ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={item.img} alt={item.titleEn} loading="lazy" />
+                  <img src={item.img} alt={item.name} loading="lazy" />
                 ) : (
                   <div className="ph g-aurora" />
                 )}
-                <span className="byd-img-lnk en">{item.linkEn}</span>
-                <span className="byd-img-lnk ko">{item.linkKo}</span>
-              </a>
+                <span className="byd-img-lnk en">Read posts →</span>
+                <span className="byd-img-lnk ko">글 읽기 →</span>
+              </Link>
 
-              <a
-                href={item.href}
-                className="byd-ta"
-                target={item.href.startsWith('http') ? '_blank' : undefined}
-                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              >
-                {item.titleEn && <span className="byd-title en">{item.titleEn}</span>}
-                {item.titleKo && <span className="byd-title ko">{item.titleKo}</span>}
-              </a>
+              <Link href={item.link} className="byd-ta">
+                {item.name  && <span className="byd-title en">{item.name}</span>}
+                {item.nameKo && <span className="byd-title ko">{item.nameKo}</span>}
+              </Link>
 
-              {item.bodyEn && <p className="byd-body en">{item.bodyEn}</p>}
+              {item.body   && <p className="byd-body en">{item.body}</p>}
               {item.bodyKo && <p className="byd-body ko">{item.bodyKo}</p>}
             </div>
           ))}

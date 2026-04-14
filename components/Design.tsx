@@ -2,8 +2,9 @@
 // Receives WP project posts from the server. Falls back to static data
 // if WordPress returns nothing (offline dev, migration window, etc.)
 
+import Link from 'next/link'
 import type { WPPost } from '@/types/wordpress'
-import { getFeaturedImage, stripHtml } from '@/lib/wordpress'
+import { getFeaturedImage, stripHtml, wpLinkToPath } from '@/lib/wordpress'
 
 // ── Static fallback data (matches the v7 HTML exactly) ────────────────────────
 const FALLBACK_POSTS = [
@@ -36,7 +37,7 @@ export default function Design({ posts }: Props) {
           title: stripHtml(p.title.rendered),
           subtitle: stripHtml(p.excerpt.rendered).slice(0, 60),
           img: getFeaturedImage(p) ?? '',
-          href: p.link,
+          href: wpLinkToPath(p.link),
         }))
       : FALLBACK_POSTS
 
@@ -65,12 +66,10 @@ export default function Design({ posts }: Props) {
         {/* ── Design grid ── */}
         <div className="d-grid rise">
           {items.map((item) => (
-            <a
+            <Link
               key={item.id}
               href={item.href}
               className="di"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               {item.img && (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -85,7 +84,7 @@ export default function Design({ posts }: Props) {
                   }}
                 />
               </div>
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -102,16 +101,14 @@ export default function Design({ posts }: Props) {
         </div>
 
         <div style={{ marginTop: '1.75rem' }} className="rise">
-          <a
-            href="https://aaron.kr/portfolio"
+          <Link
+            href="/portfolio"
             className="slink sl-p fs"
-            target="_blank"
-            rel="noopener noreferrer"
             style={{ display: 'inline-flex' }}
           >
             <span className="en">View all design work →</span>
             <span className="ko">모든 디자인 작업 →</span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -2,7 +2,8 @@
 // Receives WP posts from the server. Falls back to static data if WP is offline.
 
 import type { WPPost } from '@/types/wordpress'
-import { stripHtml, formatWPDate } from '@/lib/wordpress'
+import Link from 'next/link'
+import { stripHtml, formatWPDate, wpLinkToPath } from '@/lib/wordpress'
 
 // ── Static fallback posts (from v7 HTML) ──────────────────────────────────────
 const FALLBACK_POSTS = [
@@ -24,7 +25,7 @@ export default function Writing({ posts }: Props) {
           title: stripHtml(p.title.rendered),
           titleKo: '',
           date: formatWPDate(p.date),
-          href: p.link,
+          href: wpLinkToPath(p.link),
           italic: false,
         }))
       : FALLBACK_POSTS
@@ -47,7 +48,7 @@ export default function Writing({ posts }: Props) {
         {/* ── Post list ── */}
         <div className="blist rise">
           {items.map((item) => (
-            <a key={item.id} href={item.href} className="bi" target="_blank" rel="noopener noreferrer">
+            <Link key={item.id} href={item.href} className="bi">
               {item.italic ? (
                 <span className="bt"><em dangerouslySetInnerHTML={{ __html: item.title }} /></span>
               ) : (
@@ -57,7 +58,7 @@ export default function Writing({ posts }: Props) {
                 </>
               )}
               <span className="bm">{item.date}</span>
-            </a>
+            </Link>
           ))}
 
           {/* All posts link */}

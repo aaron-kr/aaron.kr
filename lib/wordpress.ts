@@ -1,7 +1,7 @@
 // lib/wordpress.ts
 // WordPress REST API helpers — all fetches use Next.js ISR (revalidate: 3600)
 
-import type { WPPost } from '@/types/wordpress'
+import type { WPPost, WPCategory } from '@/types/wordpress'
 
 const WP_API = process.env.WP_API_URL ?? 'https://notes.aaron.kr/wp-json/wp/v2'
 
@@ -106,6 +106,18 @@ export function formatWPDate(date: string): string {
 
 
 
+/** Convert an absolute WP permalink to a root-relative path for Next.js navigation.
+ *  Strips whatever domain WP happens to be on (notes.aaron.kr, aaronkr.local, aaron.kr)
+ *  so components link to the correct host regardless of environment.
+ *  e.g. https://notes.aaron.kr/portfolio/my-item/ → /portfolio/my-item/ */
+export function wpLinkToPath(link: string): string {
+  try {
+    return new URL(link).pathname
+  } catch {
+    return link
+  }
+}
+
 /** Get the best available featured image — prefers the inline `featured_image_urls`
  *  field (no extra API call) over the legacy _embed approach. */
 export function getFeaturedImage(post: WPPost): string | null {
@@ -154,6 +166,16 @@ export const POST_TYPE_MAP: Record<string, string> = {
   testimonials:'testimonials',
 }
 
+/** Map a WP post type name to its REST API endpoint */
+export function wpTypeEndpoint(wpType: string): string {
+  const m: Record<string, string> = {
+    post: 'posts', page: 'pages', portfolio: 'portfolio',
+    testimonial: 'testimonials', research: 'research',
+    talk: 'talks', course: 'courses',
+  }
+  return m[wpType] ?? wpType
+}
+
 /** Generate static params for a post type (used in generateStaticParams) */
 export async function getAllSlugs(
   postType: string
@@ -165,4 +187,119 @@ export async function getAllSlugs(
     order:    'desc',
   })
   return (data ?? []).map( (p) => ({ slug: p.slug }) )
+}
+
+// ── Archive fetchers ──────────────────────────────────────────────────────────
+
+/** All portfolio posts for the archive page */
+export async function getPortfolioPosts(perPage = 24): Promise<WPPost[]> {
+  const type = process.env.WP_PROJECT_POST_TYPE ?? 'portfolio'
+  const data = await fetchWP<WPPost[]>(type, {
+    per_page: String(perPage), _embed: '1', orderby: 'date', order: 'desc',
+  })
+  return data ?? []
+}
+
+/** Posts filtered by category slug */
+export async function getPostsByCategory(slug: string, perPage = 10): Promise<{
+  posts: WPPost[]; categoryName: string
+}> {
+  const cats = await fetchWP<{ id: number; name: string }[]>('categories', {
+    slug, _fields: 'id,name',
+  })
+  const cat = cats?.[0]
+  if (!cat) return { posts: [], categoryName: slug }
+  const posts = await fetchWP<WPPost[]>('posts', {
+    categories: String(cat.id), per_page: String(perPage),
+    _embed: '1', orderby: 'date', order: 'desc',
+  })
+  return { posts: posts ?? [], categoryName: cat.name }
+}
+
+/** Posts filtered by tag slug */
+export async function getPostsByTag(slug: string, perPage = 10): Promise<{
+  posts: WPPost[]; tagName: string
+}> {
+  const tags = await fetchWP<{ id: number; name: string }[]>('tags', {
+    slug, _fields: 'id,name',
+  })
+  const tag = tags?.[0]
+  if (!tag) return { posts: [], tagName: slug }
+  const posts = await fetchWP<WPPost[]>('posts', {
+    tags: String(tag.id), per_page: String(perPage),
+    _embed: '1', orderby: 'date', order: 'desc',
+  })
+  return { posts: posts ?? [], tagName: tag.name }
+}
+
+// ── Related / adjacent posts ──────────────────────────────────────────────────
+
+/** Related posts: same categories (or just recent posts of same type) */
+export async function getRelatedPosts(
+  endpoint: string,
+  categoryIds: number[],
+  excludeId: number,
+  perPage = 3,
+): Promise<WPPost[]> {
+  const base = {
+    per_page: String(perPage + 1),
+    exclude:  String(excludeId),
+    _fields:  'id,title,slug,link,type,date,excerpt_plain,featured_image_urls',
+  }
+  const params =
+    endpoint === 'posts' && categoryIds.length > 0
+      ? { ...base, categories: categoryIds.join(',') }
+      : base
+  const data = await fetchWP<WPPost[]>(endpoint, params)
+  return (data ?? []).filter(p => p.id !== excludeId).slice(0, perPage)
+}
+
+/** Fetch a single post by WP ID (for preview/redirect support) */
+export async function getPostById(id: number): Promise<WPPost | null> {
+  // Try common endpoints — WP REST doesn't have a universal "get by ID" endpoint
+  for (const endpoint of ['posts', 'pages', 'portfolio', 'research', 'talks', 'courses']) {
+    const data = await fetchWP<WPPost[]>(endpoint, {
+      include: String(id), per_page: '1', _fields: 'id,slug,link,type',
+    })
+    if (data?.[0]) return data[0]
+  }
+  return null
+}
+
+/** Fetch subcategories of the "beyond" parent category (for the Beyond section) */
+export async function getBeyondCategories(
+  perPage = 12,
+): Promise<WPCategory[]> {
+  const parentSlug = process.env.WP_BEYOND_CATEGORY ?? 'beyond'
+
+  // Find the parent category ID
+  const parents = await fetchWP<WPCategory[]>('categories', {
+    slug: parentSlug, _fields: 'id',
+  })
+  const parentId = parents?.[0]?.id
+
+  // Fetch child categories
+  const params: Record<string, string> = {
+    per_page: String(perPage),
+    orderby:  'count',
+    order:    'desc',
+    _fields:  'id,name,slug,description,count,meta',
+  }
+  if (parentId) params.parent = String(parentId)
+
+  const cats = await fetchWP<WPCategory[]>('categories', params)
+  return (cats ?? []).filter(c => c.slug !== parentSlug)
+}
+
+/** Adjacent posts: one before and one after by date */
+export async function getAdjacentPosts(
+  endpoint: string,
+  date: string,
+): Promise<{ prev: WPPost | null; next: WPPost | null }> {
+  const fields = 'id,title,slug,link,type,date'
+  const [prevData, nextData] = await Promise.all([
+    fetchWP<WPPost[]>(endpoint, { before: date, per_page: '1', orderby: 'date', order: 'desc', _fields: fields }),
+    fetchWP<WPPost[]>(endpoint, { after:  date, per_page: '1', orderby: 'date', order: 'asc',  _fields: fields }),
+  ])
+  return { prev: prevData?.[0] ?? null, next: nextData?.[0] ?? null }
 }

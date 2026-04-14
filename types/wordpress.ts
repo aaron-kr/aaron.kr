@@ -63,6 +63,9 @@ export interface WPPost {
     client: string; year: string; tools: string; project_url: string
   }
 
+  naver_blog_url?:  string | null
+  korean_post_url?: string | null
+
   _embedded?: {
     'wp:featuredmedia'?: Array<{
       source_url: string
@@ -81,4 +84,6 @@ export interface WPPost {
 
 export interface WPCategory {
   id: number; count: number; name: string; slug: string; parent: number
+  description: string
+  meta?: { category_image_url?: string }
 }
