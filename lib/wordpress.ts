@@ -3,7 +3,7 @@
 
 import type { WPPost } from '@/types/wordpress'
 
-const WP_API = process.env.WP_API_URL ?? 'https://aaron.kr/wp-json/wp/v2'
+const WP_API = process.env.WP_API_URL ?? 'https://notes.aaron.kr/wp-json/wp/v2'
 
 // ── Generic fetcher with ISR caching ──────────────────────────────────────────
 async function fetchWP<T>(

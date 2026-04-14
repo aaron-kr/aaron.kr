@@ -56,7 +56,7 @@ export default function Footer() {
             <div className="fl-row">
               <a href="https://kspai.org"              className="fl p" target="_blank" rel="noopener noreferrer">KSPAI</a>
               <a href="https://m.blog.naver.com/aaron_kr" className="fl p" target="_blank" rel="noopener noreferrer">Naver</a>
-              <a href="https://aaron.kr/content"       className="fl p" target="_blank" rel="noopener noreferrer">Blog</a>
+              <a href="https://aaron.kr"       className="fl p" target="_blank" rel="noopener noreferrer">Blog</a>
             </div>
             <p className="foot-info" style={{ textAlign: 'right', marginTop: '.35rem' }}>
               © {new Date().getFullYear()} Aaron Snowberger

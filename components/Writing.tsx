@@ -6,10 +6,10 @@ import { stripHtml, formatWPDate } from '@/lib/wordpress'
 
 // ── Static fallback posts (from v7 HTML) ──────────────────────────────────────
 const FALLBACK_POSTS = [
-  { id: 1, title: 'On Physical AI: What Embodied Intelligence Means for Education',       titleKo: '피지컬 AI에 대하여: 체화된 지능이 교육에 의미하는 것', date: '2025 · Research', href: 'https://aaron.kr/content', italic: false },
-  { id: 2, title: 'GitHub Classroom After One Year: What Actually Worked',                titleKo: 'GitHub Classroom 1년 후: 실제로 효과가 있었던 것들',   date: '2024 · Teaching', href: 'https://aaron.kr/content', italic: false },
-  { id: 3, title: 'Twenty Years in Korea: Observations on Education and Culture',         titleKo: '한국에서의 20년: 교육과 문화에 관한 관찰',             date: '2024 · Reflection', href: 'https://aaron.kr/content', italic: false },
-  { id: 4, title: '"A kind \'no\' is kinder than a wishy-washy \'maybe.\'"', titleKo: '', date: 'Aug 2022', href: 'https://aaron.kr/content/reflection/a-kind-no-is-kinder-than-a-wishy-washy-maybe/', italic: true },
+  { id: 1, title: 'On Physical AI: What Embodied Intelligence Means for Education',       titleKo: '피지컬 AI에 대하여: 체화된 지능이 교육에 의미하는 것', date: '2025 · Research', href: 'https://aaron.kr', italic: false },
+  { id: 2, title: 'GitHub Classroom After One Year: What Actually Worked',                titleKo: 'GitHub Classroom 1년 후: 실제로 효과가 있었던 것들',   date: '2024 · Teaching', href: 'https://aaron.kr', italic: false },
+  { id: 3, title: 'Twenty Years in Korea: Observations on Education and Culture',         titleKo: '한국에서의 20년: 교육과 문화에 관한 관찰',             date: '2024 · Reflection', href: 'https://aaron.kr', italic: false },
+  { id: 4, title: '"A kind \'no\' is kinder than a wishy-washy \'maybe.\'"', titleKo: '', date: 'Aug 2022', href: 'https://aaron.kr/reflection/a-kind-no-is-kinder-than-a-wishy-washy-maybe/', italic: true },
 ]
 
 interface Props {
@@ -62,7 +62,7 @@ export default function Writing({ posts }: Props) {
 
           {/* All posts link */}
           <a
-            href="https://aaron.kr/content"
+            href="https://aaron.kr"
             className="bi"
             target="_blank"
             rel="noopener noreferrer"

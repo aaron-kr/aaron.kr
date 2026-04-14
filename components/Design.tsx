@@ -7,10 +7,10 @@ import { getFeaturedImage, stripHtml } from '@/lib/wordpress'
 
 // ── Static fallback data (matches the v7 HTML exactly) ────────────────────────
 const FALLBACK_POSTS = [
-  { id: 1, title: 'JB Life! 2022 · Vol. 3', subtitle: 'Jeongeup Travel',   img: 'https://files.aaron.kr/media/2025/01/jblife-2022-vol3.jpg', href: 'https://aaron.kr/content/project-type/design' },
-  { id: 2, title: '2022 · Vol. 2',          subtitle: 'Slow Summer',       img: 'https://files.aaron.kr/media/2025/01/jblife-2022-vol2.png', href: 'https://aaron.kr/content/project-type/design' },
-  { id: 3, title: '2022 · Vol. 1',          subtitle: 'Art &amp; History', img: 'https://files.aaron.kr/media/2025/01/jblife-2022-vol1.png', href: 'https://aaron.kr/content/project-type/design' },
-  { id: 4, title: '2021 · Winter',          subtitle: 'Korean Games',      img: 'https://files.aaron.kr/media/2025/01/jblife-2021-winter.jpg', href: 'https://aaron.kr/content/project-type/design' },
+  { id: 1, title: 'JB Life! 2022 · Vol. 3', subtitle: 'Jeongeup Travel',   img: 'https://files.aaron.kr/media/2025/01/jblife-2022-vol3.jpg', href: 'https://aaron.kr/portfolio' },
+  { id: 2, title: '2022 · Vol. 2',          subtitle: 'Slow Summer',       img: 'https://files.aaron.kr/media/2025/01/jblife-2022-vol2.png', href: 'https://aaron.kr/portfolio' },
+  { id: 3, title: '2022 · Vol. 1',          subtitle: 'Art &amp; History', img: 'https://files.aaron.kr/media/2025/01/jblife-2022-vol1.png', href: 'https://aaron.kr/portfolio' },
+  { id: 4, title: '2021 · Winter',          subtitle: 'Korean Games',      img: 'https://files.aaron.kr/media/2025/01/jblife-2021-winter.jpg', href: 'https://aaron.kr/portfolio' },
 ]
 
 const CLIENTS = [
@@ -103,7 +103,7 @@ export default function Design({ posts }: Props) {
 
         <div style={{ marginTop: '1.75rem' }} className="rise">
           <a
-            href="https://aaron.kr/content/project-type/design"
+            href="https://aaron.kr/portfolio"
             className="slink sl-p fs"
             target="_blank"
             rel="noopener noreferrer"
