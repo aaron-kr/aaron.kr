@@ -32,13 +32,21 @@ export async function generateStaticParams() {
   return paths
 }
 
+// ── Shared post resolver ──────────────────────────────────────────────────────
+// When postType is a known CPT key (portfolio, research…) fetch from that endpoint.
+// When it isn't — e.g. it's a WP category slug like "code" in /code/wp-cli —
+// fall back to blog posts, which are the only type that uses /%category%/%postname%/.
+async function resolvePost(postType: string, slug: string): Promise<import('@/types/wordpress').WPPost | null> {
+  const endpoint = POST_TYPE_MAP[postType]
+  if (endpoint) return getPostBySlug(endpoint, slug)
+  // postType is a category slug — look the post up as a standard blog post
+  return getPostBySlug('posts', slug)
+}
+
 // ── Metadata ──────────────────────────────────────────────────────────────────
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { postType, slug } = await params
-  const endpoint = POST_TYPE_MAP[postType]
-  if (!endpoint) return {}
-
-  const post = await getPostBySlug(endpoint, slug)
+  const post = await resolvePost(postType, slug)
   if (!post) return {}
 
   const title   = stripHtml(post.title.rendered)
@@ -58,10 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default async function PostPage({ params }: Props) {
   const { postType, slug } = await params
-  const endpoint = POST_TYPE_MAP[postType]
-  if (!endpoint) notFound()
-
-  const post = await getPostBySlug(endpoint, slug)
+  const post = await resolvePost(postType, slug)
   if (!post) notFound()
 
   const typeEndpoint = wpTypeEndpoint(post.type)
