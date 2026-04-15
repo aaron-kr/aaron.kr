@@ -1,4 +1,4 @@
-# aaron-kr
+# `aaron-kr`
 
 Next.js frontend for [aaron.kr](https://aaron.kr) — personal site for Aaron Snowberger, Ph.D., AI researcher and educator based in Jeonju, South Korea.
 
