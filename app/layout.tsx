@@ -1,6 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from 'next'
 import './globals.css'
+import { Analytics } from '@vercel/analytics/next'
 
 import 'highlight.js/styles/github-dark-dimmed.css'   // works in dark+light
 // or: import 'highlight.js/styles/atom-one-dark.css'
@@ -96,7 +97,10 @@ export default function RootLayout({
           }
         `}} />
       </head>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
