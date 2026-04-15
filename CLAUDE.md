@@ -4,16 +4,21 @@ This file gives Claude context about this repository. Read it before making any 
 
 ## What this is
 
-Next.js 15 personal site for Aaron Snowberger, Ph.D. Single-page homepage with scroll sections. Content for Design, Writing, and Beyond sections fetched from headless WordPress at `notes.aaron.kr`. Research, Teaching, and Labs sections are static. Deployed to Vercel with ISR.
+Next.js 15 personal site for Aaron Snowberger, Ph.D. Live at [aaron.kr](https://aaron.kr). Single-page homepage with scroll sections. Content for Design, Writing, and Beyond sections fetched from headless WordPress at `notes.aaron.kr`. Research, Teaching, and Labs sections are static. Deployed to Vercel with ISR, auto-deploys on push to `main`.
 
 ## WordPress backend
 
-**URL:** `https://notes.aaron.kr` (moved from `aaron.kr/content` — the `/content/` subdirectory no longer exists)
+**URL:** `https://notes.aaron.kr`
 **REST API base:** `https://notes.aaron.kr/wp-json/wp/v2`
-**Media files:** `https://files.aaron.kr/media/` (separate domain, unchanged)
+**Media files:** `https://files.aaron.kr/media/`
 **WP Admin:** `https://notes.aaron.kr/wp-admin`
+**WP repo:** `aaron-kr-wp` — mu-plugin registers CPTs and REST fields this app consumes.
 
-The WP backend repo is `aaron-kr-wp`. The mu-plugin there registers custom post types and REST fields that this app consumes.
+## Deployment
+
+**Branch:** `main` is the production branch. Push to `main` → Vercel auto-deploys in ~90 seconds.
+**Vercel project settings:** Framework = Next.js, Production Branch = main, Root = repo root. Do not change these.
+**Env vars:** `.env.local` is gitignored. Vercel manages its own env vars. You never change `.env.local` when deploying — local always points to `aaronkr.local`, Vercel always uses `notes.aaron.kr`.
 
 ## Architecture rules to preserve
 
@@ -32,18 +37,20 @@ The WP backend repo is `aaron-kr-wp`. The mu-plugin there registers custom post 
 ## File map
 
 ```
-app/layout.tsx            Anti-flash script, font links, metadata, suppressHydrationWarning
-app/page.tsx              Server component: parallel WP fetches, section assembly
-app/globals.css           ENTIRE design system
-app/writing/page.tsx      Blog post archive — all published posts
-app/portfolio/page.tsx    Portfolio archive
-app/category/[slug]/      Category archive with full category list
-app/tag/[slug]/           Tag archive with full tag cloud
-app/[...segments]/
-  page.tsx                Catch-all: handles /%category%/%postname%/ and CPT URLs
+app/layout.tsx              Anti-flash script, font links, metadata, suppressHydrationWarning
+app/page.tsx                Server component: parallel WP fetches, section assembly
+app/globals.css             ENTIRE design system + all Gutenberg block styles
+app/writing/page.tsx        Blog post archive
+app/portfolio/page.tsx      Portfolio archive
+app/category/[slug]/        Category archive + full category list below posts
+app/tag/[slug]/             Tag archive + full tag cloud below posts
+app/[postType]/[slug]/      Typed CPT route with generateStaticParams (portfolio, research, talks, etc.)
+  page.tsx
+app/[...segments]/          Catch-all: handles /%category%/%postname%/ blog URLs + fallback CPT lookup
+  page.tsx
 
 components/
-  ClientInit.tsx          useEffect only: scroll progress + IntersectionObserver
+  ClientInit.tsx          useEffect: scroll progress + IntersectionObserver + highlight.js init
   Nav.tsx                 'use client' — theme/lang/aurora toggles, mobile menu, Beyond dropdown (click-toggle)
   Hero.tsx                Static — no props
   WyoKoreaSlider.tsx      'use client' — range input → clipPath
@@ -52,19 +59,19 @@ components/
   Labs.tsx                Static — links to pailab.io
   Design.tsx              Props: WPPost[] — WP portfolio + static fallback. Export: DESIGN_COUNT
   Writing.tsx             Props: WPPost[] — WP posts + static fallback. Export: WRITING_COUNT
-  Beyond.tsx              Props: WPCategory[] + WPCategory[] (all) — image grid + tag list. Export: FEATURED_SLUGS
+  Beyond.tsx              Props: WPCategory[] + WPCategory[] (all) — image grid + tag row. Export: FEATURED_SLUGS
   PostLayout.tsx          Shared server component for all single-post pages
   PostSidebar.tsx         Sticky sidebar: author card + related posts (blog posts only)
   PostFooter.tsx          Full-width prev/next + related posts section
   PostLightbox.tsx        'use client' — click-to-enlarge images in .wp-content
   ShareButtons.tsx        'use client' — native share / X / LinkedIn / copy link
-  GiscusComments.tsx      'use client' — Giscus (GitHub Discussions) comments embed
+  GiscusComments.tsx      'use client' — Giscus comments: theme + language sync, bilingual label
   Breadcrumbs.tsx         Server component — breadcrumb trail for post/archive pages
   Footer.tsx              Static server component
   QRModal.tsx             'use client' — opens via window event 'openQRModal'
 
-lib/wordpress.ts          fetch wrappers, ISR, stripHtml with entity decode, helpers
-types/wordpress.ts        WPPost, WPCategory, WPTag interfaces with all mu-plugin custom fields
+lib/wordpress.ts            fetch wrappers, ISR, stripHtml with entity decode, all fetchers
+types/wordpress.ts          WPPost, WPCategory, WPTag interfaces with all mu-plugin custom fields
 ```
 
 ## Configurable constants (edit in component, not env vars)
@@ -86,7 +93,7 @@ types/wordpress.ts        WPPost, WPCategory, WPTag interfaces with all mu-plugi
 | `courses.aaron.kr` | Student course site (GitHub Pages CNAME) |
 | `pailab.io` | Research lab site (Astro) |
 
-**There is no `/content/` subdirectory.** WordPress previously lived at `aaron.kr/content/` but moved to `notes.aaron.kr` (root, no subdirectory). Any reference to `aaron.kr/content/` in the codebase is a stale URL that needs updating.
+**There is no `/content/` subdirectory.** WordPress previously lived at `aaron.kr/content/` but moved to `notes.aaron.kr`. Any reference to `aaron.kr/content/` in the codebase is stale.
 
 ## WP data consumed
 
@@ -149,21 +156,33 @@ Standard `post` and `page` are also extended with all custom fields.
   prev={prev}
   next={next}
   showShare={true}       // default: true for all types
-  showComments={false}   // default: true for 'post', false for CPTs
-                         // pass showComments={true} to enable on a CPT page
+  showComments={false}   // default: true for post/research/talk, false for all others
+                         // pass showComments={true} to opt any CPT in
+                         // pass showComments={false} to opt any type out
 />
 ```
 
-## Giscus comments setup
+The default set is defined as `COMMENTS_ON_TYPES = new Set(['post', 'research', 'talk'])` in `PostLayout.tsx`. Edit that set to change which post types get comments globally.
 
-Set in `.env.local` AND Vercel environment variables:
+## Giscus comments
+
+**Live on:** [github.com/aaron-kr/aaron.kr/discussions](https://github.com/aaron-kr/aaron.kr/discussions)
+**Discussion category:** `Comments` — format is **Announcement** (owner opens threads, anyone can reply; prevents public spam threads)
+**Mapping:** `pathname` — each post's URL maps to its own Discussion thread, created on first visit.
+
+**Behaviour:**
+- Theme syncs with dark/light toggle via `postMessage` to the Giscus iframe
+- Language syncs with 한국어/English toggle by reinitialising the widget
+- Label uses bilingual `<span class="en">Discussion</span><span class="ko">댓글</span>` pattern
+- Renders nothing if env vars are not set — safe to develop without them
+
+**Env vars** (set in Vercel dashboard, also in `.env.local` if testing locally):
 ```bash
-NEXT_PUBLIC_GISCUS_REPO=username/repo           # GitHub repo with Discussions enabled
-NEXT_PUBLIC_GISCUS_REPO_ID=R_xxxxxxxxxx         # from giscus.app
-NEXT_PUBLIC_GISCUS_CATEGORY=Comments            # Discussion category name
-NEXT_PUBLIC_GISCUS_CATEGORY_ID=DIC_xxxxxxxxxx   # from giscus.app
+NEXT_PUBLIC_GISCUS_REPO=aaron-kr/aaron.kr
+NEXT_PUBLIC_GISCUS_REPO_ID=<from giscus.app>
+NEXT_PUBLIC_GISCUS_CATEGORY=Comments
+NEXT_PUBLIC_GISCUS_CATEGORY_ID=<from giscus.app>
 ```
-GiscusComments renders nothing if env vars are not set. Theme syncs automatically with dark/light toggle.
 
 ## CSS design system
 
@@ -174,7 +193,28 @@ GiscusComments renders nothing if env vars are not set. Theme syncs automaticall
 **Section title links:** `.sec-h2-link` — no underline, color inherit, opacity on hover.
 **Breadcrumbs:** `.breadcrumbs`, `.bc-item`, `.bc-sep`, `.bc-link`, `.bc-cur`.
 **Share bar:** `.share-bar`, `.share-btn`, `.share-lbl`, `.share-feedback`.
-**Comments:** `.comments-wrap`, `.giscus-outer`, `.giscus-lbl`.
+**Comments:** `.comments-wrap` (max-width 880px container), `.giscus-outer` (direct Giscus wrapper).
+**Post layout:** `.post-layout` (no sidebar, max-width 880px) / `.post-layout.has-sidebar` (grid, max-width 1160px). CSS variables `--post-h-pad` and `--post-sidebar-bleed` are set on `.post-layout` and consumed by `.alignwide` / `.alignfull` inside `.wp-content`.
+
+**WordPress post content (`.wp-content`):** `globals.css` has a comprehensive Gutenberg block section covering headings h1–h6 (all Playfair Display), paragraphs, drop cap, font-size utility classes, all alignment classes (`alignleft/right/center/wide/full`), cover, gallery, columns, text-columns, buttons (fill/outline/squared), blockquote (decorative quote mark, cite eyebrow line), pullquote, code/pre, preformatted, verse, audio, video, all embed types (YouTube 16:9 container, Twitter/X centered, WordPress oEmbed card), table (header background, row hover), separators (wide gradient, dots asterism), spacer, group, media-text, details/accordion, latest-posts, file blocks (SVG icon), and the full Gutenberg colour palette class set.
+
+**Alignment breakout:** `.alignwide` breaks out 2rem past each side (removes the `.post-layout` padding). `.alignfull` additionally extends into the sidebar column in sidebar-layout posts using `--post-sidebar-bleed`. Both use `!important` to override any equal-specificity block margin rules.
+
+**Global headings:** h1–h6 all use `var(--font-playfair)` globally. Within `.wp-content`, each heading level has its own scoped font-size, margin, and Playfair family.
+
+## Syntax highlighting (highlight.js)
+
+`ClientInit.tsx` dynamically imports `highlight.js` on mount and calls `highlightAll()`. It also stamps a `data-language` attribute on `.wp-block-code` containers for a CSS language badge.
+
+To activate, install the package and import a theme in `app/layout.tsx`:
+```bash
+npm install highlight.js
+```
+```typescript
+// app/layout.tsx
+import 'highlight.js/styles/github-dark-dimmed.css'
+```
+Without installation, the dynamic import fails silently and code blocks render with the custom monospace CSS only.
 
 ## Nav dropdown
 
@@ -196,15 +236,16 @@ Nav fires `window.dispatchEvent(new Event('openQRModal'))`. QRModal listens via 
 ## Environment variables
 
 ```bash
-WP_API_URL              # Base WP REST API URL (http://aaronkr.local or https://notes.aaron.kr/.../v2)
-WP_PROJECT_POST_TYPE    # CPT slug for design posts (default: portfolio)
-WP_BEYOND_CATEGORY      # Category slug for personal posts (default: beyond)
-WP_WRITING_PER_PAGE     # Overrides WRITING_COUNT from env (optional — prefer the component constant)
+WP_API_URL              # http://aaronkr.local (local) — set in .env.local, never committed
+                        # https://notes.aaron.kr/wp-json/wp/v2 (prod) — set in Vercel dashboard
+WP_PROJECT_POST_TYPE    # portfolio
+WP_BEYOND_CATEGORY      # beyond
+WP_WRITING_PER_PAGE     # 8
 
-NEXT_PUBLIC_GISCUS_REPO          # GitHub repo for Giscus comments
-NEXT_PUBLIC_GISCUS_REPO_ID       # From giscus.app
-NEXT_PUBLIC_GISCUS_CATEGORY      # Discussion category name
-NEXT_PUBLIC_GISCUS_CATEGORY_ID   # From giscus.app
+NEXT_PUBLIC_GISCUS_REPO          # aaron-kr/aaron.kr
+NEXT_PUBLIC_GISCUS_REPO_ID       # from giscus.app
+NEXT_PUBLIC_GISCUS_CATEGORY      # Comments
+NEXT_PUBLIC_GISCUS_CATEGORY_ID   # from giscus.app
 ```
 
 ## Common mistakes to avoid
@@ -218,3 +259,6 @@ NEXT_PUBLIC_GISCUS_CATEGORY_ID   # From giscus.app
 - Don't add Tailwind — globals.css is the complete design system
 - Don't use `next/font` if the build environment has restricted network access
 - Don't change `BEYOND_ITEMS` in Nav.tsx without also updating `FEATURED_SLUGS` in Beyond.tsx
+- Don't change the Vercel production branch away from `main`
+- Don't edit `.env.local` when deploying — Vercel uses its own env vars, `.env.local` is local-only
+- Don't add `!important` to arbitrary CSS rules — it is intentionally used only on alignment utility classes (`.alignleft`, `.alignright`, `.aligncenter`, `.alignwide`, `.alignfull`) to override equal-specificity block margin rules
