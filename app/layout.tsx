@@ -6,6 +6,8 @@ import { Analytics } from '@vercel/analytics/next'
 import 'highlight.js/styles/github-dark-dimmed.css'   // works in dark+light
 // or: import 'highlight.js/styles/atom-one-dark.css'
 
+import { SpeedInsights } from '@vercel/speed-insights/next'
+
 // Font note: we load via standard <link> tags in the <head> below rather
 // than next/font, because next/font downloads font files at build time and
 // requires network access to Google Fonts servers. Using <link> tags:
@@ -99,6 +101,7 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning>
         {children}
+        <SpeedInsights />
         <Analytics />
       </body>
     </html>
