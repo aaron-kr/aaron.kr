@@ -43,9 +43,11 @@ export default function PostLayout({
   showShare    = true,
   showComments,
 }: Props) {
-  // Comments default: on for standard posts, off for CPTs.
-  // Callers can override by passing showComments explicitly.
-  const commentsOn = showComments ?? (post.type === 'post')
+  // Comments: on by default for blog posts, research, and talks.
+  // Portfolio, testimonials, courses, and pages opt out by default.
+  // Any route can override by passing showComments={true|false} explicitly.
+  const COMMENTS_ON_TYPES = new Set(['post', 'research', 'talk'])
+  const commentsOn = showComments ?? COMMENTS_ON_TYPES.has(post.type)
   const title       = stripHtml(post.title.rendered)
   const date        = formatWPDate(post.date)
   const image       = getFeaturedImage(post)

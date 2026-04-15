@@ -1326,6 +1326,11 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 .post-sidebar {
   position: sticky;
   top: 76px; /* nav height + breathing room */
+  background: var(--nav-bg);
+  padding: 2rem;
+  margin: -2rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
 }
 .sb-author {
   margin-bottom: 2rem; padding-bottom: 2rem;
@@ -1462,18 +1467,21 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 /* ══════════════════════════════
    GISCUS COMMENTS
    Full article-width block placed below the sidebar grid inside <main>.
+   The eyebrow (Discussion / 댓글) uses the existing .hero-eyebrow pattern
+   so it matches the site's section labels visually.
 ══════════════════════════════ */
 .comments-wrap {
   max-width: 880px;
   margin: 0 auto;
-  padding: 0 2rem 4rem;
+  padding: 0 2rem 5rem;
 }
-.giscus-outer { }
-.giscus-lbl {
-  font-size: .68rem; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--t3);
-  margin-bottom: 1.5rem; padding-top: .5rem;
-  border-top: 1px solid var(--rule);
+.giscus-outer {
+  /* Giscus injects its own iframe styling; this just contains it */
+}
+/* Ensure Giscus iframe fills the container and respects border-radius */
+.giscus-outer .giscus,
+.giscus-outer .giscus-frame {
+  width: 100% !important;
 }
 
 /* ══════════════════════════════
