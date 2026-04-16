@@ -25,6 +25,24 @@ async function fetchWP<T>(
   }
 }
 
+// ── Paginated fetcher — also returns X-WP-TotalPages from response header ────
+async function fetchWPPaged<T>(
+  endpoint: string,
+  params: Record<string, string> = {}
+): Promise<{ data: T | null; totalPages: number }> {
+  const url = new URL(`${WP_API}/${endpoint}`)
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v))
+
+  try {
+    const res = await fetch(url.toString(), { next: { revalidate: 3600 } })
+    if (!res.ok) return { data: null, totalPages: 1 }
+    const totalPages = Math.max(1, parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10) || 1)
+    return { data: (await res.json()) as T, totalPages }
+  } catch {
+    return { data: null, totalPages: 1 }
+  }
+}
+
 // ── Design / Projects ──────────────────────────────────────────────────────────
 // Assumes a custom post type registered as `project` in WordPress.
 // Adjust WP_PROJECT_POST_TYPE env var if your slug differs (e.g. "portfolio").
@@ -102,6 +120,14 @@ export function formatWPDate(date: string): string {
     year: 'numeric',
     month: 'short',
   })
+}
+
+/** Compact date format → "Jan '25" — used for "originally published" short label */
+export function formatWPDateShort(date: string): string {
+  const d = new Date(date)
+  const month = d.toLocaleDateString('en-US', { month: 'short' })
+  const year  = d.getFullYear().toString().slice(-2)
+  return `${month} '${year}`
 }
 
 
@@ -217,7 +243,8 @@ export async function getPostsByCategory(slug: string, perPage = 10): Promise<{
   return { posts: posts ?? [], categoryName: cat.name }
 }
 
-/** Posts filtered by tag slug */
+/** Posts filtered by tag slug — searches posts, portfolio, and research
+ *  so tags shared across CPTs (e.g. migrated Jetpack portfolio tags) don't 404 */
 export async function getPostsByTag(slug: string, perPage = 10): Promise<{
   posts: WPPost[]; tagName: string
 }> {
@@ -226,11 +253,82 @@ export async function getPostsByTag(slug: string, perPage = 10): Promise<{
   })
   const tag = tags?.[0]
   if (!tag) return { posts: [], tagName: slug }
-  const posts = await fetchWP<WPPost[]>('posts', {
-    tags: String(tag.id), per_page: String(perPage),
+
+  const tagParam = String(tag.id)
+  const base = { tags: tagParam, per_page: String(perPage), _embed: '1', orderby: 'date', order: 'desc' }
+  const [blogPosts, portfolioPosts, researchPosts] = await Promise.all([
+    fetchWP<WPPost[]>('posts',     base),
+    fetchWP<WPPost[]>('portfolio', base),
+    fetchWP<WPPost[]>('research',  base),
+  ])
+  const combined = [
+    ...(blogPosts     ?? []),
+    ...(portfolioPosts ?? []),
+    ...(researchPosts  ?? []),
+  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+   .slice(0, perPage)
+
+  return { posts: combined, tagName: tag.name }
+}
+
+// ── Paginated archive fetchers ────────────────────────────────────────────────
+export const ARCHIVE_PER_PAGE = 12
+
+export async function getWritingPostsPaged(
+  page = 1
+): Promise<{ posts: WPPost[]; totalPages: number }> {
+  const { data, totalPages } = await fetchWPPaged<WPPost[]>('posts', {
+    per_page: String(ARCHIVE_PER_PAGE), page: String(page),
     _embed: '1', orderby: 'date', order: 'desc',
   })
-  return { posts: posts ?? [], tagName: tag.name }
+  return { posts: data ?? [], totalPages }
+}
+
+export async function getCategoryPostsPaged(
+  slug: string, page = 1
+): Promise<{ posts: WPPost[]; categoryName: string; totalPages: number }> {
+  const cats = await fetchWP<{ id: number; name: string }[]>('categories', {
+    slug, _fields: 'id,name',
+  })
+  const cat = cats?.[0]
+  if (!cat) return { posts: [], categoryName: slug, totalPages: 1 }
+
+  const { data, totalPages } = await fetchWPPaged<WPPost[]>('posts', {
+    categories: String(cat.id),
+    per_page: String(ARCHIVE_PER_PAGE), page: String(page),
+    _embed: '1', orderby: 'date', order: 'desc',
+  })
+  return { posts: data ?? [], categoryName: cat.name, totalPages }
+}
+
+export async function getTagPostsPaged(
+  slug: string, page = 1
+): Promise<{ posts: WPPost[]; tagName: string; totalPages: number }> {
+  const tags = await fetchWP<{ id: number; name: string }[]>('tags', {
+    slug, _fields: 'id,name',
+  })
+  const tag = tags?.[0]
+  if (!tag) return { posts: [], tagName: slug, totalPages: 1 }
+
+  // Only paginate blog posts for the paged view; tag cross-search is for the
+  // non-paginated single-page case (getPostsByTag above handles CPTs).
+  const { data, totalPages } = await fetchWPPaged<WPPost[]>('posts', {
+    tags: String(tag.id),
+    per_page: String(ARCHIVE_PER_PAGE), page: String(page),
+    _embed: '1', orderby: 'date', order: 'desc',
+  })
+  return { posts: data ?? [], tagName: tag.name, totalPages }
+}
+
+export async function getPortfolioPostsPaged(
+  page = 1
+): Promise<{ posts: WPPost[]; totalPages: number }> {
+  const type = process.env.WP_PROJECT_POST_TYPE ?? 'portfolio'
+  const { data, totalPages } = await fetchWPPaged<WPPost[]>(type, {
+    per_page: String(ARCHIVE_PER_PAGE), page: String(page),
+    _embed: '1', orderby: 'date', order: 'desc',
+  })
+  return { posts: data ?? [], totalPages }
 }
 
 // ── Related / adjacent posts ──────────────────────────────────────────────────
@@ -240,7 +338,7 @@ export async function getRelatedPosts(
   endpoint: string,
   categoryIds: number[],
   excludeId: number,
-  perPage = 3,
+  perPage = 4,
 ): Promise<WPPost[]> {
   const base = {
     per_page: String(perPage + 1),

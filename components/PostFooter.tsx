@@ -1,10 +1,10 @@
 // components/PostFooter.tsx
 // Full-width colored section after the post body.
-// Shows: related posts grid + simple prev/next text links.
+// Shows: related posts grid (with featured images) + simple prev/next text links.
 // Server component — no 'use client'.
 
 import Link from 'next/link'
-import { stripHtml, formatWPDate, wpLinkToPath } from '@/lib/wordpress'
+import { stripHtml, formatWPDate, getFeaturedImage, wpLinkToPath } from '@/lib/wordpress'
 import type { WPPost } from '@/types/wordpress'
 
 interface Props {
@@ -24,13 +24,22 @@ export default function PostFooter({ prev, next, related }: Props) {
         {related.length > 0 && (
           <div className="pf-related">
             <div className="pf-label">Continue Reading</div>
-            <div className="pf-grid">
-              {related.map(p => (
-                <Link key={p.id} href={wpLinkToPath(p.link)} className="pf-card">
-                  <span className="pf-card-title">{stripHtml(p.title.rendered)}</span>
-                  <span className="pf-card-date">{formatWPDate(p.date)}</span>
-                </Link>
-              ))}
+            <div className={`pf-grid pf-grid-${related.length}`}>
+              {related.map(p => {
+                const img = getFeaturedImage(p)
+                return (
+                  <Link key={p.id} href={wpLinkToPath(p.link)} className="pf-card">
+                    {img ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={img} alt={stripHtml(p.title.rendered)} className="pf-card-img" loading="lazy" />
+                    ) : (
+                      <div className="pf-card-img pf-card-img-ph g-aurora" />
+                    )}
+                    <span className="pf-card-title">{stripHtml(p.title.rendered)}</span>
+                    <span className="pf-card-date">{formatWPDate(p.date)}</span>
+                  </Link>
+                )
+              })}
             </div>
           </div>
         )}

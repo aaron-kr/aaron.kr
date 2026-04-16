@@ -1,20 +1,28 @@
 // app/portfolio/page.tsx
-// Portfolio archive — all design/creative work.
+// Portfolio archive — paginated grid.
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getPortfolioPosts, getFeaturedImage, stripHtml, wpLinkToPath } from '@/lib/wordpress'
+import { getPortfolioPostsPaged, getFeaturedImage, stripHtml, wpLinkToPath } from '@/lib/wordpress'
 import Nav        from '@/components/Nav'
 import Footer     from '@/components/Footer'
 import ClientInit from '@/components/ClientInit'
+import Pagination from '@/components/Pagination'
 
 export const metadata: Metadata = {
   title: 'Portfolio · Aaron Snowberger',
   description: 'Design, magazine, and visual work by Aaron Snowberger.',
 }
 
-export default async function PortfolioPage() {
-  const posts = await getPortfolioPosts(24)
+interface Props {
+  searchParams: Promise<{ page?: string }>
+}
+
+export default async function PortfolioPage({ searchParams }: Props) {
+  const { page: pageStr } = await searchParams
+  const page = Math.max(1, parseInt(pageStr ?? '1', 10) || 1)
+
+  const { posts, totalPages } = await getPortfolioPostsPaged(page)
 
   return (
     <>
@@ -27,7 +35,6 @@ export default async function PortfolioPage() {
       <main style={{ paddingTop: '58px', minHeight: '80vh' }}>
         <div style={{ maxWidth: '1060px', margin: '0 auto', padding: '4rem 2rem 6rem' }}>
 
-          {/* Header */}
           <div className="hero-eyebrow" style={{ marginBottom: '1rem' }}>
             <div className="ey-line" />
             <span className="ey-txt">Creative Work</span>
@@ -40,7 +47,6 @@ export default async function PortfolioPage() {
             <p style={{ color: 'var(--t3)' }}>No portfolio items found.</p>
           )}
 
-          {/* Grid reuses the homepage .d-grid design */}
           <div className="d-grid">
             {posts.map(p => {
               const img   = getFeaturedImage(p)
@@ -65,6 +71,8 @@ export default async function PortfolioPage() {
               )
             })}
           </div>
+
+          <Pagination currentPage={page} totalPages={totalPages} basePath="/portfolio" />
 
         </div>
       </main>

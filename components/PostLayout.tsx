@@ -3,7 +3,7 @@
 
 import type { WPPost } from '@/types/wordpress'
 import {
-  stripHtml, formatWPDate, getFeaturedImage, wpLinkToPath,
+  stripHtml, formatWPDate, formatWPDateShort, getFeaturedImage, wpLinkToPath,
 } from '@/lib/wordpress'
 import Nav              from '@/components/Nav'
 import Footer           from '@/components/Footer'
@@ -59,6 +59,16 @@ export default function PostLayout({
   const section     = SECTION_LABELS[post.type] ?? post.type
   const isPost      = post.type === 'post'
   const isPortfolio = post.type === 'portfolio'
+
+  // "Updated" meta: show when modified is more than 7 days after original publish
+  const publishedMs = new Date(post.date).getTime()
+  const modifiedMs  = new Date(post.modified).getTime()
+  const SEVEN_DAYS  = 7 * 24 * 60 * 60 * 1000
+  const wasUpdated  = modifiedMs - publishedMs > SEVEN_DAYS
+
+  // "Possibly outdated" banner: post is 3+ years old and hasn't been meaningfully updated
+  const THREE_YEARS = 3 * 365.25 * 24 * 60 * 60 * 1000
+  const isOldContent = Date.now() - publishedMs > THREE_YEARS && !wasUpdated
 
   // Breadcrumb trail: Home > Section > Title
   const SECTION_HREF: Record<string, string> = {
@@ -124,7 +134,19 @@ export default function PostLayout({
                 />
               )}
               {author?.name && <span style={{ color: 'var(--t2)' }}>{author.name}</span>}
-              <span>{date}</span>
+              {/* Show updated date when meaningfully revised; collapse original to short form */}
+              {wasUpdated ? (
+                <>
+                  <span className="post-meta-updated">
+                    Updated {formatWPDate(post.modified)}
+                  </span>
+                  <span className="post-meta-orig">
+                    orig. {formatWPDateShort(post.date)}
+                  </span>
+                </>
+              ) : (
+                <span>{date}</span>
+              )}
               {readTime && <span>{readTime} min read</span>}
 
               {/* "Filed under" — category links */}
@@ -245,6 +267,14 @@ export default function PostLayout({
                     View Project →
                   </a>
                 )}
+              </div>
+            )}
+
+            {/* ── Possibly outdated banner ── */}
+            {isOldContent && (
+              <div className="post-outdated">
+                <span className="en">This post is over 3 years old — some information may be outdated.</span>
+                <span className="ko">이 글은 3년 이상 된 글입니다. 일부 정보가 오래되었을 수 있습니다.</span>
               </div>
             )}
 

@@ -66,6 +66,7 @@ export interface WPPost {
 
   naver_blog_url?:  string | null
   korean_post_url?: string | null
+  korean_title?:    string | null
 
   _embedded?: {
     'wp:featuredmedia'?: Array<{

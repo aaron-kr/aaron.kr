@@ -82,6 +82,9 @@ export default function RootLayout({
         {/* Anti-flash: must be the first script in <head>, before any CSS */}
         <script dangerouslySetInnerHTML={{ __html: antiFlashScript }} />
 
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
         {/* Google Fonts — preconnect for speed, then the actual stylesheet */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

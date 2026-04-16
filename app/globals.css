@@ -482,13 +482,28 @@ h1 em { font-style:italic; color:var(--teal); }
    BLOG
 ══════════════════════════════ */
 .blist { display:flex; flex-direction:column; }
+/* .bi is now a <div> container so the Korean link can be a separate <a> */
 .bi { display:flex; align-items:baseline; justify-content:space-between; gap:1.5rem; padding:1.3rem 0; position:relative; transition:padding-left .2s; }
 .bi::before { content:''; position:absolute; bottom:0; left:0; height:1px; width:100%; background:var(--rule); }
 .bi::after  { content:''; position:absolute; bottom:0; left:0; height:1px; width:0%; background:linear-gradient(90deg,var(--purple),var(--blue),var(--pink)); transition:width .45s ease; }
 .bi:last-child::before, .bi:last-child::after { display:none; }
 .bi:hover { padding-left:.45rem; }
 .bi:hover .bt { color:var(--teal); }
-.bt { font-family: var(--font-playfair), serif; font-size:clamp(1rem,2.8vw,1.6rem); font-weight:600; color:var(--t1); line-height:1.25; flex:1; transition:color .2s; }
+/* Main post link — stretches to fill, no underline */
+.bi-main { flex:1; min-width:0; text-decoration:none; display:flex; flex-direction:column; gap:.2rem; }
+/* Right-side group: Korean badge + date */
+.bi-aside { display:flex; align-items:center; gap:.65rem; flex-shrink:0; }
+/* Korean external badge */
+.bi-ko {
+  font-size:.68rem; font-weight:600; letter-spacing:.03em;
+  color:var(--teal); border:1px solid var(--brd-t); border-radius:4px;
+  padding:1px 7px; text-decoration:none; white-space:nowrap;
+  transition:background .15s, border-color .2s;
+}
+.bi-ko:hover { background:var(--dt); border-color:var(--teal); }
+/* Korean subtitle — faded small line below the main title */
+.bt-ko { font-size:.78rem; color:var(--t3); font-family:var(--font-kr),'Noto Sans KR',sans-serif; font-weight:400; line-height:1.4; }
+.bt { font-family: var(--font-playfair), serif; font-size:clamp(1rem,2.8vw,1.6rem); font-weight:600; color:var(--t1); line-height:1.25; transition:color .2s; }
 .bt em { font-style:italic; }
 .bm { font-size:.73rem; color:var(--t3); white-space:nowrap; letter-spacing:.04em; }
 
@@ -1298,25 +1313,41 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
   font-size: .7rem; font-weight: 700; letter-spacing: .1em;
   text-transform: uppercase; color: var(--t3); margin-bottom: 1rem;
 }
-/* Related posts cards */
+/* Related posts cards — fills the row regardless of count */
 .pf-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   margin-bottom: 2.5rem;
 }
+/* Force exact column counts when we know the count */
+.pf-grid-1 { grid-template-columns: 1fr; max-width: 360px; }
+.pf-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.pf-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.pf-grid-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 720px) {
+  .pf-grid-3, .pf-grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .pf-grid-2, .pf-grid-3, .pf-grid-4 { grid-template-columns: 1fr; }
+}
 .pf-card {
   display: block; text-decoration: none;
-  padding: 1rem 1.1rem;
   background: var(--bg); border: 1px solid var(--brd);
-  border-radius: 8px; transition: border-color .2s;
+  border-radius: 8px; overflow: hidden; transition: border-color .2s;
 }
 .pf-card:hover { border-color: var(--teal); }
+.pf-card-img {
+  display: block; width: 100%; aspect-ratio: 16/9;
+  object-fit: cover;
+}
+.pf-card-img-ph { background: var(--bg-muted); }
 .pf-card-title {
   display: block; font-size: .88rem; color: var(--t2);
   line-height: 1.4; margin-bottom: .3rem;
+  padding: .75rem .9rem 0;
 }
-.pf-card-date { display: block; font-size: .72rem; color: var(--t3); }
+.pf-card-date { display: block; font-size: .72rem; color: var(--t3); padding: 0 .9rem .75rem; }
 /* Prev / Next simple text links */
 .pf-adjacents {
   display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
@@ -1352,6 +1383,24 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
   transition: border-color .2s;
 }
 .post-meta-ko:hover { border-color: var(--teal); color: var(--teal); }
+/* Updated / original dates */
+.post-meta-updated {
+  color: var(--teal); font-size: .78rem; font-weight: 500;
+}
+.post-meta-orig {
+  color: var(--t3); font-size: .72rem;
+}
+/* Possibly outdated banner */
+.post-outdated {
+  display: flex; gap: .6rem; align-items: flex-start;
+  padding: .7rem 1rem; margin-bottom: 2rem;
+  background: var(--bg-muted); border-left: 3px solid var(--pink);
+  border-radius: 0 8px 8px 0;
+  font-size: .8rem; color: var(--t2); line-height: 1.55;
+}
+.post-outdated::before {
+  content: '⏳'; flex-shrink: 0; font-size: .9rem; margin-top: .05em;
+}
 
 /* ══════════════════════════════
    STYLED OL NUMBERS  (Playfair Display, teal, large)
@@ -1388,9 +1437,11 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 .post-sidebar {
   position: sticky;
   top: 76px; /* nav height + breathing room */
+  /* Align top of sidebar with the post h1 — breadcrumbs (~2.25rem) + eyebrow (~2.5rem) */
+  margin-top: 4.75rem;
   background: var(--nav-bg);
   padding: 2rem;
-  margin: -2rem;
+  margin-left: -2rem; margin-right: -2rem; /* keep horizontal bleed, drop vertical auto-margin */
   border: 1px solid var(--rule);
   border-radius: 8px;
 }
@@ -1498,6 +1549,27 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 .bc-link { color: var(--t3); text-decoration: none; transition: color .15s; }
 .bc-link:hover { color: var(--teal); }
 .bc-cur  { color: var(--t2); }
+
+/* ══════════════════════════════
+   PAGINATION
+══════════════════════════════ */
+.pagination {
+  display: flex; align-items: center; gap: .35rem;
+  margin-top: 3rem; flex-wrap: wrap;
+}
+.pg-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 2.2rem; height: 2.2rem; padding: 0 .5rem;
+  border-radius: 6px; font-size: .82rem; font-weight: 500;
+  color: var(--t2); border: 1px solid var(--brd2);
+  text-decoration: none;
+  transition: border-color .2s, color .2s, background .15s;
+}
+.pg-btn:hover { border-color: var(--teal); color: var(--teal); }
+.pg-active { background: var(--teal); border-color: var(--teal); color: var(--bg) !important; }
+.pg-active:hover { opacity: .85; }
+.pg-adj { font-size: .9rem; }
+.pg-ellipsis { color: var(--t3); font-size: .82rem; padding: 0 .2rem; }
 
 /* ══════════════════════════════
    SHARE BUTTONS

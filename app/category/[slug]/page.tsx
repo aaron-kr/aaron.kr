@@ -1,41 +1,65 @@
 // app/category/[slug]/page.tsx
-// Archive page for a WordPress category.
-// Shows all posts in the category, a breadcrumb trail, and a full list of
-// all blog categories so readers can browse elsewhere.
+// Archive page for a WordPress category — paginated.
 
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
-  getPostsByCategory, getAllBlogCategories,
+  getCategoryPostsPaged, getAllBlogCategories,
   stripHtml, formatWPDate, wpLinkToPath,
 } from '@/lib/wordpress'
 import Nav          from '@/components/Nav'
 import Footer       from '@/components/Footer'
 import ClientInit   from '@/components/ClientInit'
 import Breadcrumbs  from '@/components/Breadcrumbs'
+import Pagination   from '@/components/Pagination'
+import type { WPPost } from '@/types/wordpress'
 
 interface Props {
-  params: Promise<{ slug: string }>
+  params:       Promise<{ slug: string }>
+  searchParams: Promise<{ page?: string }>
+}
+
+function PostRow({ p }: { p: WPPost }) {
+  const koUrl = p.naver_blog_url ?? p.korean_post_url ?? null
+  return (
+    <div className="bi">
+      <Link href={wpLinkToPath(p.link)} className="bi-main">
+        <span className="bt">{stripHtml(p.title.rendered)}</span>
+        {p.korean_title && <span className="bt-ko">{p.korean_title}</span>}
+      </Link>
+      <span className="bi-aside">
+        {koUrl && (
+          <a href={koUrl} className="bi-ko" target="_blank" rel="noopener noreferrer">
+            한국어 ↗
+          </a>
+        )}
+        <span className="bm">{formatWPDate(p.date)}</span>
+      </span>
+    </div>
+  )
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const { categoryName } = await getPostsByCategory(slug, 1)
+  const { categoryName } = await getCategoryPostsPaged(slug, 1)
   return {
     title: `${categoryName} · Aaron Snowberger`,
     description: `Posts in the ${categoryName} category.`,
   }
 }
 
-export default async function CategoryPage({ params }: Props) {
-  const { slug } = await params
-  const [{ posts, categoryName }, allCategories] = await Promise.all([
-    getPostsByCategory(slug, 50),
+export default async function CategoryPage({ params, searchParams }: Props) {
+  const { slug }          = await params
+  const { page: pageStr } = await searchParams
+  const page = Math.max(1, parseInt(pageStr ?? '1', 10) || 1)
+
+  const [{ posts, categoryName, totalPages }, allCategories] = await Promise.all([
+    getCategoryPostsPaged(slug, page),
     getAllBlogCategories(),
   ])
 
-  if (posts.length === 0) notFound()
+  if (posts.length === 0 && page === 1) notFound()
 
   const otherCategories = allCategories.filter(
     c => c.slug !== slug && c.slug !== 'uncategorized' && c.count > 0
@@ -67,13 +91,10 @@ export default async function CategoryPage({ params }: Props) {
           </h1>
 
           <div className="blist">
-            {posts.map(p => (
-              <Link key={p.id} href={wpLinkToPath(p.link)} className="bi">
-                <span className="bt">{stripHtml(p.title.rendered)}</span>
-                <span className="bm">{formatWPDate(p.date)}</span>
-              </Link>
-            ))}
+            {posts.map(p => <PostRow key={p.id} p={p} />)}
           </div>
+
+          <Pagination currentPage={page} totalPages={totalPages} basePath={`/category/${slug}`} />
 
           {/* ── All categories ── */}
           {otherCategories.length > 0 && (
