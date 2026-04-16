@@ -14,6 +14,7 @@ import PostLightbox     from '@/components/PostLightbox'
 import ShareButtons     from '@/components/ShareButtons'
 import GiscusComments   from '@/components/GiscusComments'
 import Breadcrumbs      from '@/components/Breadcrumbs'
+import BrokenLinks      from '@/components/BrokenLinks'
 import Link from 'next/link'
 
 interface Props {
@@ -250,6 +251,7 @@ export default function PostLayout({
             {/* ── Post content ── */}
             <div className="wp-content"
                  dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+              <BrokenLinks />
 
             {/* ── Tags ── */}
             {tags.length > 0 && (

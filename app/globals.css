@@ -654,6 +654,68 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 .wp-content a  { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
 .wp-content a:hover { opacity: .75; }
 
+/* ══════════════════════════════════════════════════════════
+   EXTERNAL & BROKEN LINK INDICATORS
+
+   External links get a subtle ↗ icon.
+   Broken links (marked by the BrokenLinks client component)
+   get a strikethrough + warning color.
+══════════════════════════════════════════════════════════ */
+
+/* External link arrow — only inside post content, not nav/UI */
+.wp-content a[href^="http"]:not([href*="aaron.kr"])::after {
+  content: '\2197';           /* ↗ arrow */
+  display: inline-block;
+  font-size: .7em;
+  line-height: 1;
+  margin-left: .2em;
+  opacity: .55;
+  vertical-align: super;
+  text-decoration: none;
+  font-style: normal;
+}
+
+/* Don't show arrow on image links or buttons */
+.wp-content a[href^="http"]:not([href*="aaron.kr"]):has(img)::after,
+.wp-content a[href^="http"]:not([href*="aaron.kr"]).no-ext-icon::after {
+  display: none;
+}
+
+/* Broken link state — applied by BrokenLinks.tsx at runtime */
+.wp-content a[data-broken="true"] {
+  color: var(--pink) !important;
+  text-decoration: line-through;
+  text-decoration-color: var(--pink);
+  opacity: .7;
+  cursor: help;
+}
+.wp-content a[data-broken="true"]::after {
+  content: '\26A0\FE0F'; /* ⚠️ */
+  margin-left: .25em;
+  font-style: normal;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+.wp-content a[data-broken="true"]:hover::before {
+  content: 'This link may be broken';
+  position: absolute;
+  background: var(--bg-soft);
+  color: var(--t2);
+  border: 1px solid var(--brd);
+  border-radius: 4px;
+  font-size: .75rem;
+  padding: .25rem .5rem;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateY(-120%);
+  z-index: 10;
+}
+/* Relative positioning needed on the anchor for the tooltip */
+.wp-content a[data-broken="true"] {
+  position: relative;
+}
+
 /* ── Lists ── */
 .wp-content ul, .wp-content ol { margin: 0 0 1.4rem 1.5rem; }
 .wp-content li { margin-bottom: .4rem; }
