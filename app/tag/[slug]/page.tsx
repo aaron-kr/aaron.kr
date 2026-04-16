@@ -73,7 +73,7 @@ export default async function TagPage({ params, searchParams }: Props) {
       <div className="post-aurora" aria-hidden="true" />
 
       <main style={{ paddingTop: '58px', minHeight: '80vh' }}>
-        <div style={{ maxWidth: '1060px', margin: '0 auto', padding: '4rem 2rem 6rem' }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto', padding: '4rem 2rem 6rem' }}>
 
           <Breadcrumbs crumbs={[
             { label: 'Home', href: '/' },
