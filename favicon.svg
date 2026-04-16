@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.23 33.55">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1d1d1b;
+        font-family: PlayfairDisplay-Bold, 'Playfair Display';
+        font-size: 30.59px;
+        font-weight: 700;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="print">
+    <circle class="cls-2" cx="14.11" cy="16.78" r="14.11"/>
+    <text class="cls-1" transform="translate(4.04 26.12)"><tspan x="0" y="0">A</tspan></text>
+  </g>
+</svg>
