@@ -1538,7 +1538,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
   color: var(--t3); letter-spacing: .02em;
   position: relative;
   justify-content: start;
-  background: transparent;
+  z-index: 1;
   height: 2.5rem;
   border: none;
   top: -3rem;
