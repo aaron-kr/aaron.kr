@@ -13,11 +13,11 @@ export default function Footer() {
           </div>
           <p className="foot-info en">
             AI Researcher &amp; Educator · Jeonju, Republic of Korea<br />
-            Five Korean universities · hi@aaron.kr · aaron.kr
+            Five Korean universities · <span dangerouslySetInnerHTML={{ __html: 'hi&#64;aaron.kr' }} /> · aaron.kr
           </p>
           <p className="foot-info ko">
             AI 연구자 &amp; 교육자 · 전주, 대한민국<br />
-            다섯 개 한국 대학 · hi@aaron.kr · aaron.kr
+            다섯 개 한국 대학 · <span dangerouslySetInnerHTML={{ __html: 'hi&#64;aaron.kr' }} /> · aaron.kr
           </p>
         </div>
 

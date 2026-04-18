@@ -130,8 +130,8 @@ export default function QRModal() {
           <div className="qr-purl">
             {activeTab === 'contact' ? (
               <>
-                <span className="en">Scan to save · hi@aaron.kr</span>
-                <span className="ko">스캔하여 저장 · hi@aaron.kr</span>
+                <span className="en">Scan to save · <span dangerouslySetInnerHTML={{ __html: 'hi&#64;aaron.kr' }} /></span>
+                <span className="ko">스캔하여 저장 · <span dangerouslySetInnerHTML={{ __html: 'hi&#64;aaron.kr' }} /></span>
               </>
             ) : (
               currentTab.url

@@ -2,6 +2,7 @@
 // Static server component — no WP dependency
 
 import Image from 'next/image'
+import EmailLink from './EmailLink'
 
 export default function Hero() {
   return (
@@ -117,13 +118,13 @@ export default function Hero() {
               </svg>
               KSPAI
             </a>
-            <a href="mailto:hi@aaron.kr" className="slink sl-pk fs">
+            <EmailLink className="slink sl-pk fs">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="13" height="13">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                 <polyline points="22,6 12,12 2,6"/>
               </svg>
               Email
-            </a>
+            </EmailLink>
           </div>
         </div>
       </div>
