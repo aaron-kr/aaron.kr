@@ -197,9 +197,15 @@ npm install
 cp .env.local.example .env.local
 # .env.local already points to http://aaronkr.local — no changes needed for local dev
 
-npm run dev     # → http://localhost:3000
-npm run build   # production build check (uses .env.local — expects aaronkr.local to be running)
+npm run dev          # → http://localhost:3000
+npm run build        # production build (expects aaronkr.local running)
+npm run typecheck    # TypeScript check
+npm run lint         # ESLint (app/ components/ lib/ types/)
+npm run lint:css     # Stylelint (app/globals.css)
+npm run lint:all     # ESLint + Stylelint
 ```
+
+Pre-commit hooks (Husky) run `lint-staged` automatically — ESLint + Stylelint fix on every commit. CI runs TypeScript + ESLint + Stylelint on every push to `main`.
 
 ---
 

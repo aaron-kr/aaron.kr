@@ -248,6 +248,40 @@ NEXT_PUBLIC_GISCUS_CATEGORY      # Comments
 NEXT_PUBLIC_GISCUS_CATEGORY_ID   # from giscus.app
 ```
 
+## Code quality
+
+**ESLint** — `eslint.config.mjs` (flat config, ESLint v9). Extends `next/core-web-vitals` + `next/typescript`. `@next/next/no-page-custom-font` is disabled — this project uses `<link>` tags intentionally, not `next/font`, so the rule fires as a false positive on every page.
+
+**Stylelint** — `.stylelintrc.json`. Checks `app/globals.css` only. `no-descending-specificity` is disabled — WordPress block CSS legitimately uses patterns that trigger false positives (e.g. `.wp-block-X .element` followed by `.wp-content .element`).
+
+**Pre-commit (Husky + lint-staged)** — runs ESLint `--fix` on `*.{ts,tsx}` and Stylelint `--fix` on `*.css` before every commit. `.husky/pre-commit` runs `npx lint-staged`.
+
+**GitHub Actions CI** — `.github/workflows/lint.yml`. On every push/PR to `main`: TypeScript check → ESLint → Stylelint.
+
+```bash
+npm run typecheck     # tsc --noEmit
+npm run lint          # ESLint over app/ components/ lib/ types/
+npm run lint:css      # Stylelint over app/globals.css
+npm run lint:all      # Both lint commands
+```
+
+**History (April 2026):** Fixed 6 ESLint errors: `<a href="/writing">` → `<Link>` in `Writing.tsx` (×2) and `Design.tsx`; removed unused `wpLinkToPath` import in `PostLayout.tsx`; removed unused `Image` import in `Teaching.tsx`; suppressed false-positive font rule. Fixed 12 duplicate CSS selector pairs in `globals.css`, merged duplicate `:root` blocks, co-located `--sf` fill-slide vars with their component blocks, fixed `.tag` shorthand property override (`border-color` then `border` → `border: 1px solid var(--brd-t)`).
+
+---
+
+## AI-assisted development
+
+Claude Code is configured for this repo via this CLAUDE.md file. When using Claude Code or any AI assistant:
+
+- **Run `npm run lint:all` and `npm run typecheck` before committing** — or rely on the pre-commit hook which runs automatically.
+- **CI enforces quality on every push** — TypeScript check → ESLint → Stylelint. AI-generated code passes through all three gates before it can merge.
+- **Keep CLAUDE.md current** — when a significant architectural decision is made (new route, new WP CPT, new CSS pattern), update this file so future AI sessions start with correct context rather than re-deriving it from the code.
+- **globals.css is intentionally large** — do not split it. When adding new component styles, match the existing naming (kebab-case, section-comment headers `/* ── COMPONENT ── */`). The fill-slide `--sf` variable must be co-located with the component's main selector block, not in a separate section.
+- **Server/client component boundary is strict** — see Architecture rules above. AI suggestions that move `fetch()` calls into client components break ISR and should be rejected.
+- **WordPress CSS false positives are expected** — `no-descending-specificity` is disabled for a reason. Do not re-enable it and do not restructure WP block CSS to satisfy it.
+
+---
+
 ## Common mistakes to avoid
 
 - Don't reference `aaron.kr/content/` — that path no longer exists
