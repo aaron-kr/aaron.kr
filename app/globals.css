@@ -7,10 +7,18 @@
 ═══════════════════════════════════════════════════════ */
 
 /* ══════════════════════════════
-   ROOT FONT SCALING
+   ROOT FONT SCALING + MANUSCRIPT DEFAULTS
    14px mobile → ~16px 1440px → 19px 27"
 ══════════════════════════════ */
-:root { font-size: clamp(14px, 1.1vw + 1px, 19px); }
+:root {
+  font-size: clamp(14px, 1.1vw + 1px, 19px);
+  /* Manuscript texture defaults (overridden per-section below) */
+  --ms-url:      none;
+  --ms-opacity:  0.08;
+  --ms-position: center center;
+  --ms-size:     cover;
+  --ms-blend:    multiply;
+}
 @media (max-width:480px) { :root { font-size: 14px; } }
 
 /* ══════════════════════════════
@@ -93,15 +101,7 @@ footer::before {
 .sl-b  { --sf: var(--blue);   color: var(--blue);   border-color: var(--blue); }
 .sl-p  { --sf: var(--purple); color: var(--purple); border-color: var(--purple); }
 .sl-pk { --sf: var(--pink);   color: var(--pink);   border-color: var(--pink); }
-.tag   { --sf: var(--dt); color: var(--teal);   border-color: var(--brd-t); }
-.tag.b { --sf: var(--db); color: var(--blue);   border-color: var(--brd-b); }
-.tag.p { --sf: var(--dp); color: var(--purple); border-color: var(--brd-p); }
-.nbtn       { --sf: var(--teal); }
-.nav-courses{ --sf: var(--teal); }
-.soc-pill   { --sf: var(--teal); border-color: var(--teal); color: var(--t2); }
-.hero-cta   { --sf: var(--teal); }
-.qr-dl      { --sf: var(--teal); }
-.modal-close{ --sf: var(--teal); }
+/* Per-component --sf vars are co-located with each component's main block below */
 
 /* ══════════════════════════════
    TOOLTIP SYSTEM
@@ -151,13 +151,6 @@ footer::before {
 /* ══════════════════════════════
    MANUSCRIPT TEXTURE
 ══════════════════════════════ */
-:root {
-  --ms-url:      none;
-  --ms-opacity:  0.08;
-  --ms-position: center center;
-  --ms-size:     cover;
-  --ms-blend:    multiply;
-}
 .ms { position: relative; isolation: isolate; }
 .ms::before {
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
@@ -175,8 +168,7 @@ footer::before {
   mix-blend-mode: screen;
   opacity: calc(var(--ms-opacity) * 0.75);
 }
-#hero  { --ms-url: url('/img/hangul-calligraphy.jpg'); }
-footer { --ms-url: url('/img/hangul-calligraphy.jpg'); --ms-opacity: 0.05; }
+/* ms-url values are set inside the component blocks below */
 
 /* ══════════════════════════════
    RESET & BASE
@@ -192,7 +184,7 @@ body {
 }
 a { text-decoration:none; color:inherit; }
 section { position:relative; overflow:hidden; }
-footer  { position:relative; overflow:hidden; }
+/* footer layout — combined with full styles in FOOTER section */
 #prog {
   position:fixed; top:0; left:0; height:2px; width:0%;
   background:linear-gradient(90deg,var(--teal),var(--blue),var(--purple),var(--pink));
@@ -256,12 +248,14 @@ nav {
 }
 .mob-dd-item:hover { color:var(--teal); }
 .nav-courses {
+  --sf: var(--teal);
   font-size:.78rem; font-weight:700; letter-spacing:.05em;
   color:var(--teal); padding:5px 13px;
   border:1.5px solid var(--teal); border-radius:6px; white-space:nowrap;
 }
 .nav-right { display:flex; gap:.35rem; align-items:center; flex-shrink:0; }
 .nbtn {
+  --sf: var(--teal);
   background:transparent; border:1px solid var(--brd2); color:var(--t2); cursor:pointer;
   padding:5px 10px; border-radius:6px;
   font-family: var(--font-dm), sans-serif;
@@ -334,7 +328,7 @@ h6 { font-family: var(--font-playfair), serif; font-size:.95rem; font-weight:700
 /* ══════════════════════════════
    HERO
 ══════════════════════════════ */
-#hero { padding-top:58px; min-height:clamp(600px,90vh,920px); display:flex; align-items:center; background: var(--bg-soft); }
+#hero { --ms-url: url('/img/hangul-calligraphy.jpg'); padding-top:58px; min-height:clamp(600px,90vh,920px); display:flex; align-items:center; background: var(--bg-soft); }
 .hero-grid {
   max-width:1060px; margin:0 auto; padding:4rem 2rem 5rem;
   display:grid; grid-template-columns:240px 1fr; gap:4.5rem; align-items:center;
@@ -349,6 +343,7 @@ h6 { font-family: var(--font-playfair), serif; font-size:.95rem; font-weight:700
 .affil-dot.b { background:var(--blue); }
 .affil-dot.p { background:var(--purple); }
 .hero-cta {
+  --sf: var(--teal);
   display:inline-flex; align-items:center; gap:.4rem; margin-top:.85rem;
   font-size:.78rem; font-weight:700; letter-spacing:.04em;
   color:var(--teal); padding:6px 14px; border:1.5px solid var(--teal); border-radius:6px;
@@ -418,7 +413,9 @@ h1 em { font-style:italic; color:var(--teal); }
 .ri-title { font-family: var(--font-playfair), serif; font-size:1.12rem; font-weight:600; color:var(--t1); line-height:1.3; margin-bottom:.5rem; }
 .ri-body  { font-size:.88rem; color:var(--t2); line-height:1.8; margin-bottom:.7rem; }
 .tags { display:flex; flex-wrap:wrap; gap:.3rem; margin-bottom:.6rem; }
-.tag  { font-size:.66rem; font-weight:700; padding:3px 9px; border-radius:5px; border:1px solid; letter-spacing:.03em; cursor:default; transition:border-color .2s; }
+.tag  { --sf: var(--dt); color: var(--teal); font-size:.66rem; font-weight:700; padding:3px 9px; border-radius:5px; border:1px solid var(--brd-t); letter-spacing:.03em; cursor:default; transition:border-color .2s; }
+.tag.b { --sf: var(--db); color: var(--blue);   border-color: var(--brd-b); }
+.tag.p { --sf: var(--dp); color: var(--purple); border-color: var(--brd-p); }
 .tag span { position:relative; z-index:1; }
 .ri-links { display:flex; gap:.7rem; flex-wrap:wrap; }
 .ri-lnk   { font-size:.78rem; font-weight:600; color:var(--teal); transition:opacity .2s; letter-spacing:.02em; }
@@ -450,9 +447,10 @@ h1 em { font-style:italic; color:var(--teal); }
 .soc-lbl { font-size:.67rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--t3); margin-bottom:.8rem; }
 .soc-row { display:flex; flex-wrap:wrap; gap:.45rem; }
 .soc-pill {
+  --sf: var(--teal);
   display:inline-flex; align-items:center; gap:.45rem;
   font-size:.74rem; font-weight:600; padding:5px 13px; border-radius:5px;
-  border:1px solid var(--teal); background:transparent; letter-spacing:.04em; transition:color .2s;
+  border:1px solid var(--teal); color:var(--t2); background:transparent; letter-spacing:.04em; transition:color .2s;
 }
 .soc-logo { height:20px; width:auto; display:block; filter:grayscale(100%) brightness(.75); opacity:.6; transition:filter .3s, opacity .3s; }
 .soc-pill:hover .soc-logo { filter:grayscale(0%) brightness(1); opacity:1; }
@@ -534,7 +532,7 @@ h1 em { font-style:italic; color:var(--teal); }
 /* ══════════════════════════════
    FOOTER
 ══════════════════════════════ */
-footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4rem 0 3rem; }
+footer { --ms-url: url('/img/hangul-calligraphy.jpg'); --ms-opacity: 0.05; position:relative; overflow:hidden; background:var(--bg-soft); border-top:1px solid var(--brd); padding:4rem 0 3rem; }
 .foot-inner {
   max-width:1060px; margin:0 auto; padding:0 2rem;
   display:grid; grid-template-columns:1fr auto 1fr; gap:2.5rem; align-items:center;
@@ -558,7 +556,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 .modal-bg { display:none; position:fixed; inset:0; z-index:500; background:rgba(6,10,9,.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:1.5rem; }
 .modal-bg.open { display:flex; }
 .qr-card { background:var(--bg-soft); border:1px solid var(--brd2); border-radius:18px; padding:2rem 2rem 1.75rem; max-width:400px; width:100%; position:relative; text-align:center; }
-.modal-close { position:absolute; top:1rem; right:1rem; background:transparent; border:1px solid var(--brd2); color:var(--t2); cursor:pointer; width:30px; height:30px; border-radius:6px; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.modal-close { --sf: var(--teal); position:absolute; top:1rem; right:1rem; background:transparent; border:1px solid var(--brd2); color:var(--t2); cursor:pointer; width:30px; height:30px; border-radius:6px; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:all .2s; }
 .qr-tabs { display:flex; gap:.5rem; margin-bottom:1.5rem; }
 .qtab { flex:1; padding:.55rem .5rem; background:transparent; border:1px solid var(--brd2); border-radius:7px; color:var(--t2); cursor:pointer; font-family: var(--font-dm), sans-serif; font-size:.79rem; font-weight:600; letter-spacing:.03em; transition:color .2s, border-color .2s, background .2s; white-space:nowrap; }
 .qtab:hover { border-color:var(--teal); color:var(--teal); }
@@ -569,6 +567,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 .qr-ptitle { font-family: var(--font-playfair), serif; font-size:.95rem; font-weight:700; color:var(--t1); margin-bottom:.3rem; }
 .qr-purl { font-size:.74rem; color:var(--t3); word-break:break-all; margin-bottom:.85rem; }
 .qr-dl {
+  --sf: var(--teal);
   display:inline-flex; align-items:center; gap:.35rem;
   font-size:.78rem; font-weight:700; color:var(--teal);
   padding:7px 18px; border:1.5px solid var(--teal); border-radius:7px;
@@ -698,6 +697,7 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
 
 /* Broken link state — applied by BrokenLinks.tsx at runtime */
 .wp-content a[data-broken="true"] {
+  position: relative; /* needed for tooltip ::before */
   color: var(--pink) !important;
   text-decoration: line-through;
   text-decoration-color: var(--pink);
@@ -726,11 +726,6 @@ footer { background:var(--bg-soft); border-top:1px solid var(--brd); padding:4re
   transform: translateY(-120%);
   z-index: 10;
 }
-/* Relative positioning needed on the anchor for the tooltip */
-.wp-content a[data-broken="true"] {
-  position: relative;
-}
-
 /* ── Lists ── */
 .wp-content ul, .wp-content ol { margin: 0 0 1.4rem 1.5rem; }
 .wp-content li { margin-bottom: .4rem; }

@@ -54,10 +54,10 @@ export default function Design({ posts }: Props) {
             <div className="sec-lbl pu en">Creative Work</div>
             <div className="sec-lbl pu ko">크리에이티브 작업</div>
             <h2>
-              <a href="/portfolio" className="sec-h2-link">
+              <Link href="/portfolio" className="sec-h2-link">
                 <span className="en">Design &amp; <span className="ip">Visual Work</span></span>
                 <span className="ko">디자인 &amp; <span className="ip">시각 작업</span></span>
-              </a>
+              </Link>
             </h2>
             <p className="sec-intro en">
               Five years as English magazine designer for Jeonbuk Center for

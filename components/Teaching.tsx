@@ -1,8 +1,6 @@
 // components/Teaching.tsx
 // Static server component — links out to courses.aaron.kr
 
-import Image from 'next/image'
-
 const UNIVERSITIES = [
   { tip: 'Jeonbuk National University',              src: 'https://aaronkr-courses.github.io/assets/img/jbnu-logo-2.png',  alt: 'JBNU'  },
   { tip: 'Korea National University of Transportation', src: 'https://aaronkr-courses.github.io/assets/img/ut-logo.png',   alt: 'UT'    },

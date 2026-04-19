@@ -3,7 +3,7 @@
 
 import type { WPPost } from '@/types/wordpress'
 import {
-  stripHtml, formatWPDate, formatWPDateShort, getFeaturedImage, wpLinkToPath,
+  stripHtml, formatWPDate, formatWPDateShort, getFeaturedImage,
 } from '@/lib/wordpress'
 import Nav              from '@/components/Nav'
 import Footer           from '@/components/Footer'

@@ -43,10 +43,10 @@ export default function Writing({ posts }: Props) {
             <div className="sec-lbl en">Writing</div>
             <div className="sec-lbl ko">글쓰기</div>
             <h2>
-              <a href="/writing" className="sec-h2-link">
+              <Link href="/writing" className="sec-h2-link">
                 <span className="en">From the <em>Notebook</em></span>
                 <span className="ko"><em>노트</em>에서</span>
-              </a>
+              </Link>
             </h2>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function Writing({ posts }: Props) {
           ))}
 
           {/* All posts link */}
-          <a
+          <Link
             href="/writing"
             className="bi"
             style={{ borderBottom: 'none' }}
@@ -78,7 +78,7 @@ export default function Writing({ posts }: Props) {
               <span className="ko">모든 글 →</span>
             </span>
             <span className="bm" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
