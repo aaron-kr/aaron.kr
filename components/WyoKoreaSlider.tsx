@@ -34,6 +34,7 @@ export default function WyoKoreaSlider() {
           max="100"
           defaultValue="50"
           onChange={handleSlider}
+          aria-label="Compare Wyoming and Korea — drag to reveal"
         />
       </div>
       <div className="cmp-sub">

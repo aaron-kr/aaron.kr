@@ -31,7 +31,7 @@ function PostRow({ p }: { p: WPPost }) {
       </Link>
       <span className="bi-aside">
         {koUrl && (
-          <a href={koUrl} className="bi-ko" target="_blank" rel="noopener noreferrer">
+          <a href={koUrl} className="bi-ko" target="_blank" rel="noopener noreferrer" aria-label="Read in Korean (opens in new tab)">
             한국어 ↗
           </a>
         )}
@@ -49,13 +49,13 @@ export default async function WritingPage({ searchParams }: Props) {
 
   return (
     <>
-      <div id="prog" />
+      <div id="prog" role="progressbar" aria-label="Page scroll progress" aria-hidden="true" />
       <ClientInit />
       <Nav />
 
       <div className="post-aurora" aria-hidden="true" />
 
-      <main style={{ paddingTop: '58px', minHeight: '80vh' }}>
+      <main id="main-content" style={{ paddingTop: '58px', minHeight: '80vh' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto', padding: '4rem 2rem 6rem' }}>
 
           <div className="hero-eyebrow" style={{ marginBottom: '1rem' }}>

@@ -50,10 +50,10 @@ export default async function Home({ searchParams }: Props) {
   return (
     <>
       <ClientInit />
-      <div id="prog" />
+      <div id="prog" role="progressbar" aria-label="Page scroll progress" aria-hidden="true" />
       <Nav />
 
-      <main>
+      <main id="main-content">
         <Hero />
         <WyoKoreaSlider />
         <div className="rule" />

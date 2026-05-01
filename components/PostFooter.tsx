@@ -4,6 +4,7 @@
 // Server component — no 'use client'.
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { stripHtml, formatWPDate, getFeaturedImage, wpLinkToPath } from '@/lib/wordpress'
 import type { WPPost } from '@/types/wordpress'
 
@@ -30,8 +31,16 @@ export default function PostFooter({ prev, next, related }: Props) {
                 return (
                   <Link key={p.id} href={wpLinkToPath(p.link)} className="pf-card">
                     {img ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={img} alt={stripHtml(p.title.rendered)} className="pf-card-img" loading="lazy" />
+                      <Image
+                        src={img}
+                        alt={stripHtml(p.title.rendered)}
+                        className="pf-card-img"
+                        width={640}
+                        height={360}
+                        sizes="(max-width:640px) 100vw, 33vw"
+                        style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+                        loading="lazy"
+                      />
                     ) : (
                       <div className="pf-card-img pf-card-img-ph g-aurora" />
                     )}

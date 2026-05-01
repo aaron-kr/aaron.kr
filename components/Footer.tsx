@@ -29,11 +29,12 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             title="Wyoming, USA — Big Sky Country"
+            aria-label="Wyoming, USA — Big Sky Country (opens in new tab)"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/img/wyoming_cowboys_no-txt.webp"
-              alt="Wyoming Cowboy"
+              alt="Wyoming Cowboy silhouette"
               style={{ maxHeight: '60px' }}
               loading="lazy"
             />
@@ -42,7 +43,7 @@ export default function Footer() {
 
         {/* ── RIGHT: links ── */}
         <div className="foot-right">
-          <div className="foot-links">
+          <nav className="foot-links" aria-label="Footer links">
             <div className="fl-row">
               <a href="https://linkedin.com/in/aaronsnowberger/" className="fl t" target="_blank" rel="noopener noreferrer">LinkedIn</a>
               <a href="https://github.com/jekkilekki"            className="fl t" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -61,7 +62,7 @@ export default function Footer() {
             <p className="foot-info" style={{ textAlign: 'right', marginTop: '.35rem' }}>
               © {new Date().getFullYear()} Aaron Snowberger
             </p>
-          </div>
+          </nav>
         </div>
 
       </div>

@@ -3,6 +3,7 @@
 // Server component — no 'use client'.
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { stripHtml, formatWPDate, wpLinkToPath } from '@/lib/wordpress'
 import type { WPPost } from '@/types/wordpress'
 
@@ -20,8 +21,7 @@ export default function PostSidebar({ post, related }: Props) {
       {author && (
         <div className="sb-author">
           {author.avatar && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={author.avatar} alt={author.name} className="sb-avatar" />
+            <Image src={author.avatar} alt={author.name} width={56} height={56} className="sb-avatar" style={{ borderRadius: '50%', objectFit: 'cover' }} />
           )}
           <div className="sb-author-name">{author.name}</div>
           {author.description && (

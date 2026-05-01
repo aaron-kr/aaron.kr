@@ -29,3 +29,6 @@ next-env.d.ts
 
 # Personal
 audit-results/
+
+# Image compression backups
+scripts/image-originals/

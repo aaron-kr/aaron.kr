@@ -3,6 +3,7 @@
 // if WordPress returns nothing (offline dev, migration window, etc.)
 
 import Link from 'next/link'
+import Image from 'next/image'
 import type { WPPost } from '@/types/wordpress'
 import { getFeaturedImage, stripHtml, wpLinkToPath } from '@/lib/wordpress'
 
@@ -78,8 +79,14 @@ export default function Design({ posts }: Props) {
               className="di"
             >
               {item.img && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={item.img} alt={item.title} loading="lazy" />
+                <Image
+                  src={item.img}
+                  alt={item.title}
+                  fill
+                  sizes="(max-width:640px) 50vw, 25vw"
+                  style={{ objectFit: 'cover' }}
+                  loading="lazy"
+                />
               )}
               {!item.img && <div className="ph g-aurora" />}
               <div className="di-ov">
@@ -99,10 +106,9 @@ export default function Design({ posts }: Props) {
           <div className="uni-strip-lbl en">Selected Clients</div>
           <div className="uni-strip-lbl ko">선택된 클라이언트</div>
           {CLIENTS.map((c) => (
-            <a key={c.tip} className="uni-logo-wrap" data-tip={c.tip}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={c.src} alt={c.tip} className="uni-logo" loading="lazy" />
-            </a>
+            <span key={c.tip} className="uni-logo-wrap" data-tip={c.tip} role="img" aria-label={c.tip}>
+              <Image src={c.src} alt="" className="uni-logo" width={80} height={24} style={{ width: 'auto', height: '24px' }} loading="lazy" />
+            </span>
           ))}
         </div>
 

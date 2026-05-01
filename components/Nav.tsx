@@ -63,7 +63,7 @@ export default function Nav() {
 
   return (
     <>
-      <nav>
+      <nav aria-label="Primary">
         {/* Logo — always links to homepage */}
         <Link href="/" className="nav-logo" style={{ textDecoration: 'none', color: 'inherit' }}>
           Aaron Snowberger<span>, Ph.D.</span>
@@ -147,9 +147,10 @@ export default function Nav() {
             className="nbtn aurora-btn fs"
             onClick={toggleAurora}
             aria-pressed={aurora === 'on'}
+            aria-label="Toggle aurora effect"
             title="Toggle aurora effect"
           >
-            ✦
+            <span aria-hidden="true">✦</span>
           </button>
 
           {/* Language toggle — homepage only */}
@@ -166,9 +167,9 @@ export default function Nav() {
           <button
             className="nbtn fs"
             onClick={toggleTheme}
-            aria-label="Toggle theme"
+            aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
           >
-            {theme === 'dark' ? '☀' : '☾'}
+            <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
           </button>
 
           <button
@@ -185,7 +186,7 @@ export default function Nav() {
       </nav>
 
       {/* Mobile menu */}
-      <nav className={`mob-menu${mobileOpen ? ' open' : ''}`}>
+      <nav className={`mob-menu${mobileOpen ? ' open' : ''}`} aria-label="Mobile menu">
         <a href={s('#research')} onClick={closeMobile} className="en">Research</a>
         <a href={s('#research')} onClick={closeMobile} className="ko">연구</a>
         <a href={s('#teaching')} onClick={closeMobile} className="en">Teaching</a>

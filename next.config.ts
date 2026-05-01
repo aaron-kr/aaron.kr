@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'notes.aaron.kr' },
       { protocol: 'https', hostname: 'aaronkr-courses.github.io' },
       { protocol: 'https', hostname: 'aaronsnowberger.com' },
+      { protocol: 'https', hostname: 'secure.gravatar.com' },
+      { protocol: 'https', hostname: '*.gravatar.com' },
     ],
   },
 }

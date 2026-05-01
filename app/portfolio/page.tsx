@@ -3,6 +3,7 @@
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getPortfolioPostsPaged, getFeaturedImage, stripHtml, wpLinkToPath } from '@/lib/wordpress'
 import Nav        from '@/components/Nav'
 import Footer     from '@/components/Footer'
@@ -26,13 +27,13 @@ export default async function PortfolioPage({ searchParams }: Props) {
 
   return (
     <>
-      <div id="prog" />
+      <div id="prog" role="progressbar" aria-label="Page scroll progress" aria-hidden="true" />
       <ClientInit />
       <Nav />
 
       <div className="post-aurora" aria-hidden="true" />
 
-      <main style={{ paddingTop: '58px', minHeight: '80vh' }}>
+      <main id="main-content" style={{ paddingTop: '58px', minHeight: '80vh' }}>
         <div style={{ maxWidth: '1060px', margin: '0 auto', padding: '4rem 2rem 6rem' }}>
 
           <div className="hero-eyebrow" style={{ marginBottom: '1rem' }}>
@@ -54,8 +55,14 @@ export default async function PortfolioPage({ searchParams }: Props) {
               return (
                 <Link key={p.id} href={wpLinkToPath(p.link)} className="di">
                   {img ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={img} alt={title} loading="lazy" />
+                    <Image
+                      src={img}
+                      alt={title}
+                      fill
+                      sizes="(max-width:640px) 50vw, 25vw"
+                      style={{ objectFit: 'cover' }}
+                      loading="lazy"
+                    />
                   ) : (
                     <div className="ph g-aurora" />
                   )}

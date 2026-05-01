@@ -81,6 +81,7 @@ export default function QRModal() {
       role="dialog"
       aria-modal="true"
       aria-label="QR Codes"
+      aria-hidden={!open}
     >
       <div className="qr-card">
         {/* Close button */}

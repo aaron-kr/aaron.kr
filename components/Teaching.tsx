@@ -1,14 +1,16 @@
 // components/Teaching.tsx
 // Static server component — links out to courses.aaron.kr
 
+import Image from 'next/image'
+
 const UNIVERSITIES = [
-  { tip: 'Jeonbuk National University',              src: 'https://aaronkr-courses.github.io/assets/img/jbnu-logo-2.png',  alt: 'JBNU'  },
-  { tip: 'Korea National University of Transportation', src: 'https://aaronkr-courses.github.io/assets/img/ut-logo.png',   alt: 'UT'    },
-  { tip: 'Hanbat National University',               src: 'https://aaronkr-courses.github.io/assets/img/hanbat-logo.png', alt: 'HBU'   },
-  { tip: 'Jeonju National University of Education',  src: 'https://aaronkr-courses.github.io/assets/img/jnue-logo.png',   alt: 'JNUE'  },
-  { tip: 'Wonkwang University',                      src: 'https://aaronkr-courses.github.io/assets/img/wku-logo.png',    alt: 'WKU'   },
-  { tip: 'Daejeon University',                       src: 'https://aaronkr-courses.github.io/assets/img/dju-logo-2.png',  alt: 'DJU'   },
-  { tip: 'Jeonju University',                        src: 'https://aaronkr-courses.github.io/assets/img/jju-logo.png',    alt: 'JJU'   },
+  { tip: 'Jeonbuk National University',              src: 'https://aaronkr-courses.github.io/assets/img/jbnu-logo-2.png',  alt: 'Jeonbuk National University (JBNU)'  },
+  { tip: 'Korea National University of Transportation', src: 'https://aaronkr-courses.github.io/assets/img/ut-logo.png',   alt: 'Korea National University of Transportation (UT)'    },
+  { tip: 'Hanbat National University',               src: 'https://aaronkr-courses.github.io/assets/img/hanbat-logo.png', alt: 'Hanbat National University (HBU)'   },
+  { tip: 'Jeonju National University of Education',  src: 'https://aaronkr-courses.github.io/assets/img/jnue-logo.png',   alt: 'Jeonju National University of Education (JNUE)'  },
+  { tip: 'Wonkwang University',                      src: 'https://aaronkr-courses.github.io/assets/img/wku-logo.png',    alt: 'Wonkwang University (WKU)'   },
+  { tip: 'Daejeon University',                       src: 'https://aaronkr-courses.github.io/assets/img/dju-logo-2.png',  alt: 'Daejeon University (DJU)'   },
+  { tip: 'Jeonju University',                        src: 'https://aaronkr-courses.github.io/assets/img/jju-logo.png',    alt: 'Jeonju University (JJU)'   },
 ]
 
 export default function Teaching() {
@@ -98,10 +100,9 @@ export default function Teaching() {
           <div className="uni-strip-lbl en">University Teaching Experience</div>
           <div className="uni-strip-lbl ko">강의 경험</div>
           {UNIVERSITIES.map((u) => (
-            <a key={u.alt} className="uni-logo-wrap" data-tip={u.tip}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={u.src} alt={u.alt} className="uni-logo" />
-            </a>
+            <span key={u.alt} className="uni-logo-wrap" data-tip={u.tip} role="img" aria-label={u.tip}>
+              <Image src={u.src} alt="" className="uni-logo" width={80} height={24} style={{ width: 'auto', height: '24px' }} />
+            </span>
           ))}
         </div>
 

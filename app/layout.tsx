@@ -103,6 +103,7 @@ export default function RootLayout({
         `}} />
       </head>
       <body suppressHydrationWarning>
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         {children}
         <SpeedInsights />
         <Analytics />

@@ -5,6 +5,7 @@
 // Falls back to static data if WP is offline or categories aren't set up yet.
 
 import Link from 'next/link'
+import Image from 'next/image'
 import type { WPCategory } from '@/types/wordpress'
 
 // ── Configurable: which slugs get the large image card treatment ───────────────
@@ -104,8 +105,14 @@ export default function Beyond({ categories, allCategories }: Props) {
             <div key={item.id} className="byd-item">
               <Link href={item.link} className="byd-img">
                 {item.img ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={item.img} alt={item.name} loading="lazy" />
+                  <Image
+                    src={item.img}
+                    alt={item.name}
+                    fill
+                    sizes="(max-width:640px) 100vw, (max-width:960px) 50vw, 33vw"
+                    style={{ objectFit: 'cover' }}
+                    loading="lazy"
+                  />
                 ) : (
                   <div className="ph g-aurora" />
                 )}

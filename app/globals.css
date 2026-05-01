@@ -26,7 +26,7 @@
 ══════════════════════════════ */
 [data-theme="dark"] {
   --bg: #0c0f0e; --bg-soft: #101614; --bg-muted: #131a18;
-  --t1: #e6efec; --t2: #7ea89e; --t3: #3e5852;
+  --t1: #e6efec; --t2: #7ea89e; --t3: #5c7a72;
   --brd: #1b2825; --brd2: #243530; --rule: rgba(255,255,255,.06);
   --nav-bg: rgba(12,15,14,.9); --cta-fg: #0c0f0e;
   --teal: #2dd4bf; --blue: #38bdf8; --purple: #a78bfa; --pink: #e879f9;
@@ -38,7 +38,7 @@
 }
 [data-theme="light"] {
   --bg: #f8faf9; --bg-soft: #ffffff; --bg-muted: #eef5f2;
-  --t1: #101814; --t2: #3e5750; --t3: #8aa29b;
+  --t1: #101814; --t2: #3e5750; --t3: #4a6861;
   --brd: #d6e6e0; --brd2: #c2d6d0; --rule: rgba(0,0,0,.07);
   --nav-bg: rgba(248,250,249,.93); --cta-fg: #ffffff;
   --teal: #0a8c78; --blue: #0369a1; --purple: #6d28d9; --pink: #a21caf;
@@ -184,6 +184,29 @@ body {
 }
 a { text-decoration:none; color:inherit; }
 section { position:relative; overflow:hidden; }
+
+/* ── Skip link ── */
+.skip-link {
+  position:fixed; top:-100%; left:1rem; z-index:9999;
+  background:var(--teal); color:#000; font-size:.85rem; font-weight:700;
+  padding:.55rem 1.1rem; border-radius:0 0 6px 6px;
+  transition:top .15s;
+}
+.skip-link:focus { top:0; }
+
+/* ── Screen-reader only utility ── */
+.sr-only {
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* ── Global focus styles ── */
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 /* footer layout — combined with full styles in FOOTER section */
 #prog {
   position:fixed; top:0; left:0; height:2px; width:0%;

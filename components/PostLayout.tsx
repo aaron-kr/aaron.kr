@@ -5,6 +5,7 @@ import type { WPPost } from '@/types/wordpress'
 import {
   stripHtml, formatWPDate, formatWPDateShort, getFeaturedImage,
 } from '@/lib/wordpress'
+import Image            from 'next/image'
 import Nav              from '@/components/Nav'
 import Footer           from '@/components/Footer'
 import ClientInit       from '@/components/ClientInit'
@@ -96,13 +97,13 @@ export default function PostLayout({
 
   return (
     <>
-      <div id="prog" />
+      <div id="prog" role="progressbar" aria-label="Page scroll progress" aria-hidden="true" />
       <ClientInit />
       <Nav />
       <PostLightbox />
       <div className="post-aurora" aria-hidden="true" />
 
-      <main style={{ paddingTop: '58px', minHeight: '60vh' }}>
+      <main id="main-content" style={{ paddingTop: '58px', minHeight: '60vh' }}>
         <div className={`post-layout${isPost ? ' has-sidebar' : ''}`}>
 
           {/* ── Article ── */}
@@ -126,11 +127,12 @@ export default function PostLayout({
             {/* ── Meta byline ── */}
             <div className="post-meta">
               {author?.avatar && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={author.avatar}
                   alt={author.name}
-                  style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }}
+                  width={28}
+                  height={28}
+                  style={{ borderRadius: '50%', objectFit: 'cover' }}
                 />
               )}
               {author?.name && <span style={{ color: 'var(--t2)' }}>{author.name}</span>}
@@ -188,18 +190,27 @@ export default function PostLayout({
             {/* ── Featured image ── */}
             {image && (
               isPortfolio ? (
-                <div className="portfolio-hero-img">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={image} alt={post.featured_image_urls?.alt || title} />
+                <div className="portfolio-hero-img" style={{ position: 'relative' }}>
+                  <Image
+                    src={image}
+                    alt={post.featured_image_urls?.alt || title}
+                    width={1200}
+                    height={800}
+                    priority
+                    sizes="(max-width:960px) 100vw, 900px"
+                    style={{ width: '100%', height: 'auto', display: 'block' }}
+                  />
                 </div>
               ) : (
                 <div style={{ marginBottom: '2.5rem', borderRadius: '8px',
-                              overflow: 'hidden', aspectRatio: '16/9' }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                              overflow: 'hidden', aspectRatio: '16/9', position: 'relative' }}>
+                  <Image
                     src={image}
                     alt={post.featured_image_urls?.alt || title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    fill
+                    priority
+                    sizes="(max-width:960px) 100vw, 900px"
+                    style={{ objectFit: 'cover' }}
                   />
                 </div>
               )

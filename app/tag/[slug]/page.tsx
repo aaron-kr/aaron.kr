@@ -66,13 +66,13 @@ export default async function TagPage({ params, searchParams }: Props) {
 
   return (
     <>
-      <div id="prog" />
+      <div id="prog" role="progressbar" aria-label="Page scroll progress" aria-hidden="true" />
       <ClientInit />
       <Nav />
 
       <div className="post-aurora" aria-hidden="true" />
 
-      <main style={{ paddingTop: '58px', minHeight: '80vh' }}>
+      <main id="main-content" style={{ paddingTop: '58px', minHeight: '80vh' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto', padding: '4rem 2rem 6rem' }}>
 
           <Breadcrumbs crumbs={[
