@@ -69,16 +69,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await findPost(segments)
   if (!post) return {}
 
-  const title   = stripHtml(post.title.rendered)
-  const desc    = post.seo?.description || post.excerpt_plain || stripHtml(post.excerpt.rendered)
-  const ogImage = post.seo?.og_image || getFeaturedImage(post)
+  const title    = stripHtml(post.title.rendered)
+  const desc     = post.seo?.description || post.excerpt_plain || stripHtml(post.excerpt.rendered)
+  const ogImage  = post.seo?.og_image || getFeaturedImage(post)
+  const canonical = post.seo?.canonical || `https://aaron.kr/${segments.join('/')}`
+
+  // Determine og:type — articles for posts; website for everything else
+  const ogType = post.type === 'post' ? 'article' : 'website'
 
   return {
-    title: `${title} · Aaron Snowberger`,
+    title,
     description: desc,
+    alternates: { canonical },
     openGraph: {
-      title, description: desc,
-      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+      title,
+      description: desc,
+      url: canonical,
+      type: ogType,
+      ...(post.type === 'post' ? {
+        publishedTime: post.date,
+        modifiedTime: post.modified,
+        authors: ['https://aaron.kr'],
+      } : {}),
+      ...(ogImage ? { images: [{ url: ogImage, alt: title }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: desc,
+      creator: '@aaronsnowberger',
+      ...(ogImage ? { images: [ogImage] } : {}),
     },
   }
 }
@@ -91,13 +111,53 @@ export default async function CatchAllPage({ params }: Props) {
 
   const endpoint = wpTypeEndpoint(post.type)
   const catIds   = (post.category_list ?? []).map(c => c.id)
+  const title    = stripHtml(post.title.rendered)
+  const desc     = post.seo?.description || post.excerpt_plain || stripHtml(post.excerpt.rendered)
+  const ogImage  = post.seo?.og_image || getFeaturedImage(post)
+  const canonical = post.seo?.canonical || `https://aaron.kr/${segments.join('/')}`
+
+  // Build JSON-LD — Article for blog posts, CreativeWork for CPTs
+  const jsonLd = post.type === 'post'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: title,
+        description: desc,
+        url: canonical,
+        datePublished: post.date,
+        dateModified: post.modified,
+        author: { '@type': 'Person', name: post.author_card?.name ?? 'Aaron Snowberger', url: 'https://aaron.kr' },
+        publisher: { '@type': 'Person', name: 'Aaron Snowberger', url: 'https://aaron.kr' },
+        ...(ogImage ? { image: ogImage } : {}),
+        ...(post.category_list?.length ? { articleSection: post.category_list.map(c => c.name).join(', ') } : {}),
+        ...(post.tag_list?.length ? { keywords: post.tag_list.map(t => t.name).join(', ') } : {}),
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'CreativeWork',
+        name: title,
+        description: desc,
+        url: canonical,
+        datePublished: post.date,
+        dateModified: post.modified,
+        author: { '@type': 'Person', name: 'Aaron Snowberger', url: 'https://aaron.kr' },
+        ...(ogImage ? { image: ogImage } : {}),
+      }
 
   const [related, { prev, next }] = await Promise.all([
     getRelatedPosts(endpoint, catIds, post.id),
     getAdjacentPosts(endpoint, post.date),
   ])
 
-  return <PostLayout post={post} related={related} prev={prev} next={next} />
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <PostLayout post={post} related={related} prev={prev} next={next} />
+    </>
+  )
 }
 
 // No generateStaticParams — catch-all routes use on-demand ISR.

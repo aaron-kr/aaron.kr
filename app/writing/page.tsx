@@ -11,8 +11,23 @@ import Pagination from '@/components/Pagination'
 import type { WPPost } from '@/types/wordpress'
 
 export const metadata: Metadata = {
-  title: 'Writing · Aaron Snowberger',
-  description: 'Essays, reflections, and notes from Aaron Snowberger.',
+  title: 'Writing',
+  description:
+    'Essays, reflections, technical notes, and observations from Aaron Snowberger — AI researcher, educator, and longtime resident of South Korea.',
+  alternates: { canonical: 'https://aaron.kr/writing' },
+  openGraph: {
+    title: 'Writing · Aaron Snowberger',
+    description:
+      'Essays, reflections, technical notes, and observations from Aaron Snowberger — AI researcher, educator, and longtime resident of South Korea.',
+    url: 'https://aaron.kr/writing',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Writing · Aaron Snowberger',
+    description: 'Essays, reflections, and notes from Aaron Snowberger.',
+    creator: '@aaronsnowberger',
+  },
 }
 
 export const revalidate = 3600

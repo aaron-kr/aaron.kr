@@ -11,8 +11,23 @@ import ClientInit from '@/components/ClientInit'
 import Pagination from '@/components/Pagination'
 
 export const metadata: Metadata = {
-  title: 'Portfolio · Aaron Snowberger',
-  description: 'Design, magazine, and visual work by Aaron Snowberger.',
+  title: 'Portfolio',
+  description:
+    'Design, magazine layout, and visual work by Aaron Snowberger — two decades of creative projects spanning print, digital, and academic publishing.',
+  alternates: { canonical: 'https://aaron.kr/portfolio' },
+  openGraph: {
+    title: 'Portfolio · Aaron Snowberger',
+    description:
+      'Design, magazine layout, and visual work by Aaron Snowberger — two decades of creative projects spanning print, digital, and academic publishing.',
+    url: 'https://aaron.kr/portfolio',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Portfolio · Aaron Snowberger',
+    description: 'Design, magazine, and visual work by Aaron Snowberger.',
+    creator: '@aaronsnowberger',
+  },
 }
 
 interface Props {

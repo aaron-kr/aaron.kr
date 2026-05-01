@@ -44,9 +44,23 @@ function PostRow({ p }: { p: WPPost }) {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const { tagName } = await getTagPostsPaged(slug, 1)
+  const canonical = `https://aaron.kr/tag/${slug}`
   return {
-    title: `#${tagName} · Aaron Snowberger`,
-    description: `Posts tagged ${tagName}.`,
+    title: `#${tagName}`,
+    description: `Browse all posts tagged "${tagName}" by Aaron Snowberger — AI researcher and educator based in Jeonju, South Korea.`,
+    alternates: { canonical },
+    openGraph: {
+      title: `#${tagName} · Aaron Snowberger`,
+      description: `Browse all posts tagged "${tagName}" by Aaron Snowberger.`,
+      url: canonical,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary',
+      title: `#${tagName} · Aaron Snowberger`,
+      description: `Posts tagged ${tagName}.`,
+      creator: '@aaronsnowberger',
+    },
   }
 }
 

@@ -18,7 +18,17 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 //   npx next-google-fonts   or   download manually → public/fonts/
 
 export const metadata: Metadata = {
-  title: 'Aaron Snowberger, Ph.D. · AI Researcher & Educator',
+  // metadataBase is required for Next.js to resolve og:image and other
+  // absolute URLs correctly. Without it, relative image paths in metadata
+  // will not be resolved and og:image will be missing from the <head>.
+  metadataBase: new URL('https://aaron.kr'),
+
+  // title.template appends the site name to every child page title automatically.
+  // The root page overrides with its own absolute title via title.default.
+  title: {
+    template: '%s · Aaron Snowberger',
+    default: 'Aaron Snowberger, Ph.D. · AI Researcher & Educator',
+  },
   description:
     'Lecturer across five Korean universities in AI, programming, IoT, and circuits. Research in handwriting recognition, Physical AI curriculum, and CS education. Twenty years in Korean academia.',
   keywords: [
@@ -40,14 +50,30 @@ export const metadata: Metadata = {
     siteName: 'Aaron Snowberger',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: 'https://i0.wp.com/files.aaron.kr/media/2025/01/aaron.jpg?fit=1200%2C630&ssl=1',
+        width: 1200,
+        height: 630,
+        alt: 'Aaron Snowberger, Ph.D. — AI Researcher & Educator',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Aaron Snowberger, Ph.D.',
     description: 'AI Researcher & Educator · Jeonju, Republic of Korea',
+    creator: '@aaronsnowberger',
+    images: ['https://i0.wp.com/files.aaron.kr/media/2025/01/aaron.jpg?fit=1200%2C630&ssl=1'],
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://aaron.kr' },
+  alternates: {
+    canonical: 'https://aaron.kr',
+    languages: {
+      'en': 'https://aaron.kr',
+      'ko': 'https://aaron.kr',
+    },
+  },
 }
 
 // ── Anti-flash script: reads saved theme/lang/aurora from localStorage
