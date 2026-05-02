@@ -217,7 +217,7 @@ section { position:relative; overflow:hidden; }
 /* ══════════════════════════════
    NAV
 ══════════════════════════════ */
-nav {
+nav.top-nav {
   position:fixed; top:0; left:0; right:0; z-index:200; height:58px;
   display:flex; align-items:center; justify-content:space-between; padding:0 1.75rem; gap:1rem;
   background:var(--nav-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);

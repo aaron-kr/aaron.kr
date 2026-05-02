@@ -63,7 +63,7 @@ export default function Nav() {
 
   return (
     <>
-      <nav aria-label="Primary">
+      <nav className="top-nav" aria-label="Primary">
         {/* Logo — always links to homepage */}
         <Link href="/" className="nav-logo" style={{ textDecoration: 'none', color: 'inherit' }}>
           Aaron Snowberger<span>, Ph.D.</span>
