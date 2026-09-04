@@ -11,6 +11,7 @@
 // WP slugs are unique site-wide so this is safe.
 
 import { notFound } from 'next/navigation'
+import { draftMode } from 'next/headers'
 import type { Metadata } from 'next'
 import {
   getPostBySlug,
@@ -21,6 +22,7 @@ import {
   wpTypeEndpoint,
 } from '@/lib/wordpress'
 import PostLayout from '@/components/PostLayout'
+import PreviewBanner from '@/components/PreviewBanner'
 import type { WPPost } from '@/types/wordpress'
 
 interface Props {
@@ -42,6 +44,8 @@ async function findPost(segments: string[]): Promise<WPPost | null> {
   const slug = segments[segments.length - 1]
   if (!slug) return null
 
+  const { isEnabled: preview } = await draftMode()
+
   const typeMap: Record<string, string> = {
     portfolio: 'portfolio', research: 'research',
     talks: 'talks', talk: 'talks',
@@ -50,13 +54,13 @@ async function findPost(segments: string[]): Promise<WPPost | null> {
   const hintedType = typeMap[segments[0]]
 
   if (hintedType) {
-    const post = await getPostBySlug(hintedType, slug)
+    const post = await getPostBySlug(hintedType, slug, { preview })
     if (post) return post
   }
 
   for (const type of SEARCH_ORDER) {
     if (type === hintedType) continue
-    const post = await getPostBySlug(type, slug)
+    const post = await getPostBySlug(type, slug, { preview })
     if (post) return post
   }
 
@@ -155,6 +159,7 @@ export default async function CatchAllPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <PreviewBanner post={post} />
       <PostLayout post={post} related={related} prev={prev} next={next} />
     </>
   )

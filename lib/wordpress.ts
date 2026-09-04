@@ -25,6 +25,41 @@ async function fetchWP<T>(
   }
 }
 
+// ── Authenticated fetcher — used only by /api/preview for draft/scheduled
+//    posts, which WP's public REST API hides from unauthenticated requests.
+//    Requires WP_PREVIEW_USER + WP_PREVIEW_APP_PASSWORD (a WP Application
+//    Password, generated in wp-admin → Users → Profile → Application
+//    Passwords). Never call this from anything reachable without going
+//    through the /api/preview secret check first. ────────────────────────────
+function wpBasicAuthHeader(): string | null {
+  const user = process.env.WP_PREVIEW_USER
+  const pass = process.env.WP_PREVIEW_APP_PASSWORD
+  if (!user || !pass) return null
+  return 'Basic ' + Buffer.from(`${user}:${pass}`).toString('base64')
+}
+
+async function fetchWPAuth<T>(
+  endpoint: string,
+  params: Record<string, string> = {}
+): Promise<T | null> {
+  const auth = wpBasicAuthHeader()
+  if (!auth) return null
+
+  const url = new URL(`${WP_API}/${endpoint}`)
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v))
+
+  try {
+    const res = await fetch(url.toString(), {
+      headers: { Authorization: auth },
+      cache: 'no-store', // never cache authenticated/draft content
+    })
+    if (!res.ok) return null
+    return (await res.json()) as T
+  } catch {
+    return null
+  }
+}
+
 // ── Paginated fetcher — also returns X-WP-TotalPages from response header ────
 async function fetchWPPaged<T>(
   endpoint: string,
@@ -170,11 +205,24 @@ export function getFeaturedImage(post: WPPost): string | null {
 
 // ── Single post fetchers ───────────────────────────────────────────────────────
 
-/** Fetch a single post by slug from any post type */
+/** Fetch a single post by slug from any post type.
+ *  Pass `preview: true` (only from within Next Draft Mode, after the
+ *  /api/preview secret check) to also find drafts/scheduled/private posts,
+ *  which the public REST API hides from unauthenticated requests. */
 export async function getPostBySlug(
   postType: string,
-  slug: string
+  slug: string,
+  opts: { preview?: boolean } = {}
 ): Promise<WPPost | null> {
+  if (opts.preview) {
+    const data = await fetchWPAuth<WPPost[]>(postType, {
+      slug,
+      status: 'publish,future,draft,pending,private',
+      _embed: '1',
+      per_page: '1',
+    })
+    return data?.[0] ?? null
+  }
   const data = await fetchWP<WPPost[]>(postType, {
     slug,
     _embed: '1',
@@ -353,7 +401,7 @@ export async function getRelatedPosts(
   return (data ?? []).filter(p => p.id !== excludeId).slice(0, perPage)
 }
 
-/** Fetch a single post by WP ID (for preview/redirect support) */
+/** Fetch a single PUBLISHED post by WP ID (for the ?p=123 homepage redirect) */
 export async function getPostById(id: number): Promise<WPPost | null> {
   // Try common endpoints — WP REST doesn't have a universal "get by ID" endpoint
   for (const endpoint of ['posts', 'pages', 'portfolio', 'research', 'talks', 'courses']) {
@@ -361,6 +409,18 @@ export async function getPostById(id: number): Promise<WPPost | null> {
       include: String(id), per_page: '1', _fields: 'id,slug,link,type',
     })
     if (data?.[0]) return data[0]
+  }
+  return null
+}
+
+/** Fetch a single post by WP ID regardless of status (draft/scheduled/private
+ *  included) via authenticated request — used only by /api/preview after the
+ *  secret check. Tries every known post type since there's no universal
+ *  get-by-ID endpoint across CPTs. */
+export async function getPostByIdForPreview(id: number): Promise<WPPost | null> {
+  for (const endpoint of ['posts', 'pages', 'portfolio', 'research', 'talks', 'courses', 'testimonials']) {
+    const post = await fetchWPAuth<WPPost>(`${endpoint}/${id}`, { context: 'edit', _embed: '1' })
+    if (post) return post
   }
   return null
 }

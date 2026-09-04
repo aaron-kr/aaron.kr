@@ -2,6 +2,7 @@
 // Handles: /portfolio/my-item, /research/paper-title, /talks/talk-name, etc.
 
 import { notFound } from 'next/navigation'
+import { draftMode } from 'next/headers'
 import type { Metadata } from 'next'
 import {
   getPostBySlug,
@@ -14,6 +15,7 @@ import {
   wpTypeEndpoint,
 } from '@/lib/wordpress'
 import PostLayout from '@/components/PostLayout'
+import PreviewBanner from '@/components/PreviewBanner'
 
 interface Props {
   params: Promise<{ postType: string; slug: string }>
@@ -36,11 +38,24 @@ export async function generateStaticParams() {
 // When postType is a known CPT key (portfolio, research…) fetch from that endpoint.
 // When it isn't — e.g. it's a WP category slug like "code" in /code/wp-cli —
 // fall back to blog posts, which are the only type that uses /%category%/%postname%/.
+//
+// A mapped postType key can ALSO be a real WP category slug at the same time
+// (e.g. the "Talks" category, slug "talks", vs the "talk" CPT's own rewrite
+// slug "talks") — WP's /%category%/%postname%/ permalink structure then puts
+// a regular blog post at this exact same URL prefix as the CPT. If the CPT
+// lookup misses, fall back to blog posts before giving up, so those legacy
+// category-based permalinks resolve instead of 404ing.
 async function resolvePost(postType: string, slug: string): Promise<import('@/types/wordpress').WPPost | null> {
+  const { isEnabled: preview } = await draftMode()
   const endpoint = POST_TYPE_MAP[postType]
-  if (endpoint) return getPostBySlug(endpoint, slug)
+  if (endpoint) {
+    const post = await getPostBySlug(endpoint, slug, { preview })
+    if (post) return post
+    if (endpoint === 'posts') return null
+    return getPostBySlug('posts', slug, { preview })
+  }
   // postType is a category slug — look the post up as a standard blog post
-  return getPostBySlug('posts', slug)
+  return getPostBySlug('posts', slug, { preview })
 }
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
@@ -140,6 +155,7 @@ export default async function PostPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <PreviewBanner post={post} />
       <PostLayout post={post} related={related} prev={prev} next={next} />
     </>
   )
