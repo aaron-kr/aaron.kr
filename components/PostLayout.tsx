@@ -76,7 +76,7 @@ export default function PostLayout({
     post:        '/writing',
     portfolio:   '/portfolio',
     research:    '/#research',
-    talk:        '/#research',
+    talk:        '/talks',
     testimonial: '/#research',
     course:      'https://courses.aaron.kr/',
   }

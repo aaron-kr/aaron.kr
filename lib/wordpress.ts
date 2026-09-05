@@ -379,6 +379,16 @@ export async function getPortfolioPostsPaged(
   return { posts: data ?? [], totalPages }
 }
 
+export async function getTalksPostsPaged(
+  page = 1
+): Promise<{ posts: WPPost[]; totalPages: number }> {
+  const { data, totalPages } = await fetchWPPaged<WPPost[]>('talks', {
+    per_page: String(ARCHIVE_PER_PAGE), page: String(page),
+    _embed: '1', orderby: 'date', order: 'desc',
+  })
+  return { posts: data ?? [], totalPages }
+}
+
 // ── Related / adjacent posts ──────────────────────────────────────────────────
 
 /** Related posts: same categories (or just recent posts of same type) */

@@ -1,6 +1,8 @@
 // components/Research.tsx
 // Static server component — content maintained here, links out to pailab.io
 
+import Link from 'next/link'
+
 export default function Research() {
   return (
     <section className="pad" id="research">
@@ -152,6 +154,13 @@ export default function Research() {
               </a>
             ))}
           </div>
+        </div>
+
+        <div style={{ marginTop: '1.75rem' }} className="rise">
+          <Link href="/talks" className="slink sl-t fs" style={{ display: 'inline-flex' }}>
+            <span className="en">View all talks →</span>
+            <span className="ko">모든 강연 보기 →</span>
+          </Link>
         </div>
       </div>
     </section>
