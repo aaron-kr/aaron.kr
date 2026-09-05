@@ -27,12 +27,17 @@ own content (`aaronkr.local` / `localhost` substring) instead of comparing
 `home` vs `siteurl` — this class of bug can't recur even if wp-config.php
 stays misconfigured.
 
-**Still needed from you:** SSH into the Dreamhost VPS and fix wp-config.php so
-`WP_HOME` is actually `https://aaron.kr` (see `aaron-kr-wp-config-additions.php`,
-now rewritten to auto-detect environment so there's nothing to toggle by hand
-next time). The code fix above makes the bug harmless either way, but WP core
-itself still uses `home_url()` for feeds/other native features, so the config
-should still be corrected properly.
+**Correction (2026-09-05):** the "still needed from you" advice below was
+wrong — do not set `WP_HOME` to `https://aaron.kr`. WordPress itself runs at
+`notes.aaron.kr`; `aaron.kr` is only the headless Next.js frontend and never
+serves WP core. Pointing `WP_HOME`/`WP_SITEURL` at a domain WordPress doesn't
+actually run on broke Site Kit re-verification, featured-image loading, and
+publishing. Confirmed live and reverted: both should stay
+`https://notes.aaron.kr`. The `aaron_kr_frontend_url()` fix (detecting
+environment from the siteurl's own `aaronkr.local`/`localhost` substring
+instead of comparing `home` vs `siteurl`) already makes the original
+localhost-canonical bug harmless with `WP_HOME` left correctly at
+`notes.aaron.kr` — no wp-config.php change is needed after all.
 
 ### 2. `/talks/{slug}` 404s (your reported bug)
 **Root cause, confirmed live:** there are two unrelated "Talks" — the `talk`

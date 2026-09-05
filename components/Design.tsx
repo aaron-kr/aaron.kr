@@ -102,10 +102,10 @@ export default function Design({ posts }: Props) {
         </div>
 
         {/* ── Client logos ── */}
-        <div className="uni-strip rise">
-          <div className="uni-strip-lbl en">Selected Clients</div>
-          <div className="uni-strip-lbl ko">선택된 클라이언트</div>
-          <div className="uni-strip-row">
+        <div className="societies rise">
+          <div className="soc-lbl en">Selected Clients</div>
+          <div className="soc-lbl ko">선택된 클라이언트</div>
+          <div className="soc-row">
             {[
               { href: 'https://kspai.org',   name: 'KSPAI' },
               { href: 'https://klife.re.kr',   name: 'KLife' },
@@ -116,7 +116,7 @@ export default function Design({ posts }: Props) {
               { href: 'https://jju.ac.kr',  name: 'JJU'  },
               { href: 'https://fullsail.com', name: 'Full Sail University' },
             ].map(({ href, name }) => (
-              <a key={name} href={href} className="soc-pill uni-pill fs" target="_blank" rel="noopener noreferrer">
+              <a key={name} href={href} className="soc-pill fs" target="_blank" rel="noopener noreferrer">
                 {name}
               </a>
             ))}
