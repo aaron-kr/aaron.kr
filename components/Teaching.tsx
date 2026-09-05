@@ -4,13 +4,16 @@
 import Image from 'next/image'
 
 const UNIVERSITIES = [
-  { tip: 'Jeonbuk National University',              src: 'https://aaronkr-courses.github.io/assets/img/jbnu-logo-2.png',  alt: 'Jeonbuk National University (JBNU)'  },
-  { tip: 'Korea National University of Transportation', src: 'https://aaronkr-courses.github.io/assets/img/ut-logo.png',   alt: 'Korea National University of Transportation (UT)'    },
-  { tip: 'Hanbat National University',               src: 'https://aaronkr-courses.github.io/assets/img/hanbat-logo.png', alt: 'Hanbat National University (HBU)'   },
-  { tip: 'Jeonju National University of Education',  src: 'https://aaronkr-courses.github.io/assets/img/jnue-logo.png',   alt: 'Jeonju National University of Education (JNUE)'  },
-  { tip: 'Wonkwang University',                      src: 'https://aaronkr-courses.github.io/assets/img/wku-logo.png',    alt: 'Wonkwang University (WKU)'   },
-  { tip: 'Daejeon University',                       src: 'https://aaronkr-courses.github.io/assets/img/dju-logo-2.png',  alt: 'Daejeon University (DJU)'   },
-  { tip: 'Jeonju University',                        src: 'https://aaronkr-courses.github.io/assets/img/jju-logo.png',    alt: 'Jeonju University (JJU)'   },
+  { tip: 'Jeonbuk National University',              src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1777038667/jbnu-logo_r6c50n.png',  alt: 'Jeonbuk National University (JBNU)'  },
+  { tip: 'Chungbuk National University',             src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1786089776/cbnu-logo_xme7s0.png',  alt: 'Chungbuk National University (CBNU)' },
+  { tip: 'Kongju National University',               src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1786089776/kongju-logo_rspuq9.png',  alt: 'Kongju National University (KJNU)'  },
+  { tip: 'Gwangju National University of Education', src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1786089776/gnue-logo_tkxaro.png',  alt: 'Gwangju National University of Education (GNUE)' },
+  { tip: 'Korea National University of Transportation', src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1777038668/ut-logo_beiynv.png',   alt: 'Korea National University of Transportation (UT)'    },
+  { tip: 'Hanbat National University',               src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1777038668/hanbat-logo_mvle6l.png', alt: 'Hanbat National University (HBU)'   },
+  { tip: 'Jeonju National University of Education',  src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1777038668/jnue-logo_jmyh9e.png',   alt: 'Jeonju National University of Education (JNUE)'  },
+  { tip: 'Wonkwang University',                      src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1777038668/wku-logo_cu76kg.png',    alt: 'Wonkwang University (WKU)'   },
+  { tip: 'Daejeon University',                       src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1777038667/dju-logo-2_jxm7py.png',  alt: 'Daejeon University (DJU)'   },
+  { tip: 'Jeonju University',                        src: 'https://res.cloudinary.com/dobann7wi/image/upload/v1777038668/jju-logo_x1phga.png',    alt: 'Jeonju University (JJU)'   },
 ]
 
 export default function Teaching() {

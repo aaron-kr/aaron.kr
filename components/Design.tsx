@@ -105,11 +105,22 @@ export default function Design({ posts }: Props) {
         <div className="uni-strip rise">
           <div className="uni-strip-lbl en">Selected Clients</div>
           <div className="uni-strip-lbl ko">선택된 클라이언트</div>
-          {CLIENTS.map((c) => (
-            <span key={c.tip} className="uni-logo-wrap" data-tip={c.tip} role="img" aria-label={c.tip}>
-              <Image src={c.src} alt="" className="uni-logo" width={80} height={24} style={{ width: 'auto', height: '24px' }} loading="lazy" />
-            </span>
-          ))}
+          <div className="uni-strip-row">
+            {[
+              { href: 'https://kspai.org',   name: 'KSPAI' },
+              { href: 'https://klife.re.kr',   name: 'KLife' },
+              { href: 'https://keytokorean.com',   name: 'Key To Korean' },
+              { href: 'https://koreatesol.org',   name: 'KOTESOL' },
+              { href: 'https://jbcia.kr', name: 'JBCIA' },
+              { href: 'https://gpa.ac.kr', name: 'GPA' },
+              { href: 'https://jju.ac.kr',  name: 'JJU'  },
+              { href: 'https://fullsail.com', name: 'Full Sail University' },
+            ].map(({ href, name }) => (
+              <a key={name} href={href} className="soc-pill uni-pill fs" target="_blank" rel="noopener noreferrer">
+                {name}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div style={{ marginTop: '1.75rem' }} className="rise">
